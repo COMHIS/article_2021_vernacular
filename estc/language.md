@@ -3,8 +3,9 @@
 # Language analysis
 
  * Catalog: estc
+ * Field: language_primary 
  * Entries: 481217
- * Unique entries for field language_primary: 50  
+ * Unique entries for this field: 50  
 
 
 ## Top languages
