@@ -3,8 +3,9 @@
 # Language analysis
 
  * Catalog: hpbd
- * Entries: 0
- * Unique entries: 0  
+ * Field: language_primary 
+ * Entries: 10662195
+ * Unique entries for this field: 235  
 
 
 ## Top languages

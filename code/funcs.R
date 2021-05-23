@@ -81,16 +81,16 @@ read_physicalextent_estc <- function () {
   folder <- paste0("data/", catalog, "-", field)    
   file <- paste(folder, "/", "physicalextent.csv", sep = "")
   x <- read.csv(file, sep = "\t")
-  #x <- readRDS(file)  
   x
 }
 
 
-read_physicaldimension_hpbd <- function (catalog) {
+read_physicaldimension_hpbd <- function () {
   field <- "physicaldimension"
+  catalog <- "hpb"  
   folder <- paste0("data/", catalog, "-", field)
-  file <- paste(folder, "/", "physical_dimension.Rds", sep = "")
-  x <- readRDS(file)
+  file <- paste(folder, "/", "physical_dimension.csv", sep = "")
+  x <- read.csv(file, sep = "\t")    
   x
 }
 
@@ -101,7 +101,6 @@ read_physicaldimension_estc <- function () {
   folder <- paste0("data/", catalog, "-", field)
   file <- paste(folder, "/", "physical_dimension.csv", sep = "")
   x <- read.csv(file, sep = "\t")  
-  # x <- readRDS(file)
   x
 }
 
@@ -141,6 +140,23 @@ read_geoinformation <- function (catalog, file = "allMappedMetadataLocationsBy11
   f <- paste(folder, "/", file, sep = "")
   x <- read.csv(f)
   x
+}
+
+
+combine_tables <- function (datalist) {
+
+  # Unique IDs, removing duplicates
+  ids <- unique(intersect(datalist[[1]]$system_control_number, unique(unlist(sapply(datalist, function (x) {unique(x$system_control_number)})))))
+  duplicated <- unlist(sapply(datalist, function (x) {x$system_control_number[which(duplicated(x$system_control_number))]}))
+  ids <- setdiff(ids, duplicated)
+
+  dlist <- sapply(datalist, function (d) {d[match(ids, d$system_control_number),]}, USE.NAMES = FALSE)
+  for (i in 2:length(dlist)) {dlist[[i]]$system_control_number <- NULL}
+  names(dlist) <- NULL
+
+  dat <- do.call("cbind", dlist)
+  dat
+
 }
 
 

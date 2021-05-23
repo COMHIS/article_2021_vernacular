@@ -1,11 +1,13 @@
 catalog <- "hpbd";
 
-dat <- list()
+datalist <- list()
+datalist[["language"]] <- read_language(catalog)
+datalist[["publicationyears"]] <- read_publicationyears(catalog)
+datalist[["physicalextent"]] <- read_physicalextent(catalog)
+datalist[["physicaldimension"]] <- read_physicaldimension(catalog)
 
-dat[["language"]] <- read_language(catalog)
-dat[["publicationyears"]] <- read_publicationyears(catalog)
-dat[["physicalextent"]] <- read_physicalextent(catalog)
-dat[["physicaldimension"]] <- read_physicaldimension(catalog)
+# Only taking non-duplicated entries
+dat <- combine_tables(datalist) 
 
 # Author -> TODO
 # Title  -> TODO

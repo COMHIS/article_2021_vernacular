@@ -5,8 +5,9 @@ field <- "language_primary"
 # Language analysis
 
  * Catalog: `r catalog`
+ * Field: `r field` 
  * Entries: `r length(dat[[field]])`
- * Unique entries for field `r field`: `r length(unique(dat[[field]]))`  
+ * Unique entries for this field: `r length(unique(dat[[field]]))`  
 
 
 ## Top languages
