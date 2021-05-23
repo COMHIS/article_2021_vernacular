@@ -17,7 +17,7 @@ field <- "language_primary"
 #Austria based on HPB
 #Estonia based on HPB
 ntop <- 5
-p <- top_plot(dat[[field]]$language_primary, ntop = ntop) +
+p <- top_plot(dat[[field]], ntop = ntop) +
        labs(title = paste(catalog, field)) +
        theme_comhis("discrete")
 print(p)
