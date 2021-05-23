@@ -1,7 +1,9 @@
 # Analyses 
 
  * [estc](estc/README.md)
- * [hpbd](hpbd/README.md) 
+ * [hpbd](hpbd/README.md)
+ * [stcn](stcn/README.md)
+ * [snb](snb/README.md)   
 
 
 # Docs
