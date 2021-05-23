@@ -1,3 +1,15 @@
+read_author <- function (catalog) {
+
+  if (catalog == "estc") {
+    x <- read_author_estc(catalog)
+  } else if (catalog == "hpbd") {
+    x <- read_author_hpbd()
+  } else {
+    stop("catalog not recognized in read_language")
+  }
+  x
+}
+
 read_language <- function (catalog) {
 
   if (catalog == "estc") {
@@ -7,10 +19,96 @@ read_language <- function (catalog) {
   } else {
     stop("catalog not recognized in read_language")
   }
-
+  x
 }
 
+read_publicationyears <- function (catalog) {
+
+  if (catalog == "estc") {
+    x <- read_publicationyears_estc()
+  } else if (catalog == "hpbd") {
+    x <- read_publicationyears_hpbd()
+  } else {
+    stop("catalog not recognized in read_publicationyears")
+  }
+  x
+}
+
+read_physicalextent <- function (catalog) {
+
+  if (catalog == "estc") {
+    x <- read_physicalextent_estc()
+  } else if (catalog == "hpbd") {
+    x <- read_physicalextent_hpbd()
+  } else {
+    stop("catalog not recognized in read_publicationyears")
+  }
+  x
+}
+
+read_physicaldimension <- function (catalog) {
+
+  if (catalog == "estc") {
+    x <- read_physicaldimension_estc()
+  } else if (catalog == "hpbd") {
+    x <- read_physicaldimension_hpbd()
+  } else {
+    stop("catalog not recognized in read_publicationyears")
+  }
+  x
+}
+
+read_publicationyears_hpbd <- function (catalog) {
+  field <- "publicationyears"
+  folder <- paste0("data/hpb-", field)
+  file <- paste(folder, "/", "publicationyears.csv", sep = "")
+  x <- read.csv(file, sep = "\t")
+  x
+}
+
+
+read_physicalextent_hpbd <- function (catalog) {
+  field <- "physical-extent"
+  folder <- paste0("data/hpb-", field)
+  file <- paste(folder, "/", "physical_extent.Rds", sep = "")
+  x <- readRDS(file)
+  x
+}
+
+read_physicalextent_estc <- function () {
+  field <- "physicalextent"
+  catalog <- "estc"
+  folder <- paste0("data/", catalog, "-", field)    
+  file <- paste(folder, "/", "physicalextent.csv", sep = "")
+  x <- read.csv(file, sep = "\t")
+  #x <- readRDS(file)  
+  x
+}
+
+
+read_physicaldimension_hpbd <- function (catalog) {
+  field <- "physicaldimension"
+  folder <- paste0("data/", catalog, "-", field)
+  file <- paste(folder, "/", "physical_dimension.Rds", sep = "")
+  x <- readRDS(file)
+  x
+}
+
+
+read_physicaldimension_estc <- function () {
+  field <- "physicaldimension"
+  catalog <- "estc"
+  folder <- paste0("data/", catalog, "-", field)
+  file <- paste(folder, "/", "physical_dimension.csv", sep = "")
+  x <- read.csv(file, sep = "\t")  
+  # x <- readRDS(file)
+  x
+}
+
+
+
 read_language_hpbd <- function () {
+  field <- "language"
   folder <- paste0("data/hpb-", field)
   file <- paste(folder, "/", "language_008.Rds", sep = "")
   x <- readRDS(file)
@@ -19,6 +117,16 @@ read_language_hpbd <- function () {
 
 read_language_estc <- function (catalog) {
   field <- "language"
+  folder <- paste0("data/", catalog, "-", field)
+  file <- paste(folder, "/", field, ".csv", sep = "")
+  x <- read.csv(file, sep = "\t")
+  x
+}
+
+
+read_publicationyears_estc <- function () {
+  field <- "publicationyears"
+  catalog <- "estc"
   folder <- paste0("data/", catalog, "-", field)
   file <- paste(folder, "/", field, ".csv", sep = "")
   x <- read.csv(file, sep = "\t")

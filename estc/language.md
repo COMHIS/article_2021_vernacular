@@ -2,7 +2,7 @@
 
 # Language analysis
 
- * Catalog: hpbd
+ * Catalog: estc
  * Entries: 0
  * Unique entries: 0  
 

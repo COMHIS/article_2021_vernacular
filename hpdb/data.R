@@ -1,17 +1,14 @@
 catalog <- "hpbd";
 
 dat <- list()
-field <- "language"
-x <- read_language("hpbd")
-dat[[field]] <- x
 
+dat[["language"]] <- read_language(catalog)
+dat[["publicationyears"]] <- read_publicationyears(catalog)
+dat[["physicalextent"]] <- read_physicalextent(catalog)
+dat[["physicaldimension"]] <- read_physicaldimension(catalog)
 
-
-# HPB:
-#hpb-physicaldimension
-#hpb-physical-extent
-#hpb-publicationplace
-#hpb-publicationyears
-#system_control_numbers.Rds
+# Author -> TODO
+# Title  -> TODO
+# Publication place -> need Iiro's input; hpb-publicationplace
 
 
