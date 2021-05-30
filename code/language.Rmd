@@ -5,14 +5,6 @@
 
 Top languages according to title count in each “national” context 
 
-- UK based on ESTC
-- Sweden based on SNB
-- The Netherlands based on HPB 
-- Austria based on HPB
-- Estonia based on HPB
-- Finland based on FNB
-
-Top languages by title count.
 
 ```{r top_language, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%"}
 # Combine language data from catalogs
