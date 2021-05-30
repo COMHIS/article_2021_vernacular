@@ -1,7 +1,7 @@
 # Analyses 
 
- * [Top towns](output/place.md)
- * [Top languages](output/language.md) 
+ * [Top towns](code/output/place.md)
+ * [Top languages](code/output/language.md) 
 
 
 Replicate the analyses with:
