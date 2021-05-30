@@ -12,13 +12,12 @@ Top languages according to title count in each “national” context
 - Estonia based on HPB
 - Finland based on FNB
 
-
+Top languages by title count.
 
 ```{r top_language, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%"}
 # Combine language data from catalogs
 df <- NULL
 for (ctl in names(catalogs)) {
-  print(ctl)
   tmp <- catalogs[[ctl]][, c("language_primary", "publication_country")]
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
@@ -33,7 +32,7 @@ for (country in unique(df$publication_country)) {
   library(comhis)
   library(ggplot2)  
   p <- top_plot(dfs$language_primary, ntop = ntop) +
-       labs(title = "Top languages by title count", subtitle = paste(country, catalog, sep = " / ")) +
+       labs(title = paste(country, catalog, sep = " / ")) +
        scale_y_log10() +
        theme_comhis("discrete", base_size=25)
        
