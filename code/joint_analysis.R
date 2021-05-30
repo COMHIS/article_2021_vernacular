@@ -9,6 +9,6 @@ catalogs[["fnb"]] <- readRDS("../fnb/fnb_subset.rds")
 
 # ------------------------------------------------------------
 
-rmarkdown::render(input = "place.Rmd",    output_format = "md_document", output_dir = "../output")
-rmarkdown::render(input = "language.Rmd", output_format = "md_document", output_dir = "../output")
+rmarkdown::render(input = "place.Rmd",    output_format = "md_document", output_dir = "output")
+rmarkdown::render(input = "language.Rmd", output_format = "md_document", output_dir = "output")
 
