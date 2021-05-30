@@ -1,5 +1,5 @@
-Language analysis
-=================
+Publication place analysis
+==========================
 
 Top places
 ----------
