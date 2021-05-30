@@ -150,6 +150,8 @@ combine_tables <- function (datalist) {
   # Unique IDs, removing duplicates
   ids <- unique(intersect(datalist[[1]]$system_control_number, unique(unlist(sapply(datalist, function (x) {unique(x$system_control_number)})))))
   duplicated <- unlist(sapply(datalist, function (x) {x$system_control_number[which(duplicated(x$system_control_number))]}))
+  if (length(unique(duplicated))>0) {warning(paste("Removing", length(unique(duplicated)), "duplicate entries in combine_tables."))}
+
   ids <- setdiff(ids, duplicated)
 
   dlist <- sapply(datalist, function (d) {d[match(ids, d$system_control_number),]}, USE.NAMES = FALSE)

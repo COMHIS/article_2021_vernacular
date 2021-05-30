@@ -1,0 +1,23 @@
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+field <- "publication_place"
+```
+
+# Language analysis
+
+ * Catalog: `r catalog`
+ * Field: `r field`
+ * Country: `r country`  
+ * Entries: `r length(subdat[[field]])`
+ * Unique entries for this field: `r length(unique(subdat[[field]]))`  
+
+
+## Top places
+
+```{r top_place, echo=FALSE, message=FALSE, warning=FALSE}
+ntop <- 20
+p <- top_plot(subdat[[field]], ntop = ntop) +
+       labs(title = paste(catalog, field)) +
+       theme_comhis("discrete")
+print(p)
+```
+
