@@ -24,7 +24,7 @@ for (country in unique(df$publication_country)) {
   library(comhis)
   library(ggplot2)  
   p <- top_plot(dfs$publication_place, ntop = ntop) +
-       labs(title = paste(country, catalog, sep = " / ")) +
+       labs(title = country, subtitle = catalog) +
        scale_y_log10() +
        theme_comhis("discrete", base_size=25)
        
