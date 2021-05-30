@@ -1,2 +1,5 @@
+*.rds
+*.RDS
+*.Rds
 geomapping_process
 *~

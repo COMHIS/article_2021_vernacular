@@ -1,9 +1,13 @@
 # Analyses 
 
- * [estc](estc/README.md)
- * [hpb](hpb/README.md)
- * [stcn](stcn/README.md)
- * [snb](snb/README.md)   
+ * [Top towns](output/place.md)
+ * [Top languages](output/language.md) 
+
+
+Replicate the analyses with:
+- Reproduce the data subsets with main.R in each catalog folder 
+- Run the final analyses with [code/main.R](code/main.R)
+
 
 # Docs
 

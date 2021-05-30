@@ -1,6 +1,54 @@
 # Language analysis
 
+
+## Top places
+
+Top towns according to title count in each “national” context 
+- UK based on ESTC
+- Sweden based on SNB
+- The Netherlands based on HPB 
+- Austria based on HPB
+- Estonia based on HPB
+- Finland based on FNB
+
+
+
+```{r top_place, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%"}
+# Combine place data from catalogs
+# Exclude STCN as it does not have towns
+df <- NULL
+for (ctl in setdiff(names(catalogs), "stcn")) {
+  print(ctl)
+  tmp <- catalogs[[ctl]][, c("publication_place", "publication_country")]
+  tmp$catalog <- rep(ctl, nrow(tmp))
+  df <- dplyr::bind_rows(df, tmp)
+}
+
+# For each country, show top towns
+ntop <- 10
+for (country in unique(df$publication_country)) {
+
+  dfs <- subset(df, publication_country == country)
+  catalog <- paste(unique(dfs$catalog), collapse = "+")
+  library(comhis)
+  library(ggplot2)  
+  p <- top_plot(dfs$publication_place, ntop = ntop) +
+       labs(title = "Top towns by title count", subtitle = paste(country, catalog, sep = " / ")) +
+       scale_y_log10() +
+       theme_comhis("discrete")
+       
+  print(p)
+
+}
+```
+
+
+
+
+
 ## Countries per catalog
+
+Summary of selected countries per catalog, for quality control purposes. Should have the same countries than above.
 
 ```{r countries, echo=FALSE, message=FALSE, warning=FALSE}
 for (catal in names(catalogs)) {
@@ -10,16 +58,3 @@ for (catal in names(catalogs)) {
   print("----------")
 }
 ```
-
-
-## Top places
-
-```{r top_place, echo=FALSE, message=FALSE, warning=FALSE}
-ntop <- 20
-p <- top_plot(subdat[[field]], ntop = ntop) +
-       labs(title = paste(catalog, field)) +
-       scale_x_log10() +
-       theme_comhis("discrete")
-print(p)
-```
-

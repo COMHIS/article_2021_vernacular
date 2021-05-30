@@ -1,54 +1,121 @@
-```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
-field <- "language_primary"
-```
-
 # Language analysis
 
- * Catalog: `r catalog`
- * Field: `r field` 
- * Country: `r country`  
- * Entries: `r length(subdat[[field]])`
- * Unique entries for this field: `r length(unique(subdat[[field]]))`  
+
+## Top languages
+
+Top languages according to title count in each “national” context 
+
+- UK based on ESTC
+- Sweden based on SNB
+- The Netherlands based on HPB 
+- Austria based on HPB
+- Estonia based on HPB
+- Finland based on FNB
 
 
-## Top languages by country
 
-```{r top_lang, echo=FALSE, message=FALSE, warning=FALSE}
-#Top languages per “national” context, histogram
-#The Netherlands based on HPB (and STCN?)
-#Austria based on HPB
-#Estonia based on HPB
+```{r top_language, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%"}
+# Combine language data from catalogs
+df <- NULL
+for (ctl in names(catalogs)) {
+  print(ctl)
+  tmp <- catalogs[[ctl]][, c("language_primary", "publication_country")]
+  tmp$catalog <- rep(ctl, nrow(tmp))
+  df <- dplyr::bind_rows(df, tmp)
+}
+
+# For each country, show top languagues
 ntop <- 5
-p <- top_plot(subdat[[field]], ntop = ntop) +
-       labs(title = paste(catalog, field)) +
-       scale_x_log10() +       
-       theme_comhis("discrete")
-print(p)
-```
+for (country in unique(df$publication_country)) {
 
+  dfs <- subset(df, publication_country == country)
+  catalog <- paste(unique(dfs$catalog), collapse = "+")
+  library(comhis)
+  library(ggplot2)  
+  p <- top_plot(dfs$language_primary, ntop = ntop) +
+       labs(title = "Top languages by title count", subtitle = paste(country, catalog, sep = " / ")) +
+       scale_y_log10() +
+       theme_comhis("discrete")
+       
+  print(p)
+
+}
+```
 
 
 
 ## Top languages by town
 
+Top langues by town (based on the indicated catalog):
+
+- London (ESTC)
+- Oxford (ESTC)
+- Cambridge (ESTC)
+
+- Leiden (HPB)
+- Amsterdam (HPB)
+- Wien (HPB)
+- Salzburg (HPB)
+- Tallinn (HPB)
+- Tartu (HPB)
+
+- Stockholm (SNB)
+- Lund (SNB)
+- Uppsala (SNB)
+
+- Turku (FNB)
 
 
-London (ESTC)
-Oxford (ESTC)
-Cambridge (ESTC)
 
-Leiden (HPB)
-Amsterdam (HPB)
-Wien (HPB)
-Salzburg (HPB)
-Tallinn (HPB)
-Tartu (HPB)
+```{r top_language_by_town, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%"}
+# Combine language data from catalogs
+df <- NULL
+for (ctl in names(catalogs)) {
+  print(ctl)
+  tmp <- catalogs[[ctl]][, c("language_primary", "publication_country", "publication_place")]
+  tmp$catalog <- rep(ctl, nrow(tmp))
+  df <- dplyr::bind_rows(df, tmp)
+}
 
-Turku (FNB)
 
-Stockholm (SNB)
-Lund (SNB)
-Uppsala (SNB)
+selected.towns <- as.data.frame(rbind(
+  c("London", "estc"),
+  c("Oxford", "estc"),
+  c("Cambridge", "estc"),
+  c("Leiden", "hpb"),
+  c("Amsterdam", "hpb"),
+  c("Vienna", "hpb"),
+  c("Salzburg", "hpb"),
+  c("Tallinn", "hpb"),
+  c("Tartu", "hpb"),
+  c("Stockholm", "snb"),
+  c("Lund", "snb"),
+  c("Uppsala", "snb"),
+  c("Turku", "fnb")))
+names(selected.towns) <- c("town", "catalog")
+
+# For each country, show top languagues
+ntop <- 5
+for (i in seq_along(selected.towns)) {
+
+  ctl <- selected.towns[i, "catalog"]
+  town <- selected.towns[i, "town"]
+
+  # Pick the selected town and catalog
+  dfs <- subset(df, publication_place == town & catalog == ctl)
+  
+  library(comhis)
+  library(ggplot2)  
+  p <- top_plot(dfs$language_primary, ntop = ntop) +
+       labs(title = "Top languages", subtitle = paste(town, ctl, sep = " / ")) +
+       scale_y_log10() +
+       theme_comhis("discrete")
+       
+  print(p)
+
+}
+```
+
 
 
 
