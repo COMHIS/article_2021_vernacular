@@ -46,34 +46,14 @@ for (country in unique(df$publication_country)) {
 
 ## Top languages by town
 
-Top langues by town (based on the indicated catalog):
+Top languages by town (based on the indicated catalog).
 
-- London (ESTC)
-- Oxford (ESTC)
-- Cambridge (ESTC)
-
-- Leiden (HPB)
-- Amsterdam (HPB)
-- Wien (HPB)
-- Salzburg (HPB)
-- Tallinn (HPB)
-- Tartu (HPB)
-
-- Stockholm (SNB)
-- Lund (SNB)
-- Uppsala (SNB)
-
-- Turku (FNB)
-
-
-
-```{r top_language_by_town, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%"}
+```{r top_language_by_town, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%"}
 # Combine language data from catalogs
 df <- NULL
 # Exclude STCN as it does not have towns
 df <- NULL
 for (ctl in setdiff(names(catalogs), "stcn")) {
-  print(ctl)
   tmp <- catalogs[[ctl]][, c("language_primary", "publication_country", "publication_place")]
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
@@ -111,7 +91,7 @@ for (i in seq_len(nrow(selected.towns))) {
   p <- top_plot(dfs$language_primary, ntop = ntop) +
        labs(title = "Top languages", subtitle = paste(town, ctl, sep = " / ")) +
        scale_y_log10() +
-       theme_comhis("discrete")
+       theme_comhis("discrete", base_size=30)
        
   print(p)
 
