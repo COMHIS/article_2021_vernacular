@@ -35,7 +35,7 @@ for (country in unique(df$publication_country)) {
   p <- top_plot(dfs$language_primary, ntop = ntop) +
        labs(title = "Top languages by title count", subtitle = paste(country, catalog, sep = " / ")) +
        scale_y_log10() +
-       theme_comhis("discrete")
+       theme_comhis("discrete", base_size=25)
        
   print(p)
 
