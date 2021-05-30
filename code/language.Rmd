@@ -20,11 +20,11 @@ ntop <- 5
 for (country in unique(df$publication_country)) {
 
   dfs <- subset(df, publication_country == country)
-  catalog <- paste(unique(dfs$catalog), collapse = "+")
+  ctl <- paste(unique(dfs$catalog), collapse = "+")
   library(comhis)
   library(ggplot2)  
   p <- top_plot(dfs$language_primary, ntop = ntop) +
-       labs(title = paste(country, catalog, sep = " / ")) +
+       labs(title = town, subtitle = ctl) +       
        scale_y_log10() +
        theme_comhis("discrete", base_size=25)
        
@@ -39,7 +39,7 @@ for (country in unique(df$publication_country)) {
 
 Top languages by town (based on the indicated catalog).
 
-```{r top_language_by_town, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%"}
+```{r top_language_by_town, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%", fig.width=10, fig.height=7}
 # Combine language data from catalogs
 df <- NULL
 # Exclude STCN as it does not have towns
@@ -79,7 +79,7 @@ for (i in seq_len(nrow(selected.towns))) {
   library(comhis)
   library(ggplot2)  
   p <- top_plot(dfs$language_primary, ntop = ntop) +
-       labs(title = paste(town, ctl, sep = " / ")) +
+       labs(title = town, subtitle = ctl) +
        scale_y_log10() +
        theme_comhis("discrete", base_size=30)
        
