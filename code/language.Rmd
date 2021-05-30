@@ -70,7 +70,9 @@ Top langues by town (based on the indicated catalog):
 ```{r top_language_by_town, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%"}
 # Combine language data from catalogs
 df <- NULL
-for (ctl in names(catalogs)) {
+# Exclude STCN as it does not have towns
+df <- NULL
+for (ctl in setdiff(names(catalogs), "stcn")) {
   print(ctl)
   tmp <- catalogs[[ctl]][, c("language_primary", "publication_country", "publication_place")]
   tmp$catalog <- rep(ctl, nrow(tmp))
@@ -96,8 +98,8 @@ names(selected.towns) <- c("town", "catalog")
 
 # For each country, show top languagues
 ntop <- 5
-for (i in seq_along(selected.towns)) {
-
+for (i in seq_len(nrow(selected.towns))) {
+  print(i)
   ctl <- selected.towns[i, "catalog"]
   town <- selected.towns[i, "town"]
 
