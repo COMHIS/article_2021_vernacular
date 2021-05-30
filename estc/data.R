@@ -11,13 +11,7 @@ datalist[["geo"]] <- read.csv("../input/geomapping_process/data_output/estc_geom
 # Only taking non-duplicated entries
 dat <- combine_tables(datalist) 
 
-
-
-
-
-
-
-# ESTC
+# ESTC some available fields
 # field <- "actors / viaf / actors-unified / author_data / estc-author-data" # author
 # Other:
 # - prices

@@ -1,6 +1,11 @@
 source("init.R")
 source("data.R")
 
-knit(input = "../code/language.Rmd", output = "language.md")
+# STCN countries
+country <- "Netherlands"
+subdat <- dat[dat$country %in% country,]
+# Save the selected subset
+saveRDS(subdat, file = "stcn_subset.rds")
+
 
 

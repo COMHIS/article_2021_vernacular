@@ -1,15 +1,19 @@
-
-
 # Language analysis
 
- * Catalog: estc
- * Field: publication_place
- * Country: England  
- * Entries: 354803
- * Unique entries for this field: 388  
+## Countries per catalog
+
+
+```
+## Error in eval(expr, envir, enclos): object 'catalogs' not found
+```
 
 
 ## Top places
+
+
+```
+## Error in Math.factor(x, base): 'log' not meaningful for factors
+```
 
 ![plot of chunk top_place](figure/top_place-1.png)
 

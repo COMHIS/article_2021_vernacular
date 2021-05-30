@@ -6,8 +6,5 @@
 
 ## Reproducing the analyses
 
-Run [main.R]
-
-
-
+Run [main.R](main.R)
 

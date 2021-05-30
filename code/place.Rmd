@@ -1,14 +1,15 @@
-```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
-field <- "publication_place"
-```
-
 # Language analysis
 
- * Catalog: `r catalog`
- * Field: `r field`
- * Country: `r country`  
- * Entries: `r length(subdat[[field]])`
- * Unique entries for this field: `r length(unique(subdat[[field]]))`  
+## Countries per catalog
+
+```{r countries, echo=FALSE, message=FALSE, warning=FALSE}
+for (catal in names(catalogs)) {
+  print(catal)
+  tab <- table(catalogs[[catal]]$publication_country)
+  print(tab[tab > 0])
+  print("----------")
+}
+```
 
 
 ## Top places
@@ -17,6 +18,7 @@ field <- "publication_place"
 ntop <- 20
 p <- top_plot(subdat[[field]], ntop = ntop) +
        labs(title = paste(catalog, field)) +
+       scale_x_log10() +
        theme_comhis("discrete")
 print(p)
 ```

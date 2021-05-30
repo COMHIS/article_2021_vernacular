@@ -6,21 +6,50 @@ field <- "language_primary"
 
  * Catalog: `r catalog`
  * Field: `r field` 
- * Entries: `r length(dat[[field]])`
- * Unique entries for this field: `r length(unique(dat[[field]]))`  
+ * Country: `r country`  
+ * Entries: `r length(subdat[[field]])`
+ * Unique entries for this field: `r length(unique(subdat[[field]]))`  
 
 
-## Top languages
+## Top languages by country
 
 ```{r top_lang, echo=FALSE, message=FALSE, warning=FALSE}
-#Top 5 languages per “national” context, histogram
+#Top languages per “national” context, histogram
 #The Netherlands based on HPB (and STCN?)
 #Austria based on HPB
 #Estonia based on HPB
 ntop <- 5
-p <- top_plot(dat[[field]], ntop = ntop) +
+p <- top_plot(subdat[[field]], ntop = ntop) +
        labs(title = paste(catalog, field)) +
+       scale_x_log10() +       
        theme_comhis("discrete")
 print(p)
 ```
+
+
+
+
+## Top languages by town
+
+
+
+London (ESTC)
+Oxford (ESTC)
+Cambridge (ESTC)
+
+Leiden (HPB)
+Amsterdam (HPB)
+Wien (HPB)
+Salzburg (HPB)
+Tallinn (HPB)
+Tartu (HPB)
+
+Turku (FNB)
+
+Stockholm (SNB)
+Lund (SNB)
+Uppsala (SNB)
+
+
+
 
