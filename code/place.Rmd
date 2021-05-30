@@ -3,17 +3,9 @@
 
 ## Top places
 
-Top towns according to title count in each “national” context 
-- UK based on ESTC
-- Sweden based on SNB
-- The Netherlands based on HPB 
-- Austria based on HPB
-- Estonia based on HPB
-- Finland based on FNB
+Top towns according to title count in each “national” context.
 
-
-
-```{r top_place, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%"}
+```{r top_place, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%"}
 # Combine place data from catalogs
 # Exclude STCN as it does not have towns
 df <- NULL
@@ -32,7 +24,7 @@ for (country in unique(df$publication_country)) {
   library(comhis)
   library(ggplot2)  
   p <- top_plot(dfs$publication_place, ntop = ntop) +
-       labs(title = "Top towns by title count", subtitle = paste(country, catalog, sep = " / ")) +
+       labs(title = paste(country, catalog, sep = " / ")) +
        scale_y_log10() +
        theme_comhis("discrete", base_size=25)
        
