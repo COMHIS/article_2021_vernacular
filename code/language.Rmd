@@ -79,7 +79,7 @@ for (i in seq_len(nrow(selected.towns))) {
   library(comhis)
   library(ggplot2)  
   p <- top_plot(dfs$language_primary, ntop = ntop) +
-       labs(title = "Top languages", subtitle = paste(town, ctl, sep = " / ")) +
+       labs(title = paste(town, ctl, sep = " / ")) +
        scale_y_log10() +
        theme_comhis("discrete", base_size=30)
        
