@@ -18,7 +18,6 @@ Top towns according to title count in each “national” context
 # Exclude STCN as it does not have towns
 df <- NULL
 for (ctl in setdiff(names(catalogs), "stcn")) {
-  print(ctl)
   tmp <- catalogs[[ctl]][, c("publication_place", "publication_country")]
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
@@ -35,7 +34,7 @@ for (country in unique(df$publication_country)) {
   p <- top_plot(dfs$publication_place, ntop = ntop) +
        labs(title = "Top towns by title count", subtitle = paste(country, catalog, sep = " / ")) +
        scale_y_log10() +
-       theme_comhis("discrete")
+       theme_comhis("discrete", base_size=25)
        
   print(p)
 

@@ -79,7 +79,6 @@ names(selected.towns) <- c("town", "catalog")
 # For each country, show top languagues
 ntop <- 5
 for (i in seq_len(nrow(selected.towns))) {
-  print(i)
   ctl <- selected.towns[i, "catalog"]
   town <- selected.towns[i, "town"]
 
@@ -97,8 +96,3 @@ for (i in seq_len(nrow(selected.towns))) {
 
 }
 ```
-
-
-
-
-
