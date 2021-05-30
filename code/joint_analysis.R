@@ -1,14 +1,7 @@
 # Load data subsets
+source("data.R")
 
-catalogs <- list()
-catalogs[["estc"]] <- readRDS("../estc/estc_subset.rds")
-catalogs[["snb"]] <- readRDS("../snb/snb_subset.rds")
-catalogs[["hpb"]] <- readRDS("../hpb/hpb_subset.rds")
-catalogs[["stcn"]] <- readRDS("../stcn/stcn_subset.rds")
-catalogs[["fnb"]] <- readRDS("../fnb/fnb_subset.rds")
-
-# ------------------------------------------------------------
-
-rmarkdown::render(input = "place.Rmd",    output_format = "md_document", output_dir = "output")
-rmarkdown::render(input = "language.Rmd", output_format = "md_document", output_dir = "output")
+# Analyse
+rmarkdown::render(input = "place.Rmd",    output_format = "md_document")
+rmarkdown::render(input = "language.Rmd", output_format = "md_document")
 
