@@ -1,0 +1,1 @@
+Siirrä TODOt yksittäisistä hakemistoista ESTC-siivousputken listoihin

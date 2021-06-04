@@ -27,6 +27,28 @@ read_language_estc <- function (catalog) {
   x
 }
 
+
+#########################################################
+
+
+read_title <- function (catalog) {
+
+  if (catalog == "estc") {
+    x <- read_title_estc(catalog)
+  } else {
+    stop("catalog not recognized in read_title")
+  }
+  x
+}
+
+read_title_estc <- function (catalog) {
+  # This is the old initial harmonized data
+  file <- "data/estc-cleaned-initial/estc_processed.csv"
+  x <- read.csv(file)[, c("system_control_number", "title")]
+  x
+}
+
+
 ##########################################################
 
 read_author <- function (catalog) {
@@ -36,7 +58,7 @@ read_author <- function (catalog) {
   } else if (catalog == "hpb") {
     x <- read_author_hpb()
   } else {
-    stop("catalog not recognized in read_language")
+    stop("catalog not recognized in read_author")
   }
   x
 }
@@ -153,20 +175,81 @@ read_geoinformation <- function (catalog, file = "allMappedMetadataLocationsBy11
 
 ##########################################################
 
+
+read_author <- function (catalog) {
+
+
+  if (catalog == "estc") {
+  
+    x <- read.csv("data/estc-actors-unified/unified_actorlinks_enriched.csv")
+   
+    # Add system control number so that it is compatible with the others
+    x$system_control_number <- paste0("(CU-RivES)", x$estc_id)
+  
+    # Only pick author and publisher entries
+    author <- subset(x, actor_role_author == "True")
+    author <- author[, c("system_control_number", "actor_id", "actor_name_primary")]
+
+    return(author)
+    
+  } else {
+    return(NULL)
+  }
+  
+}
+
+
+##########################################################
+
+read_publisher <- function (catalog) {
+
+  if (catalog == "estc") {
+  
+    x <- read.csv("data/estc-actors-unified/unified_actorlinks_enriched.csv")
+   
+    # Add system control number so that it is compatible with the others
+    x$system_control_number <- paste0("(CU-RivES)", x$estc_id)
+  
+    # Only pick publisher and publisher entries
+    publisher <- subset(x, actor_role_publisher == "True")
+    publisher <- publisher[, c("system_control_number", "actor_id", "actor_name_primary")]
+
+    return(publisher)
+    
+  } else {
+    return(NULL)
+  }
+  
+}
+
+##########################################################
+
+
+
 combine_tables <- function (datalist) {
 
   # Unique IDs, removing duplicates
-  ids0 <- unique(intersect(datalist[[1]]$system_control_number, unique(unlist(sapply(datalist, function (x) {unique(x$system_control_number)})))))
-  duplicated <- unlist(sapply(datalist, function (x) {x$system_control_number[which(duplicated(x$system_control_number))]}))
-  if (length(unique(duplicated))>0) {warning(paste("Removing", length(unique(duplicated)), "duplicate entries in combine_tables."))}
+  ids0 <- unique(intersect(datalist[[1]]$system_control_number,
+    unique(unlist(sapply(datalist, function (x) {unique(x$system_control_number)})))))
+  duplicated <- unlist(sapply(datalist, function (x) {
+    x$system_control_number[which(duplicated(x$system_control_number))]}))
+  
+  if (length(unique(duplicated))>0) {
+    warning(paste("Removing", length(unique(duplicated)), "duplicate entries in combine_tables."))
+  }
 
   ids <- setdiff(ids0, duplicated)
 
   dlist <- sapply(datalist, function (d) {d[match(ids, d$system_control_number),]}, USE.NAMES = FALSE)
-  for (i in 2:length(dlist)) {dlist[[i]]$system_control_number <- NULL}
+  
+  for (i in 2:length(dlist)) {
+    dlist[[i]]$system_control_number <- NULL
+  }
+  
   names(dlist) <- NULL
 
   dat <- do.call("cbind", dlist)
+  
   dat
 
 }

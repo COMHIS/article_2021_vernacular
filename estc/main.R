@@ -1,10 +1,12 @@
 source("init.R")
 source("data.R")
 
-country <- "England"
-subdat <- dat %>% filter(publication_country == country)
+places <- c("London", "Dublin", "Edinburgh", "Oxford", "Cambridge", "Newcastle")
+subdat <- dat %>% filter(publication_place %in% places)
 # Save the selected subset
 saveRDS(subdat, file = "estc_subset.rds")
+
+
 
 
 
