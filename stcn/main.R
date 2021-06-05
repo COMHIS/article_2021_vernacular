@@ -7,5 +7,3 @@ subdat <- dat[dat$country %in% country,]
 # Save the selected subset
 saveRDS(subdat, file = "stcn_subset.rds")
 
-
-
