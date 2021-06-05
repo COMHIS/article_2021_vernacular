@@ -31,14 +31,22 @@ read_language_estc <- function (catalog) {
 #########################################################
 
 
-read_title <- function (catalog) {
+read_title <- function (catalog, n=30) {
 
   if (catalog == "estc") {
     x <- read_title_estc(catalog)
   } else {
     stop("catalog not recognized in read_title")
   }
+
+  # Cut title for readability
+  if (any(n < nchar(x))) {
+    warning(paste(sum(n < nchar(x)), "titles cut to string length", n))
+  }
+  x$title <- stringr::str_sub(x$title, 1, n)
+
   x
+
 }
 
 read_title_estc <- function (catalog) {
@@ -48,20 +56,6 @@ read_title_estc <- function (catalog) {
   x
 }
 
-
-##########################################################
-
-read_author <- function (catalog) {
-
-  if (catalog == "estc") {
-    x <- read_author_estc(catalog)
-  } else if (catalog == "hpb") {
-    x <- read_author_hpb()
-  } else {
-    stop("catalog not recognized in read_author")
-  }
-  x
-}
 
 ##########################################################
 
@@ -79,6 +73,18 @@ read_publicationyears <- function (catalog) {
   
   x
 }
+
+read_publicationyears_estc <- function () {
+  field <- "publicationyears"
+  catalog <- "estc"
+  folder <- paste0("data/", catalog, "-", field)
+  file <- paste(folder, "/", field, ".csv", sep = "")
+  x <- read.csv(file, sep = "\t")
+  x <- x[, c("system_control_number", "publication_year", "publication_decade", "publication_century", "uncertain", "circa")]
+  x
+
+}
+
 
 read_publicationyears_hpb <- function (catalog) {
   field <- "publicationyears"
@@ -117,6 +123,7 @@ read_physicalextent_estc <- function () {
   folder <- paste0("data/", catalog, "-", field)    
   file <- paste(folder, "/", "physicalextent.csv", sep = "")
   x <- read.csv(file, sep = "\t")
+  x <- x[, c("system_control_number", "pagecount", "singlevol", "multivol", "issue")]
   x
 }
 
@@ -148,18 +155,8 @@ read_physicaldimension_estc <- function () {
   catalog <- "estc"
   folder <- paste0("data/", catalog, "-", field)
   file <- paste(folder, "/", "physical_dimension.csv", sep = "")
-  x <- read.csv(file, sep = "\t")  
-  x
-}
-
-##########################################################
-
-read_publicationyears_estc <- function () {
-  field <- "publicationyears"
-  catalog <- "estc"
-  folder <- paste0("data/", catalog, "-", field)
-  file <- paste(folder, "/", field, ".csv", sep = "")
   x <- read.csv(file, sep = "\t")
+  x <- x[, c("system_control_number", "gatherings")]
   x
 }
 
@@ -188,7 +185,11 @@ read_author <- function (catalog) {
   
     # Only pick author and publisher entries
     author <- subset(x, actor_role_author == "True")
-    author <- author[, c("system_control_number", "actor_id", "actor_name_primary")]
+    author <- author[, c("system_control_number", "actor_name_primary")]
+
+    # Separate multi author entries by "|"
+    vec <- sapply(split(author$actor_name_primary, author$system_control_number), function (x) {paste(x, collapse="|")})
+    author <- data.frame(system_control_number = names(vec), authors = unname(vec))
 
     return(author)
     
@@ -211,10 +212,13 @@ read_publisher <- function (catalog) {
     x$system_control_number <- paste0("(CU-RivES)", x$estc_id)
   
     # Only pick publisher and publisher entries
-    publisher <- subset(x, actor_role_publisher == "True")
-    publisher <- publisher[, c("system_control_number", "actor_id", "actor_name_primary")]
+    df <- subset(x, actor_role_publisher == "True")[, c("system_control_number", "actor_name_primary")]
 
-    return(publisher)
+    # Separate multi entries by "|"
+    vec <- sapply(split(df$actor_name_primary, df$system_control_number), function (x) {paste(x, collapse="|")})
+    df <- data.frame(system_control_number = names(vec), publishers = unname(vec))
+
+    return(df)
     
   } else {
     return(NULL)
@@ -224,7 +228,17 @@ read_publisher <- function (catalog) {
 
 ##########################################################
 
+read_geo <- function (catalog) {
 
+  if (catalog == "estc") {
+    x <- read.csv("../input/geomapping_process/data_output/estc_geomapped.csv") # From IT
+    x <- x[, c("system_control_number", "publication_country", "publication_place")]
+    return(x)
+  }
+  
+}
+
+##########################################################
 
 combine_tables <- function (datalist) {
 
@@ -249,7 +263,15 @@ combine_tables <- function (datalist) {
   names(dlist) <- NULL
 
   dat <- do.call("cbind", dlist)
-  
+
+  # ids first
+  idx <- which(names(dat) == "system_control_number")
+  dat <- dat[, c(idx, setdiff(1:ncol(dat), idx))]
+
+  # titles last
+  idx <- which(names(dat) == "title")
+  dat <- dat[, c(setdiff(1:ncol(dat), idx), idx)]
+
   dat
 
 }
