@@ -1,16 +1,19 @@
 # Analyses 
 
-Run in code/main.R to generate:
+Run in code/main.R to
 
- * [Top towns](code/place.md)
- * [Top languages](code/language.md) 
+ 1. load the combined data set and
+ 2. generate summary files
+   * [Top towns](code/place.md)
+   * [Top languages](code/language.md) 
 
 
 ## Replicating the analysis
 
 Replicate the analyses with:
 
-- Reproduce the data subsets with main.R in each catalog folder 
+- Reproduce the data subsets with main.R in each catalog-specific
+  subfolder in [code/](code/)
 - Run the final analyses with [code/main.R](code/main.R)
 
 
