@@ -1,6 +1,11 @@
 # Analyses 
 
-Run in code/main.R to
+To start with the analysis, do the following:
+
+ - Navigate to [code/](code/) folder
+ - Run [code/main.R](code/main.R)
+
+This will
 
  1. load the combined data set and
  2. generate summary files
