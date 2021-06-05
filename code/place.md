@@ -15,23 +15,19 @@ Summary of selected countries per catalog, for quality control purposes.
 Should have the same countries than above.
 
     ## [1] "estc"
-    ## England 
-    ##  354803 
+    ## 
+    ##  England  Germany  Ireland Scotland 
+    ##   329441        1    26132    31906 
     ## [1] "----------"
     ## [1] "snb"
     ## Sweden 
     ## 310100 
     ## [1] "----------"
-    ## [1] "hpb"
-    ## 
-    ##     Austria     Estonia Netherlands 
-    ##       22397         651      109618 
+    ## [1] "fnb"
+    ## Finland 
+    ##   59639 
     ## [1] "----------"
     ## [1] "stcn"
     ##     nl 
     ## 200023 
-    ## [1] "----------"
-    ## [1] "fnb"
-    ## Finland 
-    ##   59639 
     ## [1] "----------"

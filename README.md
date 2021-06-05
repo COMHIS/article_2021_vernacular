@@ -1,5 +1,7 @@
 # Analyses 
 
+Run in code/main.R to generate:
+
  * [Top towns](code/place.md)
  * [Top languages](code/language.md) 
 
