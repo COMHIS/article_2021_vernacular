@@ -130,8 +130,16 @@ for (i in seq_len(nrow(selected.towns))) {
          labs(title = town, subtitle = ctl, y = "Title count (n)") +
          #scale_y_log10() +
          theme_comhis("continuous", base_size=30)
-       
-  print(p)
+
+  # Line plot version
+  #p <- ggplot(dfs, aes(x = publication_decade, y = n)) +
+  #       geom_line(aes(color = language_primary)) +
+  #       geom_point(aes(color = language_primary)) + 	 
+  #       labs(title = town, subtitle = ctl, y = "Title count (n)") +
+  #       #scale_y_log10() +
+  #       theme_comhis("continuous", base_size=30)
+  #     
+  #print(p)
 
 }
 ```
