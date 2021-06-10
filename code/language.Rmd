@@ -128,7 +128,7 @@ for (i in seq_len(nrow(selected.towns))) {
   p <- ggplot(dfs, aes(x = publication_decade, y = n)) +
          geom_bar(aes(fill = language_primary), position = "stack", stat = "identity") + 
          labs(title = town, subtitle = ctl, y = "Title count (n)") +
-         scale_y_log10() +
+         #scale_y_log10() +
          theme_comhis("continuous", base_size=30)
        
   print(p)
