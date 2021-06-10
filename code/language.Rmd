@@ -45,7 +45,7 @@ df <- NULL
 # Exclude STCN as it does not have towns
 df <- NULL
 for (ctl in setdiff(names(catalogs), "stcn")) {
-  tmp <- catalogs[[ctl]][, c("language_primary", "publication_country", "publication_place")]
+  tmp <- catalogs[[ctl]][, c("language_primary", "publication_country", "publication_place", "publication_decade")]
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
 }
@@ -82,6 +82,54 @@ for (i in seq_len(nrow(selected.towns))) {
        labs(title = town, subtitle = ctl) +
        scale_y_log10() +
        theme_comhis("discrete", base_size=30)
+       
+  print(p)
+
+}
+```
+
+
+
+## Top-N languages by town by decade
+
+
+```{r top_language_by_town_by_decade, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%", fig.width=10, fig.height=7}
+
+# Language level ordering
+langs <- names(rev(sort(table(df$language_primary))))
+
+# For each place, show top languagues
+library(dplyr)
+ntop <- 4
+for (i in seq_len(nrow(selected.towns))) {
+
+  ctl <- selected.towns[i, "catalog"]
+  town <- selected.towns[i, "town"]
+
+  # Pick the selected town and catalog
+  dfs <- subset(df, publication_place == town & catalog == ctl)
+
+  # Group by decade
+  dfs <- dfs %>% group_by(publication_decade, publication_place, language_primary) %>%
+                 summarise(n = n()) %>%
+		 group_by(publication_decade, publication_place) %>%
+		 arrange(desc(n)) %>%
+		 mutate(rank = rev(rank(n))) %>%
+		 filter(rank <= ntop)
+
+   # Arrange levels by rank
+   dfs$language_primary <- droplevels(factor(dfs$language_primary, levels = langs))
+
+   # Replace NA with 0
+   dfs$n[is.na(dfs$n)] <- 0
+
+  library(comhis)
+  library(ggplot2)
+  p <- ggplot(dfs, aes(x = publication_decade, y = n)) +
+         geom_bar(aes(fill = language_primary), position = "stack", stat = "identity") + 
+         labs(title = town, subtitle = ctl, y = "Title count (n)") +
+         scale_y_log10() +
+         theme_comhis("continuous", base_size=30)
        
   print(p)
 
