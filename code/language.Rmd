@@ -93,7 +93,7 @@ for (i in seq_len(nrow(selected.towns))) {
 ## Top-N languages by town by decade
 
 
-```{r top_language_by_town_by_decade, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%", fig.width=10, fig.height=7}
+```{r top_language_by_town_by_decade, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
 
 # Language level ordering
 langs <- names(rev(sort(table(df$language_primary))))
