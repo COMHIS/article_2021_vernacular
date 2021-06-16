@@ -52,19 +52,23 @@ for (ctl in setdiff(names(catalogs), "stcn")) {
 
 
 selected.towns <- as.data.frame(rbind(
+
   c("London", "estc"),
   c("Oxford", "estc"),
   c("Cambridge", "estc"),
-  #c("Leiden", "hpb"),
-  #c("Amsterdam", "hpb"),
-  #c("Vienna", "hpb"),
-  #c("Salzburg", "hpb"),
-  #c("Tallinn", "hpb"),
-  #c("Tartu", "hpb"),
   c("Stockholm", "snb"),
   c("Lund", "snb"),
   c("Uppsala", "snb"),
   c("Turku", "fnb")))
+
+  # STCN
+  #c("Leiden", "hpb"),
+  #c("Amsterdam", "hpb"),
+  #c("The Hague", "hpb"),
+  #c("Utrecht", "hpb"),
+  #c("Rotterdam", "hpb"),
+
+
 names(selected.towns) <- c("town", "catalog")
 
 # For each country, show top languagues
