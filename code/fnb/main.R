@@ -1,8 +1,6 @@
 source("init.R")
 source("data.R")
 
-
-
 # FNB countries
 country <- c("Finland")
 subdat <- dat %>% filter(publication_country %in% country)
