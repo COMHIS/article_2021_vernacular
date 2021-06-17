@@ -58,25 +58,6 @@ for (ctl in setdiff(names(catalogs), "stcn")) {
 }
 
 
-selected.towns <- as.data.frame(rbind(
-
-  c("London", "estc"),
-  c("Oxford", "estc"),
-  c("Cambridge", "estc"),
-  c("Stockholm", "snb"),
-  c("Lund", "snb"),
-  c("Uppsala", "snb"),
-  c("Turku", "fnb")))
-
-  # STCN
-  #c("Leiden", "hpb"),
-  #c("Amsterdam", "hpb"),
-  #c("The Hague", "hpb"),
-  #c("Utrecht", "hpb"),
-  #c("Rotterdam", "hpb"),
-
-
-names(selected.towns) <- c("town", "catalog")
 
 # For each country, show top languagues
 ntop <- 5
@@ -145,17 +126,16 @@ for (i in seq_len(nrow(selected.towns))) {
          #scale_y_log10() +
          theme_comhis("continuous", base_size=30) +
 	 labs(x = "Publication decade")
+  print(p)
 
   # Line plot version
-  #p <- ggplot(dfs, aes(x = publication_decade, y = n)) +
-  #       geom_line(aes(color = language_primary)) +
+  #p2 <- ggplot(dfs, aes(x = publication_decade, y = n)) +
+  #       geom_smooth(aes(color = language_primary, fill = language_primary)) +
   #       geom_point(aes(color = language_primary)) + 	 
   #       labs(title = town, subtitle = ctl, y = "Title count (n)") +
   #       #scale_y_log10() +
-  #       theme_comhis("continuous", base_size=30)
-  #
-  
-  print(p)
+  #       theme_comhis("continuous", base_size=30) 
+  #print(p2)
 
 }
 ```
