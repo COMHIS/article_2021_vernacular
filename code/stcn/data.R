@@ -32,7 +32,10 @@ x <- read.csv("data/final/stcn-pagecounts.csv")
 dat$pagecount <- x$pagecount
 
 # Polish language
+dat$language <- dat$language_primary
 dat$language_primary <- stringr::str_split_fixed(dat$language_primary, "\\|", n = 2)[,1]
+dat$multilingual <- sapply(stringr::str_split(dat$language, "\\|"), length) > 1
+
 
 # ------------------------------------------------------------------------
 
