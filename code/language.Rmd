@@ -51,7 +51,7 @@ Top languages by town (based on the indicated catalog).
 df <- NULL
 # Exclude STCN as it does not have towns
 df <- NULL
-for (ctl in setdiff(names(catalogs), "stcn")) {
+for (ctl in names(catalogs)) {
   tmp <- catalogs[[ctl]][, c("language_primary", "publication_country", "publication_place", "publication_decade")]
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
