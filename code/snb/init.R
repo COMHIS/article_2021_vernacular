@@ -4,5 +4,5 @@ library(knitr)
 library(dplyr)
 theme_set(theme_bw(20))
 
-source("../code/funcs.R")
+source("../funcs.R")
 
