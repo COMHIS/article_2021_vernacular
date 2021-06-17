@@ -58,7 +58,6 @@ for (ctl in setdiff(names(catalogs), "stcn")) {
 }
 
 
-
 # For each country, show top languagues
 ntop <- 5
 for (i in seq_len(nrow(selected.towns))) {

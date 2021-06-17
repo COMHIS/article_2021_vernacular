@@ -9,7 +9,7 @@ Top towns according to title count in each “national” context.
 # Combine place data from catalogs
 # Exclude STCN as it does not have towns
 df <- NULL
-for (ctl in setdiff(names(catalogs), "stcn")) {
+for (ctl in names(catalogs)) {
   tmp <- catalogs[[ctl]][, c("publication_place", "publication_country")]
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
