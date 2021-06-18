@@ -34,10 +34,13 @@ dat$pagecount <- x$pagecount
 # -----------------------------------------
 
 # Polish language
-dat$languages_all <- gsub("\\|", ";", dat$language_primary)
-dat$language_primary <- stringr::str_split_fixed(dat$languages_all, ";", n = 2)[,1]
+library(stringr)
+m <- mark_languages(gsub("\\|", ";", dat$language_primary))
+dat$language_primary <- NULL
+dat <- bind_cols(dat, m)
+dat <- dat %>% rename(languages_all = languages)
 dat$language_other <- gsub(";", ";", stringr::str_split_fixed(dat$languages_all, ";", n = 2)[,2])
-dat$multilingual <- sapply(stringr::str_split(dat$languages_all, ";"), length) > 1
+dat$language_vernacular <- grepl("Dutch", dat$languages_all)
 
 # ------------------------------------------------------------------------
 
