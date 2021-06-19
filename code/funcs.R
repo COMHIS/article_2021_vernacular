@@ -312,6 +312,19 @@ read_geoinformation <- function (catalog, file = "allMappedMetadataLocationsBy11
   x
 }
 
+read_geo <- function (catalog) {
+
+  if (catalog == "estc") {
+    x <- read.csv("../../input/geomapping_process/data_output/estc_geomapped.csv") # From IT
+    x <- x[, c("system_control_number", "publication_country", "publication_place")]
+    x$system_control_number <- gsub("\\(CU-RivES\\)", "", x$system_control_number)
+    return(x)
+   }
+
+}
+  
+
+
 ##########################################################
 
 
@@ -368,17 +381,6 @@ read_publisher <- function (catalog) {
   
 }
 
-##########################################################
-
-read_geo <- function (catalog) {
-
-  if (catalog == "estc") {
-    x <- read.csv("../../input/geomapping_process/data_output/estc_geomapped.csv") # From IT
-    x <- x[, c("system_control_number", "publication_country", "publication_place")]
-    return(x)
-  }
-  
-}
 
 ##########################################################
 
