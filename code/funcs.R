@@ -155,12 +155,18 @@ read_language_hpb <- function () {
 }
 
 read_language_estc <- function (catalog) {
+
   field <- "language"
   folder <- paste0("data/", catalog, "-", field)
   file <- paste(folder, "/", field, ".csv", sep = "")
   x <- read.csv(file, sep = "\t")
   names(x) <- c("language_primary", "system_control_number")
+  x <- x[, c(2,1)]
+  x$language_latin_primary <-  grepl("Latin", x$language_primary)
+  x$language_vernacular_primary <-  grepl("English", x$language_primary)  
+
   x
+
 }
 
 

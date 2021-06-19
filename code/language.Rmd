@@ -72,7 +72,8 @@ for (i in seq_len(nrow(selected.towns))) {
   p <- top_plot(dfs$language_primary, ntop = ntop) +
        labs(title = town, subtitle = ctl) +
        scale_y_log10() +
-       theme_comhis("discrete", base_size=30)
+       theme_bw(30)
+       # theme_comhis("discrete", base_size=30)
        
   print(p)
 
