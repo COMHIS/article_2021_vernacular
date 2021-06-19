@@ -28,7 +28,7 @@ condense_spaces <- function (x) {
 #' @author Leo Lahti \email{leo.lahti@@iki.fi}
 #' @examples \dontrun{df <- mark_languages(c("fin;lat","eng"))}
 #' @keywords utilities
-mark_languages <- function(x) {
+mark_languages <- function(x, abrv) {
 
   x0 <- x
 
@@ -46,31 +46,18 @@ mark_languages <- function(x) {
   xuniq <- unique(xorig)
   x <- xuniq
 
-  # Convert to polished language names as in
-  # http://www.loc.gov/marc/languages/language_code.html
-  # TODO: XML version available, read directly in R:
-  # see http://www.loc.gov/marc/languages/
-  
-  f <- "language_abbreviations.csv"
-  abrv <- read.csv(f, sep = "\t", header = TRUE, encoding = "UTF-8")
-
   # Further harmonization
   x <- gsub("\\(", " ", x)
   x <- gsub("\\)", " ", x)
   x <- gsub("\\,", " ", x)
   x <- gsub(" +", " ", x)
   x <- condense_spaces(x)
-  # Final name
-  #abrv$name <- gsub("\\(", " ", abrv$name)
-  #abrv$name <- gsub("\\)", " ", abrv$name)
-  #abrv$name <- gsub("\\,", " ", abrv$name)
-  #abrv$name <- gsub(" +", " ", abrv$name)    
+
   abrv$synonyme <- gsub("\\(", " ", abrv$synonyme)
   abrv$synonyme <- gsub("\\)", " ", abrv$synonyme)
   abrv$synonyme <- gsub("\\,", " ", abrv$synonyme)
   abrv$synonyme <- gsub(" +", " ", abrv$synonyme)  
   abrv <- unique(abrv)
-
 
   # Unrecognized languages?
   unrec <- as.vector(na.omit(setdiff(
@@ -79,16 +66,15 @@ mark_languages <- function(x) {
 	     )))
 
   if (length(unrec) > 0) {
-    warning(paste("Unidentified languages: ", paste(unrec, collapse = ";")))
+    warning(paste("Unidentified languages (", round(100 * mean(x %in% unrec), 1), "%): ", paste(unrec, collapse = ";"), sep = ""))
   }
 
 
   # TODO Vectorize to speed up ?
   for (i in 1:length(x)) {
-    
 
       lll <- sapply(unlist(strsplit(x[[i]], ";")), function (xx) {
-               as.character(map(xx, abrv, remove.unknown = TRUE, mode = "exact.match"))
+               as.character(map(xx, abrv, remove.unknown = FALSE, mode = "exact.match"))
 	       })
 
       lll <- na.omit(as.character(unname(lll)))
@@ -101,7 +87,7 @@ mark_languages <- function(x) {
       x[[i]] <- paste(lll, collapse = ";")
 
   }
-  
+
   # List all unique languages in the data
   x[x %in% c("NA", "Undetermined", "und")] <- NA
   xu <- na.omit(unique(unname(unlist(strsplit(unique(x), ";")))))
