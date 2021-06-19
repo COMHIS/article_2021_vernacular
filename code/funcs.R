@@ -195,6 +195,7 @@ read_title_estc <- function (catalog) {
   # This is the old initial harmonized data
   file <- "data/estc-cleaned-initial/estc_processed.csv"
   x <- read.csv(file)[, c("system_control_number", "title")]
+  x$system_control_number <- gsub("\\(CU-RivES\\)", "", x$system_control_number)  
   x
 }
 
@@ -223,6 +224,7 @@ read_publicationyears_estc <- function () {
   file <- paste(folder, "/", field, ".csv", sep = "")
   x <- read.csv(file, sep = "\t")
   x <- x[, c("system_control_number", "publication_year", "publication_decade", "publication_century", "uncertain", "circa")]
+  x$system_control_number <- gsub("\\(CU-RivES\\)", "", x$system_control_number)
   x
 
 }
@@ -266,6 +268,7 @@ read_physicalextent_estc <- function () {
   file <- paste(folder, "/", "physicalextent.csv", sep = "")
   x <- read.csv(file, sep = "\t")
   x <- x[, c("system_control_number", "pagecount", "singlevol", "multivol", "issue")]
+  x$system_control_number <- gsub("\\(CU-RivES\\)", "", x$system_control_number)
   x
 }
 
@@ -299,6 +302,7 @@ read_physicaldimension_estc <- function () {
   file <- paste(folder, "/", "physical_dimension.csv", sep = "")
   x <- read.csv(file, sep = "\t")
   x <- x[, c("system_control_number", "gatherings")]
+  x$system_control_number <- gsub("\\(CU-RivES\\)", "", x$system_control_number)  
   x
 }
 
@@ -345,6 +349,7 @@ read_author <- function (catalog) {
     # Separate multi author entries by "|"
     vec <- sapply(split(author$actor_name_primary, author$system_control_number), function (x) {paste(x, collapse="|")})
     author <- data.frame(system_control_number = names(vec), authors = unname(vec))
+    author$system_control_number <- gsub("\\(CU-RivES\\)", "", author$system_control_number)    
 
     return(author)
     
@@ -365,13 +370,14 @@ read_publisher <- function (catalog) {
    
     # Add system control number so that it is compatible with the others
     x$system_control_number <- paste0("(CU-RivES)", x$estc_id)
-  
+
     # Only pick publisher and publisher entries
     df <- subset(x, actor_role_publisher == "True")[, c("system_control_number", "actor_name_primary")]
 
     # Separate multi entries by "|"
     vec <- sapply(split(df$actor_name_primary, df$system_control_number), function (x) {paste(x, collapse="|")})
     df <- data.frame(system_control_number = names(vec), publishers = unname(vec))
+    df$system_control_number <- gsub("\\(CU-RivES\\)", "", df$system_control_number)        
 
     return(df)
     

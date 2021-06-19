@@ -1,6 +1,6 @@
 # Load data subsets and combine
 # - stored in dataset.Rds; use that as the starting point
-# source("data.R")
+source("data.R")
 
 # Analyse
 catalogs <- readRDS("../output/dataset.Rds")
