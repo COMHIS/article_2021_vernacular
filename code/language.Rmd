@@ -86,7 +86,6 @@ for (i in seq_len(nrow(selected.towns))) {
 
 
 ```{r top_language_by_town_by_decade, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
-
 # Language level ordering
 langs <- names(rev(sort(table(df$language_primary))))
 
@@ -124,8 +123,9 @@ for (i in seq_len(nrow(selected.towns))) {
          geom_bar(aes(fill = language_primary), position = "stack", stat = "identity") + 
          labs(title = town, subtitle = ctl, y = "Title count (n)") +
          #scale_y_log10() +
-         theme_comhis("continuous", base_size=30) +
-	 labs(x = "Publication decade")
+         theme_comhis("discrete", base_size=30) +
+         # theme_bw(20) +	 
+	 labs(x = "Publication decade", fill = "Primary language") 
   print(p)
 
   # Line plot version
