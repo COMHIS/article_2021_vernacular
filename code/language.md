@@ -6,7 +6,7 @@ Top languages
 
 Top languages according to title count in each “national” context
 
-<img src="language_files/figure-markdown_strict/top_language-1.png" width="25%" /><img src="language_files/figure-markdown_strict/top_language-2.png" width="25%" /><img src="language_files/figure-markdown_strict/top_language-3.png" width="25%" /><img src="language_files/figure-markdown_strict/top_language-4.png" width="25%" /><img src="language_files/figure-markdown_strict/top_language-5.png" width="25%" /><img src="language_files/figure-markdown_strict/top_language-6.png" width="25%" /><img src="language_files/figure-markdown_strict/top_language-7.png" width="25%" />
+<img src="language_files/figure-markdown_strict/top_language-1.png" width="25%" /><img src="language_files/figure-markdown_strict/top_language-2.png" width="25%" /><img src="language_files/figure-markdown_strict/top_language-3.png" width="25%" />
 
 Top languages by town
 ---------------------
