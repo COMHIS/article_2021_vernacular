@@ -28,6 +28,6 @@ Should have the same countries than above.
     ##   59639 
     ## [1] "----------"
     ## [1] "stcn"
-    ##     nl 
-    ## 200441 
+    ## Netherlands 
+    ##      134249 
     ## [1] "----------"
