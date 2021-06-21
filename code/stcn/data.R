@@ -66,6 +66,8 @@ dat$publication_decade <- comhis::decade(dat$publication_year)
 # From IT, in sync with other catalogs
 geo <- read.csv("../../input/geomapping_process/data_output/stcn_geomapped.csv")
 geo.match <- geo[match(dat$record_id, geo$system_control_number),]
+dat <- dat %>% rename(publication_country_in_stcn = publication_country)
 dat$publication_place <- geo.match$publication_place
+dat$publication_country <- geo.match$publication_country
 # Note that publication_country comes straight from STCN field
 # and is not always in sync with IT geomapping, to be curated
