@@ -21,7 +21,6 @@ selected.towns <- as.data.frame(rbind(
   c("Rotterdam", "stcn")))
 names(selected.towns) <- c("town", "catalog")
 
-
 rmarkdown::render(input = "place.Rmd",    output_format = "md_document")
 rmarkdown::render(input = "language.Rmd", output_format = "md_document")
 

@@ -49,18 +49,20 @@ Top languages by town (based on the indicated catalog).
 ```{r top_language_by_town, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%", fig.width=10, fig.height=7}
 # Combine language data from catalogs
 df <- NULL
-# Exclude STCN as it does not have towns
-df <- NULL
 for (ctl in names(catalogs)) {
-  tmp <- catalogs[[ctl]][, c("language_primary", "publication_country", "publication_place", "publication_decade")]
+
+  tmp <- catalogs[[ctl]][, c("language_primary", "publication_country",
+                             "publication_place", "publication_decade")]
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
+
 }
 
 
 # For each country, show top languagues
 ntop <- 5
 for (i in seq_len(nrow(selected.towns))) {
+
   ctl <- selected.towns[i, "catalog"]
   town <- selected.towns[i, "town"]
 
@@ -73,7 +75,6 @@ for (i in seq_len(nrow(selected.towns))) {
        labs(title = town, subtitle = ctl) +
        scale_y_log10() +
        theme_bw(30)
-       # theme_comhis("discrete", base_size=30)
        
   print(p)
 
@@ -101,10 +102,13 @@ for (i in seq_len(nrow(selected.towns))) {
   dfs <- subset(df, publication_place == town & catalog == ctl)
 
   # Top languages for this catalog and place
-  dfs$language_primary <- compress_field(dfs$language_primary, topn = 4, rest = "Other")
+  dfs$language_primary <- compress_field(dfs$language_primary,
+                            topn = 4, rest = "Other")
 
   # Group by decade
-  dfs <- dfs %>% group_by(publication_decade, publication_place, language_primary) %>%
+  dfs <- dfs %>% group_by(publication_decade,
+                          publication_place,
+			  language_primary) %>%
                  summarise(n = n()) %>%
 		 group_by(publication_decade, publication_place) %>%
 		 arrange(desc(n)) %>%
@@ -120,22 +124,67 @@ for (i in seq_len(nrow(selected.towns))) {
   library(comhis)
   library(ggplot2)
   p <- ggplot(dfs, aes(x = publication_decade, y = n)) +
-         geom_bar(aes(fill = language_primary), position = "stack", stat = "identity") + 
+         geom_bar(aes(fill = language_primary),
+	          position = "stack", stat = "identity") + 
          labs(title = town, subtitle = ctl, y = "Title count (n)") +
-         #scale_y_log10() +
          theme_comhis("discrete", base_size=30) +
-         # theme_bw(20) +	 
 	 labs(x = "Publication decade", fill = "Primary language") 
   print(p)
 
-  # Line plot version
-  #p2 <- ggplot(dfs, aes(x = publication_decade, y = n)) +
-  #       geom_smooth(aes(color = language_primary, fill = language_primary)) +
-  #       geom_point(aes(color = language_primary)) + 	 
-  #       labs(title = town, subtitle = ctl, y = "Title count (n)") +
-  #       #scale_y_log10() +
-  #       theme_comhis("continuous", base_size=30) 
-  #print(p2)
+}
+```
+
+
+
+## Language shares per decade until 1830
+
+Stacked histogram of language shares per decade until 1830
+
+```{r language_shares_till_1830, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+
+# For each place, show top languagues
+library(dplyr)
+ntop <- 4
+for (i in seq_len(nrow(selected.towns))) {
+
+  ctl <- selected.towns[i, "catalog"]
+  town <- selected.towns[i, "town"]
+
+  # Pick the selected town and catalog
+  dfs <- df %>% filter(publication_place == town & catalog == ctl) %>%
+                filter(publication_decade <= 1830)
+
+  # Top languages for this catalog and place
+  dfs$language_primary <- compress_field(dfs$language_primary, topn = 4, rest = "Other")
+
+  # Group by decade
+  dfs <- dfs %>% group_by(publication_decade, publication_place, language_primary) %>%
+                 summarise(n = n()) %>%
+		 mutate(f = n/sum(n)) %>%
+		 group_by(publication_decade, publication_place) %>%
+		 arrange(desc(n)) %>%
+		 mutate(rank = rev(rank(n))) %>%
+		 filter(rank <= ntop)
+
+   # Arrange levels by rank
+   dfs$language_primary <- droplevels(factor(dfs$language_primary))
+
+   # Replace NA with 0
+   dfs$n[is.na(dfs$n)] <- 0
+
+  p <- ggplot(dfs, aes(x = publication_decade, y = f)) +
+         geom_bar(aes(fill = language_primary),
+	              position = "stack",
+		      stat = "identity") + 
+         labs(title = town,
+	      subtitle = ctl,
+	      y = "Title count (n)",
+	      x = "Publication decade",
+	      fill = "Primary language") +
+         theme_comhis("discrete", base_size=30) 
+  print(p)
+
 
 }
+
 ```
