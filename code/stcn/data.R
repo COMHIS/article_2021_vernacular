@@ -16,6 +16,7 @@ dat$secondary_author <- NULL
 fields <- c("record_id",
        "title",
        "dimensions",
+       "genre",
        "language_primary",
        "publication_country",
        "publication_year",
