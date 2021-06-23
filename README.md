@@ -10,7 +10,8 @@ This will
  1. load the combined data set and
  2. generate summary files
    * [Top towns](code/place.md)
-   * [Top languages](code/language.md) 
+   * [Top languages](code/language.md)
+   * [Top genres](code/genre.md)    
 
 
 ## Replicating the analysis
