@@ -4,3 +4,2634 @@ Genre analysis
 Top genres illustrated.
 
 Here we show the ones with the highest standard deviation over time.
+
+    df <- catalogs[["stcn"]]
+    df$genre1 <- stringr::str_split_fixed(df$genre, "\\|", n=3)[,1]
+    df$genre2 <- stringr::str_split_fixed(df$genre, "\\|", n=3)[,2]
+
+    # Most common genres out of all separate ones
+    top.genres <- names(which(table(unlist(stringr::str_split(df$genre, "\\|"))) > 500))
+
+    for (gen in c("genre1", "genre2")) {
+
+      df$genrex <- df[[gen]]
+      df$genrex[df$genrex == ""] <- "Unknown"
+      dfs <- df %>% group_by(publication_decade, genrex) %>%
+                    summarise(n=n()) %>%
+            mutate(f=n/sum(n)) %>%
+            mutate(genrex=droplevels(factor(genrex)))
+
+      # Check genres with the highest standard deviation (out of most common ones)
+      d <- dfs %>% select(publication_decade, genrex, n) %>%
+                   tidyr::pivot_wider(names_from = publication_decade, values_from = n, values_fill=0)
+      most.variable.genres <- droplevels(d$genrex[rev(order(d %>% apply(., 1, function (x) {sd(x, na.rm=T)})))[1:10]])
+
+      # Pick subset
+      dfs <- dfs %>% filter(genrex %in% most.variable.genres) 
+
+      p <- ggplot(dfs, aes(x = publication_decade, fill=genrex, y = f)) +
+           #geom_smooth() +
+           #geom_point() +
+           geom_bar(stat="identity", color="black") +
+           labs(title="Top variable genres", subtitle=gen) +
+           theme_comhis("discrete", base_size=20) +
+           labs(x = "Publication decade", y = "Genre share (%)", fill="Genre") +
+           scale_y_continuous(label=scales::percent)
+           
+      print(p)
+    }
+
+    ## `summarise()` has grouped output by 'publication_decade'. You can override using the `.groups` argument.
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning: Removed 10 rows containing missing values (position_stack).
+
+    ## `summarise()` has grouped output by 'publication_decade'. You can override using the `.groups` argument.
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+    ## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm =
+    ## na.rm): NAs introduced by coercion
+
+<img src="genre_files/figure-markdown_strict/diverse_genre-1.png" width="50%" />
+
+    ## Warning: Removed 10 rows containing missing values (position_stack).
+
+<img src="genre_files/figure-markdown_strict/diverse_genre-2.png" width="50%" />

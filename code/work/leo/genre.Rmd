@@ -10,7 +10,7 @@ Top genres illustrated.
 
 Here we show the ones with the highest standard deviation over time.
 
-```{r diverse_genre, include=FALSE, out.width="50%", fig.width=10, fig.height=6}
+```{r diverse_genre, out.width="50%", fig.width=10, fig.height=6}
 df <- catalogs[["stcn"]]
 df$genre1 <- stringr::str_split_fixed(df$genre, "\\|", n=3)[,1]
 df$genre2 <- stringr::str_split_fixed(df$genre, "\\|", n=3)[,2]
