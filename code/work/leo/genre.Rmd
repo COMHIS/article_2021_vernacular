@@ -42,7 +42,8 @@ for (gen in c("genre1", "genre2")) {
        labs(title="Top variable genres", subtitle=gen) +
        theme_comhis("discrete", base_size=20) +
        labs(x = "Publication decade", y = "Genre share (%)", fill="Genre") +
-       scale_y_continuous(label=scales::percent)       
+       scale_y_continuous(label=scales::percent)
+       
   print(p)
 }
 ```
