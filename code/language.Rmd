@@ -21,6 +21,7 @@ for (ctl in names(catalogs)) {
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
 }
+df$catalog <- factor(df$catalog)
 
 # For each country, show top languagues
 ntop <- 5
@@ -55,8 +56,8 @@ for (ctl in names(catalogs)) {
                              "publication_place", "publication_decade", "publication_year")]
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
-
 }
+df$catalog <- factor(df$catalog)
 
 
 
@@ -195,6 +196,7 @@ for (i in seq_len(nrow(selected.towns))) {
 # Top three languages per year until 1830
 
 
+
 ```{r language_shares_by_year_till_1830, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
 # For each place, show top languagues
 library(dplyr)
@@ -238,9 +240,33 @@ for (i in seq_len(nrow(selected.towns))) {
 	      y = "Title count (n)",
 	      x = "Publication year",
 	      color = "Primary language") +
-	 guides(fill="none", position = "")
+	 guides(fill="none", position = "") +
          theme_comhis("discrete", base_size=30) 
   print(p)
 }
 ```
 
+
+### Latin share 1500-1800
+
+
+```{r latin_share, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+
+filter <- dplyr::filter
+dfs <- df %>% filter(publication_year >= 1500) %>%
+              filter(publication_year < 1800) %>%	      
+	      group_by(catalog, publication_decade, language_primary) %>%
+	      summarise(n=n()) %>%
+	      mutate(f=n/sum(n)) %>%
+	      filter(language_primary=="Latin")
+
+p <- ggplot(dfs, aes(x = publication_decade, y = f,
+                     color=catalog, fill=catalog)) +
+       geom_smooth() +
+       geom_point() +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication decade", y = "Latin share (%)") +
+       scale_y_continuous(label=scales::percent)
+
+print(p)
+```
