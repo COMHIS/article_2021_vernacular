@@ -5,9 +5,9 @@
 
 Summary files:
 
-   * [Top towns](code/work/leo/place.md)
-   * [Top languages](code/work/leo/language.md)
-   * [Top genres](code/work/leo/genre.md)    
+   * [Top towns](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/place.md)
+   * [Top languages](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/language.md)
+   * [Top genres](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/genre.md)    
 
 
 ## Replicating the analysis
