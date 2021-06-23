@@ -1,17 +1,13 @@
 # Analyses 
 
-To start with the analysis, do the following:
 
- - Navigate to [code/](code/) folder
- - Run [code/main.R](code/main.R)
+## Working code / Leo
 
-This will
+Summary files:
 
- 1. load the combined data set and
- 2. generate summary files
-   * [Top towns](code/place.md)
-   * [Top languages](code/language.md)
-   * [Top genres](code/genre.md)    
+   * [Top towns](code/work/leo/place.md)
+   * [Top languages](code/work/leo/language.md)
+   * [Top genres](code/work/leo/genre.md)    
 
 
 ## Replicating the analysis
@@ -20,7 +16,7 @@ Replicate the analyses with:
 
 - Reproduce the data subsets with main.R in each catalog-specific
   subfolder in [code/](code/)
-- Run the final analyses with [code/main.R](code/main.R)
+- Run the final analyses with [code/final/main.R](code/final/main.R)
 
 
 ## Docs
@@ -29,3 +25,11 @@ Replicate the analyses with:
 
 
 
+## Data
+
+To generate the data used in the analyses, do the following:
+
+ - Navigate to [code/](code/) folder
+ - Run [code/data/data.R](code/data/data.R)
+
+This will load the combined data set and store it.
