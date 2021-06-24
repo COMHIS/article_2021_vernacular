@@ -31,6 +31,7 @@ dfg <- data.frame(publication_year = unlist(sapply(seq(nrow(df)),
 library(stringr)
 dfw <- df
 tau <- c()
+pics <- list()
 for (sel.genre in top.genres) {
   dfw$hit <- sapply(spl, function (x){sel.genre %in% x})
   dfl <- dfw %>% filter(hit) %>%
@@ -53,33 +54,33 @@ for (sel.genre in top.genres) {
 
   # Measure time correlation with Kendall's tau
   tau[[sel.genre]] <- unname(cor.test(dfl$Vernacular_Freq, dfl$publication_year, method = "kendall")$estimate)
+
+  pics[[sel.genre]]
+
 }
 
 # Pick genres that shift most from Latin to Vernacular as quantified by tau
 most.variable.genres <- names(rev(sort(unlist(tau)))[1:5])
 
-for (gen in c("genre1", "genre2")) {
 
-  df$genrex <- df[[gen]]
-  df$genrex[df$genrex == ""] <- "Unknown"
-  dfs <- df %>% group_by(publication_decade, genrex) %>%
+
+
+dfs <- df %>% group_by(publication_decade, genre) %>%
                 summarise(n=n()) %>%
 		mutate(f=n/sum(n)) %>%
-		mutate(genrex=droplevels(factor(genrex)))
+		mutate(genre=droplevels(factor(genre)))
 
-  # Pick subset
-  dfs <- dfs %>% filter(genrex %in% most.variable.genres) 
+# Pick subset
+dfs <- dfs %>% filter(genre %in% most.variable.genres) 
 
-  p <- ggplot(dfs, aes(x = publication_decade, fill=genrex, y = f)) +
+p <- ggplot(dfs, aes(x = publication_decade, fill=genre, y = f)) +
        geom_bar(stat="identity", color="black") +
        labs(title="Top variable genres", subtitle=gen) +
        theme_comhis("discrete", base_size=20) +
        labs(x = "Publication decade", y = "Genre share (%)", fill="Genre") +
        scale_y_continuous(label=scales::percent)
        
-  print(p)
-
-}
+print(p)
 ```
 
 
