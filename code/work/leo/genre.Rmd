@@ -16,7 +16,47 @@ df$genre1 <- stringr::str_split_fixed(df$genre, "\\|", n=3)[,1]
 df$genre2 <- stringr::str_split_fixed(df$genre, "\\|", n=3)[,2]
 
 # Most common genres out of all separate ones
-top.genres <- names(which(table(unlist(stringr::str_split(df$genre, "\\|"))) > 500))
+spl <- stringr::str_split(df$genre, "\\|")
+top.genres <- names(which(table(unlist(spl)) > 500))
+
+# List all year-genre pair occurrences, calculate their frequencies, and make a wide table
+dfg <- data.frame(publication_year = unlist(sapply(seq(nrow(df)),
+         function (i) {rep(df$publication_year[[i]], length(spl[[i]]))})), genre = unlist(spl)) %>%
+	 group_by(publication_year, genre) %>%
+	 tally() %>%
+	 select(publication_year, genre, n) %>%
+         tidyr::pivot_wider(names_from = publication_year, values_from = n, values_fill=0)
+
+# For a given genre, quantify variability from Latin to Vernacular language
+library(stringr)
+dfw <- df
+tau <- c()
+for (sel.genre in top.genres) {
+  dfw$hit <- sapply(spl, function (x){sel.genre %in% x})
+  dfl <- dfw %>% filter(hit) %>%
+               filter(language_primary %in% c("Latin", "Dutch")) %>%
+       	       group_by(publication_year, language_primary) %>%	       
+	       tally() %>%
+	       select(publication_year, language_primary, n) %>%
+               tidyr::pivot_wider(names_from = language_primary, values_from = n, values_fill=0)
+
+   if (!"Latin" %in% names(dfl)) {
+     dfl$Latin <- rep(0, nrow(dfl))
+   }
+   if (!"Dutch" %in% names(dfl)) {
+     dfl$Dutch <- rep(0, nrow(dfl))
+   }
+
+   dfl <- dfl %>%
+	       mutate(Both = Latin + Dutch) %>%
+	       mutate(Vernacular_Freq = Dutch / Both)
+
+  # Measure time correlation with Kendall's tau
+  tau[[sel.genre]] <- unname(cor.test(dfl$Vernacular_Freq, dfl$publication_year, method = "kendall")$estimate)
+}
+
+# Pick genres that shift most from Latin to Vernacular as quantified by tau
+most.variable.genres <- names(rev(sort(unlist(tau)))[1:5])
 
 for (gen in c("genre1", "genre2")) {
 
@@ -26,11 +66,6 @@ for (gen in c("genre1", "genre2")) {
                 summarise(n=n()) %>%
 		mutate(f=n/sum(n)) %>%
 		mutate(genrex=droplevels(factor(genrex)))
-
-  # Check genres with the highest standard deviation (out of most common ones)
-  d <- dfs %>% select(publication_decade, genrex, n) %>%
-               tidyr::pivot_wider(names_from = publication_decade, values_from = n, values_fill=0)
-  most.variable.genres <- droplevels(d$genrex[rev(order(d %>% apply(., 1, function (x) {sd(x, na.rm=T)})))[1:10]])
 
   # Pick subset
   dfs <- dfs %>% filter(genrex %in% most.variable.genres) 
@@ -46,6 +81,8 @@ for (gen in c("genre1", "genre2")) {
 
 }
 ```
+
+
 
 
 
