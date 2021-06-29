@@ -101,7 +101,7 @@ for (sel.gat in top.gatherings) {
   p <- ggplot(dfs, aes(x = publication_decade, color=genre, fill=genre, y = f)) +
        geom_line() +
        geom_point() +       
-       labs(title="Top variable genres", subtitle=paste(gat)) +
+       labs(title="Top variable genres", subtitle=paste(sel.gat)) +
        theme_comhis("discrete", base_size=20) +
        labs(x = "Publication decade", y = "Genre share (%)", fill="Genre") +
        scale_y_continuous(label=scales::percent)
