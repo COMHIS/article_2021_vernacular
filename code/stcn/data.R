@@ -59,6 +59,29 @@ dat$language_latin_secondary <- grepl("Latin", dat$language_other)
 # Add decade
 dat$publication_decade <- comhis::decade(dat$publication_year)
 
+
+# ------------------------------------------------------------------
+
+# Standardize gatherings names
+dat$gatherings <- dat$dimensions
+dat$gatherings <- stringr::str_remove(dat$gatherings,"[O|o]blong")
+dat$gatherings <- stringr::str_remove(dat$gatherings,"[A|a]genda")
+dat$gatherings <- stringr::str_remove(dat$gatherings,"^ *")
+dat$gatherings <- stringr::str_remove(dat$gatherings," *$")
+dat$gatherings <- stringr::str_remove(dat$gatherings," ")
+dat$gatherings <- stringr::str_replace(dat$gatherings, "^4$", "4°")
+dat$gatherings <- stringr::str_replace(dat$gatherings, "^8$", "8°")
+dat$gatherings <- stringr::str_replace(dat$gatherings, "^12$", "12°")
+dat$gatherings <- stringr::str_replace(dat$gatherings, "^14$", "14°")
+dat$gatherings <- stringr::str_replace(dat$gatherings, "^16$", "16°")
+#s <- sort(table(dat$gatherings))
+#nam <- names(s)
+#nam2 <- map(comhis::polish_gatherings(nam), gatherings_table(), from = "Symbol", to="Short")
+#cbind(nam, nam2, s)
+# over 99.9% harmonized
+dat$gatherings <- map(comhis::polish_gatherings(dat$gatherings), gatherings_table(), from = "Symbol", to="Short")
+dat$dimensions <- NULL
+
 # ------------------------------------------------------------------
 
 # Add polished locatins

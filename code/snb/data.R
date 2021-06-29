@@ -1,7 +1,6 @@
 catalog <- "snb";
 dat <- readRDS("../snb/data/unified/polished/df.Rds")
 
-
 # dat <- dat %>% rename(language_all = languages)
 dat$languages <- NULL
 dat$language_latin_primary <-  grepl("Latin", dat$language_primary)
