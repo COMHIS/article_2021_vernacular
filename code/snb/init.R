@@ -3,6 +3,5 @@ library(ggplot2)
 library(knitr)
 library(dplyr)
 theme_set(theme_bw(20))
-
 source("../funcs.R")
 
