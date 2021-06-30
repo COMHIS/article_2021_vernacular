@@ -84,6 +84,11 @@ dat$dimensions <- NULL
 
 # ------------------------------------------------------------------
 
+# Pamphlet / Book info
+dat$document_type <- cut(dat$pagecount, breaks = c(0, 32, 128,Inf), include.lowest = TRUE, labels = c("Pamphlet","Intermediate","Book"))
+
+# ------------------------------------------------------------------
+
 # Add polished locatins
 # Older option - not harmonized / MJ?
 # x <- read.csv("data/final/stcn-location.csv")
