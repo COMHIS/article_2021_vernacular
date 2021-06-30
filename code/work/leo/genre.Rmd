@@ -174,5 +174,3 @@ for (doctype in na.omit(as.character(unique(df0$document_type)))) {
 
 
 
-
-

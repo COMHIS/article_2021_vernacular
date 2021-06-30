@@ -9,7 +9,9 @@ fields <- c("original_row","publication_place","publication_country","multilingu
 "language_primary","language_other","language_all",
 "language_latin_primary","language_latin_secondary",
 "language_vernacular_primary","language_vernacular_secondary",
-"author_name","title","pagecount","gatherings","width","height","publisher","author","publication_year","publication_decade")
+"author_name","title","pagecount","gatherings","width","height","publisher","author",
+"publication_year","publication_decade",
+"dissertation", "subject_topic")
 subdat <- subdat[, fields]
 
 # Save the selected subset

@@ -11,3 +11,5 @@ dat$language_vernacular_secondary <- grepl("Swedish", dat$language_other)
 dat$language_latin_all <- grepl("Latin", dat$language_all)
 dat$language_latin_primary <- grepl("Latin", dat$language_primary)
 dat$language_latin_secondary <- grepl("Latin", dat$language_other)
+
+
