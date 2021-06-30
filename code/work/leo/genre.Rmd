@@ -11,14 +11,13 @@ Top genres illustrated.
 Here we show the ones with the highest standard deviation over time.
 
 ```{r diverse_genre, echo=FALSE, warning=FALSE, message=FALSE, fig.width=15, fig.height=6}
-df <- catalogs[["stcn"]]
+df0 <- df <- catalogs[["stcn"]]
 
 # Most common genres out of all separate ones
 spl <- stringr::str_split(df$genre, "\\|")
-top.genres <- names(which(table(unlist(spl)) > 500))
+top.genres <- names(which(rev(sort(table(unlist(spl)))) > 500))[1:10]
 
 # List all year-genre pair occurrences, calculate their frequencies, and make a wide table
-df0 <- df
 
 # Gatherings with N>400
 dfglist <- list()
@@ -38,9 +37,14 @@ for (gat in top.gatherings) {
   dfglist[[gat]] <- dfg
 
 }
+```
 
 
-# For a given genre, quantify variability from Latin to Vernacular language
+
+
+For a given genre, quantify variability from Latin to Vernacular language.
+
+```{r diverse_genre2, echo=FALSE, warning=FALSE, message=FALSE, fig.width=15, fig.height=6}
 library(stringr)
 taulist <- list()
 
@@ -49,7 +53,7 @@ for (sel.gat in top.gatherings) {
   tau <- c()
   pics <- list()
   dfw <- df0 %>% filter(gatherings == gat)
-  spl <- stringr::str_split(df$genre, "\\|")
+  spl <- stringr::str_split(dfw$genre, "\\|")
 
   for (sel.genre in top.genres) {
 
@@ -61,19 +65,19 @@ for (sel.gat in top.gatherings) {
 	       select(publication_year, language_primary, n) %>%
                tidyr::pivot_wider(names_from = language_primary, values_from = n, values_fill=0)
 
-   if (!"Latin" %in% names(dfl)) {
-     dfl$Latin <- rep(0, nrow(dfl))
-   }
-   if (!"Dutch" %in% names(dfl)) {
-     dfl$Dutch <- rep(0, nrow(dfl))
-   }
+     if (!"Latin" %in% names(dfl)) {
+       dfl$Latin <- rep(0, nrow(dfl))
+     }
+     if (!"Dutch" %in% names(dfl)) {
+       dfl$Dutch <- rep(0, nrow(dfl))
+     }
 
-   dfl <- dfl %>%
+     dfl <- dfl %>%
 	       mutate(Both = Latin + Dutch) %>%
 	       mutate(Vernacular_Freq = Dutch / Both)
 
-  # Measure time correlation with Kendall's tau
-  tau[[sel.genre]] <- unname(cor.test(dfl$Vernacular_Freq, dfl$publication_year, method = "kendall")$estimate)
+    # Measure time correlation with Kendall's tau
+    tau[[sel.genre]] <- unname(cor.test(dfl$Vernacular_Freq, dfl$publication_year, method = "kendall")$estimate)
 
   }
 
@@ -82,9 +86,7 @@ for (sel.gat in top.gatherings) {
 }
 
 
-
-
-dfs0 <- df0 %>%  filter(gatherings %in% top.gatherings) %>%
+dfs0 <- df0 %>% filter(gatherings %in% top.gatherings) %>%
                 group_by(publication_decade, gatherings, genre) %>%
                 summarise(n=n()) %>%
 		mutate(f=n/sum(n)) %>%
@@ -104,6 +106,64 @@ for (sel.gat in top.gatherings) {
        labs(title="Top variable genres", subtitle=paste(sel.gat)) +
        theme_comhis("discrete", base_size=20) +
        labs(x = "Publication decade", y = "Genre share (%)", fill="Genre") +
+       scale_y_continuous(label=scales::percent)
+       
+  print(p)
+
+}
+```
+
+
+
+
+
+
+
+For each document type, quantify top genres over time. 
+
+```{r doctypes, echo=FALSE, warning=FALSE, message=FALSE, fig.width=15, fig.height=6}
+for (doctype in na.omit(as.character(unique(df0$document_type)))) {
+
+  dfw <- df0 %>% filter(document_type == doctype)
+  spl <- stringr::str_split(dfw$genre, "\\|")
+
+  dflong <- NULL
+  
+  for (sel.genre in top.genres) {
+
+    dfw$hit <- sapply(spl, function (x){sel.genre %in% x})
+    
+    dfl <- dfw %>% filter(hit) %>%
+               filter(language_primary %in% c("Latin", "Dutch")) %>%
+       	       group_by(publication_year, language_primary) %>%	       
+	       tally() %>%
+	       select(publication_year, language_primary, n) %>%
+               tidyr::pivot_wider(names_from = language_primary, values_from = n, values_fill=0)
+    
+     dfl$genre <- rep(sel.genre, rep = nrow(dfl))
+
+     if (!"Latin" %in% names(dfl)) {
+       dfl$Latin <- rep(0, nrow(dfl))
+     }
+     if (!"Dutch" %in% names(dfl)) {
+       dfl$Dutch <- rep(0, nrow(dfl))
+     }
+
+     dfl <- dfl %>%
+	       mutate(Both = Latin + Dutch) %>%
+	       mutate(Vernacular_Freq = Dutch / Both)
+
+     dflong <- bind_rows(dflong, dfl)
+
+  }
+
+  dflong$genre <- factor(dflong$genre)
+  p <- ggplot(dflong, aes(x = publication_year, color=genre, fill=genre, y = Vernacular_Freq)) +
+       geom_smooth()  +
+       geom_point() +       
+       labs(title="Top genres: vernacular frequency", subtitle=paste(doctype)) +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication year", y = "Vernacular frequency (%)", color="Genre", fill="Genre") +
        scale_y_continuous(label=scales::percent)
        
   print(p)
