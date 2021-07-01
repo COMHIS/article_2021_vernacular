@@ -5,6 +5,7 @@ catalogs <- readRDS("../../../output/dataset.Rds")
 
 # Selected towns
 selected.towns <- as.data.frame(rbind(
+  c("Edinburgh", "estc"),
   c("London", "estc"),
   c("Oxford", "estc"),
   c("Cambridge", "estc"),
