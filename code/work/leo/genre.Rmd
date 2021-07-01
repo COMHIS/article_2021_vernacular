@@ -173,4 +173,58 @@ for (doctype in na.omit(as.character(unique(df0$document_type)))) {
 
 
 
+Same with all document types combined.
+
+
+```{r doctypescombined, echo=FALSE, warning=FALSE, message=FALSE, fig.width=15, fig.height=6}
+
+  dfw <- df0
+  spl <- stringr::str_split(dfw$genre, "\\|")
+
+  dflong <- NULL
+  
+  for (sel.genre in top.genres) {
+
+    dfw$hit <- sapply(spl, function (x){sel.genre %in% x})
+    
+    dfl <- dfw %>% filter(hit) %>%
+               filter(language_primary %in% c("Latin", "Dutch")) %>%
+       	       group_by(publication_year, language_primary) %>%	       
+	       tally() %>%
+	       select(publication_year, language_primary, n) %>%
+               tidyr::pivot_wider(names_from = language_primary, values_from = n, values_fill=0)
+    
+     dfl$genre <- rep(sel.genre, rep = nrow(dfl))
+
+     if (!"Latin" %in% names(dfl)) {
+       dfl$Latin <- rep(0, nrow(dfl))
+     }
+     if (!"Dutch" %in% names(dfl)) {
+       dfl$Dutch <- rep(0, nrow(dfl))
+     }
+
+     dfl <- dfl %>%
+	       mutate(Both = Latin + Dutch) %>%
+	       mutate(Vernacular_Freq = Dutch / Both)
+
+     dflong <- bind_rows(dflong, dfl)
+
+  }
+
+  dflong$genre <- factor(dflong$genre)
+  p <- ggplot(dflong, aes(x = publication_year, color=genre, fill=genre, y = Vernacular_Freq)) +
+       geom_smooth()  +
+       geom_point() +       
+       labs(title="Top genres: vernacular frequency", subtitle="all documents") +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication year", y = "Vernacular frequency (%)", color="Genre", fill="Genre") +
+       scale_y_continuous(label=scales::percent)
+       
+  print(p)
+
+
+```
+
+
+
 

@@ -13,3 +13,7 @@ language.
 For each document type, quantify top genres over time.
 
 ![](genre_files/figure-markdown_strict/doctypes-1.png)![](genre_files/figure-markdown_strict/doctypes-2.png)![](genre_files/figure-markdown_strict/doctypes-3.png)
+
+Same with all document types combined.
+
+![](genre_files/figure-markdown_strict/doctypescombined-1.png)
