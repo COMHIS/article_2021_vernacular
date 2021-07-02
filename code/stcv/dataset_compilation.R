@@ -35,8 +35,8 @@ myvars <- as.vector(c("V6", "V10", "V11", "V13"))
 c3 = cc3[myvars]
 
 names(c3)[1] <- "actor_role"
-names(c3)[2] <- "actor_name"
-names(c3)[3] <- "actor_years"
+names(c3)[2] <- "author_name"
+names(c3)[3] <- "author_years"
 names(c3)[4] <- "stcv_id"
 
 c3 <- c3 %>% filter(actor_role == "aut")
@@ -77,29 +77,75 @@ c5 <- c5 %>% distinct(stcv_id, .keep_all = TRUE)
 
 cc6 <- read.csv(file="stcv_subject.csv", sep = ',',header = FALSE, stringsAsFactors = FALSE)
 
-myvars <- as.vector(c("V2", "V5"))
+cc6 <- cc6 %>% filter(!V4 == "STY")
+
+cc6 <- cc6 %>% filter(!V4 == "SPA")
+
+cc6 <- cc6 %>%
+  pivot_wider(names_from = V4, values_from = V5)
+
+myvars <- as.vector(c("V2", "SOW", "SPT"))
 c6 = cc6[myvars]
 
 names(c6)[1] <- "stcv_id"
-names(c6)[2] <- "subject_topic"
+names(c6)[2] <- "subject_heading"
+names(c6)[3] <- "document_type"
 
-sink('stcv_subject_row.txt')
+## subject heading matched on same row
 
-uvals = unique(c6[,1])
+myvars <- as.vector(c("stcv_id", "subject_heading"))
+a1 = c6[myvars]
+
+sink('stcv_subject_heading_row.txt')
+
+a1=as.data.frame(a1)
+
+a1 <- a1 %>% drop_na()
+
+uvals = unique(a1[,1])
 for(uIDX in c(1:length(uvals))) {
   gname = uvals[uIDX]
-  IDX = which(c6[,1] == gname)
-  cat(sprintf("%s\t%s\n", gname, paste0(c6[IDX,2], collapse=";")))
+  IDX = which(a1[,1] == gname)
+  cat(sprintf("%s\t%s\n", gname, paste0(a1[IDX,2], collapse=";")))
 }
 
 sink()
 
-c6 <- read.delim("stcv_subject_row.txt", header = FALSE )
+a1 <- read.delim("stcv_subject_heading_row.txt", header = FALSE )
 
-names(c6)[1] <- "stcv_id"
-names(c6)[2] <- "subject_topic"
+names(a1)[1] <- "stcv_id"
+names(a1)[2] <- "subject_heading"
 
-c6 <- c6 %>% distinct(stcv_id, .keep_all = TRUE)
+a1 <- a1 %>% distinct(stcv_id, .keep_all = TRUE)
+
+### document type matched on same row
+
+myvars <- as.vector(c("stcv_id", "document_type"))
+b1 = c6[myvars]
+
+sink('stcv_document_type_row.txt')
+
+b1=as.data.frame(b1)
+
+b1 <- b1 %>% drop_na()
+
+uvals = unique(b1[,1])
+for(uIDX in c(1:length(uvals))) {
+  gname = uvals[uIDX]
+  IDX = which(b1[,1] == gname)
+  cat(sprintf("%s\t%s\n", gname, paste0(b1[IDX,2], collapse=";")))
+}
+
+sink()
+
+b1 <- read.delim("stcv_document_type_row.txt", header = FALSE )
+
+names(b1)[1] <- "stcv_id"
+names(b1)[2] <- "document_type"
+
+b1 <- b1 %>% distinct(stcv_id, .keep_all = TRUE)
+
+c6 <- merge(a1, b1, by.x="stcv_id", by.y="stcv_id", all=TRUE)
 
 ### then we merge all of these
 
