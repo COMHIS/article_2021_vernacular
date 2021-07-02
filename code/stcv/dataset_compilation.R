@@ -4,6 +4,8 @@
 
 cc1 <- read.csv(file="stcv_title.csv", sep = ',',header = FALSE, stringsAsFactors = FALSE)
 
+cc1 <- cc1 %>% filter(V11 == "h")
+
 myvars <- as.vector(c("V3", "V10"))
 c1 = cc1[myvars]
 
@@ -158,3 +160,4 @@ srf3 <- merge(srf2, c5, by.x="stcv_id", by.y="stcv_id", all=TRUE)
 srf4 <- merge(srf3, c6, by.x="stcv_id", by.y="stcv_id", all=TRUE)
 
 write.csv(srf4, file = 'stcv.csv', row.names = FALSE)
+
