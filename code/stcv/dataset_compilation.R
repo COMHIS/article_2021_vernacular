@@ -18,14 +18,12 @@ c1 <- c1 %>% distinct(stcv_id, .keep_all = TRUE)
 
 cc2 <- read.csv(file="stcv_impressum.csv", sep = ',',header = FALSE, stringsAsFactors = FALSE)
 
-myvars <- as.vector(c("V3", "V6", "V12", "V18"))
+myvars <- as.vector(c("V3", "V6", "V18"))
 c2 = cc2[myvars]
 
 names(c2)[1] <- "stcv_id"
 names(c2)[2] <- "publication_year"
-names(c2)[3] <- "publication_place"
-names(c2)[4] <- "publisher"
-
+names(c2)[3] <- "publisher"
 
 c2 <- c2 %>% distinct(stcv_id, .keep_all = TRUE)
 
@@ -159,5 +157,16 @@ srf3 <- merge(srf2, c5, by.x="stcv_id", by.y="stcv_id", all=TRUE)
 
 srf4 <- merge(srf3, c6, by.x="stcv_id", by.y="stcv_id", all=TRUE)
 
-write.csv(srf4, file = 'stcv.csv', row.names = FALSE)
+### adding places
 
+urlfile= "https://media.githubusercontent.com/media/COMHIS/geomapping_process/master/data_output/stcv_geomapped.csv?token=ACPSTVCBJ563264OCUFQDR3A335L4"
+
+library(curl)
+
+c9 <-read_csv(url(urlfile))
+
+srf4$publication_place <- c9$publication_place[match(srf4$stcv_id, c9$system_control_number)]
+
+###
+
+write.csv(srf4, file = 'stcv.csv', row.names = FALSE)
