@@ -47,6 +47,8 @@ c3 <- c3 %>% distinct(stcv_id, .keep_all = TRUE)
 
 cc4 <- read.csv(file="stcv_language.csv", sep = ',',header = FALSE, stringsAsFactors = FALSE)
 
+cc4 <- cc4 %>% filter(!V5 == "bt")
+
 myvars <- as.vector(c("V3", "V4"))
 c4 = cc4[myvars]
 
