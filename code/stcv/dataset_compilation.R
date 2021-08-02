@@ -1,3 +1,6 @@
+library(dplyr)
+library(tidyr)
+
 ## put together relevant tables for stcv
 
 # title
@@ -159,14 +162,15 @@ srf4 <- merge(srf3, c6, by.x="stcv_id", by.y="stcv_id", all=TRUE)
 
 ### adding places
 
-urlfile= "https://media.githubusercontent.com/media/COMHIS/geomapping_process/master/data_output/stcv_geomapped.csv?token=ACPSTVCBJ563264OCUFQDR3A335L4"
-
-library(curl)
-
-c9 <-read_csv(url(urlfile))
+# Use local symbolic path
+file= "../../input/geomapping_process/data_output/stcv_geomapped.csv"
+c9 <-readr::read_csv(file)
 
 srf4$publication_place <- c9$publication_place[match(srf4$stcv_id, c9$system_control_number)]
 
 ###
 
 write.csv(srf4, file = 'stcv.csv', row.names = FALSE)
+
+# Save 
+saveRDS(srf4, file = "stcv_subset.rds")
