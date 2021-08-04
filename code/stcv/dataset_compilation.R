@@ -76,6 +76,28 @@ names(c5)[2] <- "language"
 
 c5 <- c5 %>% distinct(stcv_id, .keep_all = TRUE)
 
+# Polish language
+library(stringr)
+
+  # Convert to polished language names as in
+  # http://www.loc.gov/marc/languages/language_code.html
+  # TODO: XML version available, read directly in R:
+  # see http://www.loc.gov/marc/languages/
+abrv <- read.csv("language_abbreviations.csv", sep = "\t", header = TRUE, encoding = "UTF-8")
+source("../funcs.R")
+library(comhis)
+dat <- mark_languages(gsub("\\|", ";", c5$language), abrv)
+dat <- dat %>% rename(language_all = languages)
+dat$language_other <- gsub(";", ";", stringr::str_split_fixed(dat$language_all, ";", n = 2)[,2])
+dat$language_vernacular_all <- grepl("Dutch", dat$language_all)
+dat$language_vernacular_primary <- grepl("Dutch", dat$language_primary)
+dat$language_vernacular_secondary <- grepl("Dutch", dat$language_other)
+dat$language_latin_primary <- grepl("Latin", dat$language_primary)
+dat$language_latin_secondary <- grepl("Latin", dat$language_other)
+dat$stcv_id <- c5$stcv_id
+c5 <- dat
+
+
 ## subject topic
 
 cc6 <- read.csv(file="stcv_subject.csv", sep = ',',header = FALSE, stringsAsFactors = FALSE)
