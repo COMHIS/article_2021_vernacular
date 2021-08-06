@@ -250,7 +250,7 @@ for (i in seq_len(nrow(selected.towns))) {
 ### Latin share 1500-1800
 
 
-```{r latin_share, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+```{r latin_share, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=12, fig.height=7}
 filter <- dplyr::filter
 dfs <- df %>% filter(publication_year >= 1500) %>%
               filter(publication_year < 1800) %>%	      
@@ -267,7 +267,7 @@ p <- ggplot(dfs, aes(x = publication_year, y = f,
        # geom_point() +
        theme_comhis("discrete", base_size=20) +
        labs(x = "Publication year", y = "Latin share (%)") +
-       scale_y_continuous(label=scales::percent) +
+       scale_y_continuous(label=scales::percent, limits=c(0,1)) +
        scale_colour_manual(values=unname(cols)) +
        scale_fill_manual(values=unname(cols)) +
        labs(fill="Catalog", color="Catalog")
