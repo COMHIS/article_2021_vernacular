@@ -56,28 +56,28 @@ Should have the same countries than above.
     ## [1] "snb"
     ## 
     ##        Austria        Belgium         Canada     Copenhagen Czech Republic 
-    ##              7              9              1             19              2 
+    ##             16             13              1             32              5 
     ##        Denmark        England        Estonia        Finland         France 
-    ##            219            353            162           1087            164 
+    ##            423            481            167           1730            241 
     ##        Germany        Ireland          Italy         Latvia      Lithuania 
-    ##            929              3             78             81              9 
+    ##           1356              5            108             84             11 
     ##    Netherlands         Norway         Poland       Portugal         Russia 
-    ##            193              4             71              7             27 
+    ##            211             25             82              8             61 
     ##       Scotland          Spain         Sweden    Switzerland        Ukraine 
-    ##              4              8          40048             30              1 
+    ##              8             15          66238             35              1 
     ##            USA 
-    ##             11 
+    ##             22 
     ## [1] "----------"
     ## [1] "fnb"
     ## 
     ##     Austria     Belgium  Copenhagen     Denmark     England     Estonia 
-    ##           1           2           3          13          31         248 
+    ##           2           2           3          18          50         256 
     ##     Finland      France     Germany       Italy      Latvia   Lithuania 
-    ##       11751          28         225           4          37           1 
+    ##       14525          31         254           4          39           1 
     ## Netherlands      Poland    Portugal      Russia    Scotland       Spain 
-    ##          65           6           1          55           1           1 
-    ##      Sweden Switzerland 
-    ##        3462           1 
+    ##          70           6           1         106           1           1 
+    ##      Sweden Switzerland         USA 
+    ##        3818           1           1 
     ## [1] "----------"
     ## [1] "stcn"
     ## 
@@ -88,34 +88,34 @@ Should have the same countries than above.
     ##           Czech Republic                  Denmark                  England 
     ##                        6                       12                     1200 
     ##                  Estonia                  Finland                   France 
-    ##                        5                       31                     1843 
+    ##                        5                       31                     1845 
     ##                  Germany                    Haiti                  Hungary 
-    ##                     4099                        1                        4 
+    ##                     4102                        1                        4 
     ##                    India                Indonesia                     Iraq 
     ##                        2                        3                        2 
     ##                  Ireland                    Italy                Lithuania 
-    ##                        8                      347                        1 
+    ##                        8                      350                        1 
     ##              Netherlands                Nicaragua                   Norway 
-    ##                   129027                        1                       52 
+    ##                   129924                        1                       52 
     ##                   Poland                 Portugal                   Russia 
     ##                       20                        8                        6 
     ##    Saint Kitts and Nevis                 Scotland                 Slovakia 
     ##                        1                       67                        2 
     ##                    Spain                Sri Lanka                 Suriname 
-    ##                       17                       43                     4836 
+    ##                       17                       43                     4862 
     ##                   Sweden              Switzerland                   Turkey 
-    ##                       93                       57                        9 
+    ##                       94                       57                        9 
     ##                  Ukraine           United Kingdom United States of America 
-    ##                        1                        2                      957 
+    ##                        1                        2                      958 
     ##                      USA 
-    ##                      651 
+    ##                      653 
     ## [1] "----------"
     ## [1] "stcv"
     ## 
     ##        Austria        Belgium Czech Republic        England         France 
-    ##             10          20669              1             43            155 
+    ##             10          20723              1             43            156 
     ##        Germany          Italy    Netherlands       Scotland         Sweden 
-    ##             36              5            120              1              2 
+    ##             36              6            120              1              2 
     ##    Switzerland            USA 
     ##              3              1 
     ## [1] "----------"

@@ -254,18 +254,24 @@ for (i in seq_len(nrow(selected.towns))) {
 filter <- dplyr::filter
 dfs <- df %>% filter(publication_year >= 1500) %>%
               filter(publication_year < 1800) %>%	      
-	      group_by(catalog, publication_decade, language_primary) %>%
+	      group_by(catalog, publication_year, language_primary) %>%
 	      summarise(n=n()) %>%
 	      mutate(f=n/sum(n)) %>%
 	      filter(language_primary=="Latin")
 
-p <- ggplot(dfs, aes(x = publication_decade, y = f,
+# Catalog default colors
+cols <- default_colors("catalog")[unique(toupper(dfs$catalog))]
+p <- ggplot(dfs, aes(x = publication_year, y = f,
                      color=catalog, fill=catalog)) +
        geom_smooth() +
-       geom_point() +
+       # geom_point() +
        theme_comhis("discrete", base_size=20) +
-       labs(x = "Publication decade", y = "Latin share (%)") +
-       scale_y_continuous(label=scales::percent)
+       labs(x = "Publication year", y = "Latin share (%)") +
+       scale_y_continuous(label=scales::percent) +
+       scale_colour_manual(values=unname(cols)) +
+       scale_fill_manual(values=unname(cols)) +
+       labs(fill="Catalog", color="Catalog")
 
 print(p)
 ```
+
