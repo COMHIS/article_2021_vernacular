@@ -30,18 +30,4 @@ Stacked histogram of language shares per decade until 1830.
 
 ### Latin share 1500-1800
 
-\`\`\`{r latin\_share, echo=FALSE, message=FALSE, warning=FALSE,
-out.width=“50%”, fig.width=15, fig.height=7 filter &lt;- dplyr::filter
-dfs &lt;- df %&gt;% filter(publication\_year &gt;= 1500) %&gt;%
-filter(publication\_year &lt; 1800) %&gt;%  
-group\_by(catalog, publication\_decade, language\_primary) %&gt;%
-summarise(n=n()) %&gt;% mutate(f=n/sum(n)) %&gt;%
-filter(language\_primary==“Latin”)
-
-p &lt;- ggplot(dfs, aes(x = publication\_decade, y = f, color=catalog,
-fill=catalog)) + geom\_smooth() + geom\_point() +
-theme\_comhis(“discrete”, base\_size=20) + labs(x = “Publication
-decade”, y = “Latin share (%)”) +
-scale\_y\_continuous(label=scales::percent)
-
-print(p) \`\`\`
+<img src="language_files/figure-markdown_strict/latin_share-1.png" width="50%" />
