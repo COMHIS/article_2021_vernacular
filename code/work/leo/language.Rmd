@@ -250,7 +250,7 @@ for (i in seq_len(nrow(selected.towns))) {
 ### Latin share 1500-1800
 
 
-```{r latin_share, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+```{r latin_share, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7
 
 filter <- dplyr::filter
 dfs <- df %>% filter(publication_year >= 1500) %>%
