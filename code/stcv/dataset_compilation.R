@@ -29,7 +29,8 @@ names(c2)[2] <- "publication_year"
 names(c2)[3] <- "publisher"
 
 c2 <- c2 %>% distinct(stcv_id, .keep_all = TRUE)
-
+c2$publication_decade <- comhis::decade(c2$publication_year)
+ 
 ### author info
 
 cc3 <- read.csv(file="stcv_author.csv", sep = ',',header = FALSE, stringsAsFactors = FALSE)

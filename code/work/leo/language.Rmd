@@ -43,7 +43,6 @@ for (country in unique(df$publication_country)) {
 ```
 
 
-
 ## Top languages by town
 
 Top languages by town (based on the indicated catalog).
