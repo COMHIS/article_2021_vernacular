@@ -3,6 +3,14 @@
 
 catalogs <- readRDS("../../../output/dataset.Rds")
 
+# Limit years to 1800
+catalogs <- lapply(catalogs, function (x) {subset(x, publication_year < 1800)})
+
+# For STCV use countries from other catalogs
+catalogs$stcv$publication_country <- catalogs$estc$publication_country[match(catalogs$stcv$publication_place, catalogs$estc$publication_place)]
+catalogs$stcv$publication_country[catalogs$stcv$publication_place %in% c("Brussel", "Leuven", "Gent")] <- "Belgium"
+catalogs$stcv$publication_country[catalogs$stcv$publication_place %in% c("Maastricht", "s-Hertogenbosch", "Hague")] <- "Netherlands"
+
 # Selected towns
 selected.towns <- as.data.frame(rbind(
   c("Dublin", "estc"),

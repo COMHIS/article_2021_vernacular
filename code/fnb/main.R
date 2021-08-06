@@ -3,7 +3,7 @@ source("data.R")
 
 # FNB countries
 country <- c("Finland")
-subdat <- dat %>% filter(publication_country %in% country)
+subdat <- dat # %>% filter(publication_country %in% country)
 
 fields <- c("original_row","publication_place","publication_country","multilingual",
 "language_primary","language_other","language_all",
@@ -16,6 +16,7 @@ subdat <- subdat[, fields]
 
 # Save the selected subset
 saveRDS(subdat, file = "fnb_subset.rds")
+
 
 
 
