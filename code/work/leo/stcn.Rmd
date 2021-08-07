@@ -8,7 +8,7 @@
 
 
 
-```{r lang, out.width="50%", fig.width=8, fig.height=8}
+```{r lang, out.width="50%", fig.width=8, fig.height=5, echo=FALSE}
 # Onks jossain kuva koko STCN:stä / kielten osuudet vuosikymmenittäin
 # (tai vastaava)? Sellainen, josta näkyis kokonaisuudessaan ranskan
 # osuus?
