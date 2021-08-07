@@ -20,7 +20,8 @@ df <- NULL
 for (ctl in names(catalogs)) {
   tmp <- catalogs[[ctl]][, c("language_primary", "publication_country")]
   tmp$catalog <- rep(ctl, nrow(tmp))
-  df <- dplyr::bind_rows(df, tmp)
+  df <- dplyr::bind_rows(df, tmp) %>%
+          mutate(catalog=toupper(catalog))
 }
 df$catalog <- factor(df$catalog)
 
@@ -138,11 +139,11 @@ for (i in seq_len(nrow(selected.towns))) {
 
 
 
-## Language shares per decade until 1830
+## Language shares per decade until 1800
 
-Stacked histogram of language shares per decade until 1830.
+Stacked histogram of language shares per decade until 1800
 
-```{r language_shares_till_1830, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+```{r language_shares_till_end, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
 
 # For each place, show top languagues
 library(dplyr)
@@ -154,7 +155,7 @@ for (i in seq_len(nrow(selected.towns))) {
 
   # Pick the selected town and catalog
   dfs <- df %>% filter(publication_place == town & catalog == ctl) %>%
-                filter(publication_decade <= 1830)
+                filter(publication_decade <= 1800)
 
   # Top languages for this catalog and place
   dfs$language_primary <- compress_field(dfs$language_primary, topn = ntop, rest = "Other")
@@ -193,11 +194,9 @@ for (i in seq_len(nrow(selected.towns))) {
 
 
 
-# Top three languages per year until 1830
+# Top three languages per year until 1800
 
-
-
-```{r language_shares_by_year_till_1830, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+```{r language_shares_by_year_till_1800, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
 # For each place, show top languagues
 library(dplyr)
 ntop <- 3
@@ -208,7 +207,7 @@ for (i in seq_len(nrow(selected.towns))) {
 
   # Pick the selected town and catalog
   dfs <- df %>% filter(publication_place == town & catalog == ctl) %>%
-                filter(publication_year <= 1830)
+                filter(publication_year <= 1800)
 
   # Top languages for this catalog and place
   dfs$language_primary <- compress_field(dfs$language_primary, topn = ntop, rest = "Other")
@@ -228,7 +227,7 @@ for (i in seq_len(nrow(selected.towns))) {
    # Replace NA with 0
    dfs$n[is.na(dfs$n)] <- 0
 
-   v <- seq(min(na.omit(df$publication_decade)), 1830, 20)
+   v <- seq(min(na.omit(df$publication_decade)), 1800, 20)
    p <- ggplot(dfs, aes(x = publication_year, y = n)) +
          geom_point(aes(color = language_primary,
 	                fill = language_primary)) +
@@ -274,5 +273,12 @@ p <- ggplot(dfs, aes(x = publication_year, y = f,
        labs(fill="Catalog", color="Catalog")
 
 print(p)
+```
+
+
+### Version info
+
+```{r}
+sessionInfo()
 ```
 

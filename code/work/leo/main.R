@@ -1,5 +1,7 @@
 # Load data subsets and combine
 # - stored in dataset.Rds; use that as the starting point
+library(bibliographica)
+library(tidyverse)
 
 catalogs <- readRDS("../../../output/dataset.Rds")
 
@@ -29,13 +31,23 @@ selected.towns <- as.data.frame(rbind(
   c("Amsterdam", "stcn"),
   c("The Hague", "stcn"),
   c("Utrecht", "stcn"),
-  c("Rotterdam", "stcn")))
+  c("Rotterdam", "stcn"),
+  c("Antwerp", "stcv"),
+  c("Brussels", "stcv"),
+  c("Leuven", "stcv"),	
+  c("Gent", "stcv"),
+  c("Bruges", "stcv")
+
+))
+
 names(selected.towns) <- c("town", "catalog")
 
 rmarkdown::render(input = "place.Rmd",    output_format = "md_document")
 rmarkdown::render(input = "language.Rmd", output_format = "md_document")
 rmarkdown::render(input = "genre.Rmd", output_format = "md_document")
 rmarkdown::render(input = "stcn.Rmd", output_format = "md_document")
-rmarkdown::render(input = "stcv.Rmd", output_format = "md_document")
+
+
+
 
 
