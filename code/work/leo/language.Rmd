@@ -58,9 +58,8 @@ for (ctl in names(catalogs)) {
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
 }
+df <- df %>% mutate(catalog=toupper(catalog))
 df$catalog <- factor(df$catalog)
-
-
 
 # For each country, show top languagues
 ntop <- 5
@@ -98,7 +97,7 @@ library(dplyr)
 ntop <- 4
 for (i in seq_len(nrow(selected.towns))) {
 
-  ctl <- selected.towns[i, "catalog"]
+  ctl <- toupper(selected.towns[i, "catalog"])
   town <- selected.towns[i, "town"]
 
   # Pick the selected town and catalog
@@ -150,7 +149,7 @@ library(dplyr)
 ntop <- 4
 for (i in seq_len(nrow(selected.towns))) {
 
-  ctl <- selected.towns[i, "catalog"]
+  ctl <- toupper(selected.towns[i, "catalog"])
   town <- selected.towns[i, "town"]
 
   # Pick the selected town and catalog
@@ -202,7 +201,7 @@ library(dplyr)
 ntop <- 3
 for (i in seq_len(nrow(selected.towns))) {
 
-  ctl <- selected.towns[i, "catalog"]
+  ctl <- toupper(selected.towns[i, "catalog"])
   town <- selected.towns[i, "town"]
 
   # Pick the selected town and catalog
