@@ -257,7 +257,8 @@ dfs <- df %>% filter(publication_year >= 1500) %>%
 	      group_by(catalog, publication_year, language_primary) %>%
 	      summarise(n=n()) %>%
 	      mutate(f=n/sum(n)) %>%
-	      filter(language_primary=="Latin")
+	      filter(language_primary=="Latin") %>%
+	      mutate(catalog = toupper(catalog))
 
 # Catalog default colors
 cols <- default_colors("catalog")[unique(toupper(dfs$catalog))]
