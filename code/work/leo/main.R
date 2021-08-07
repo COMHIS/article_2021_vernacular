@@ -35,4 +35,7 @@ names(selected.towns) <- c("town", "catalog")
 rmarkdown::render(input = "place.Rmd",    output_format = "md_document")
 rmarkdown::render(input = "language.Rmd", output_format = "md_document")
 rmarkdown::render(input = "genre.Rmd", output_format = "md_document")
+rmarkdown::render(input = "stcn.Rmd", output_format = "md_document")
+rmarkdown::render(input = "stcv.Rmd", output_format = "md_document")
+
 
