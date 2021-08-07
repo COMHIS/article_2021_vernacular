@@ -10,7 +10,7 @@
 
 # STCN languages over time
 
-```{r lang, out.width="50%", fig.width=8, fig.height=5, echo=FALSE, warning=FALSE, message=FALSE}
+```{r lang, out.width="50%", fig.width=12, fig.height=5, echo=FALSE, warning=FALSE, message=FALSE}
 df <- catalogs$stcn %>%
         group_by(publication_decade, language_primary) %>%
 	summarize(n=n())
