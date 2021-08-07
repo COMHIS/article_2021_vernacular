@@ -56,7 +56,7 @@ for (ctl in names(catalogs)) {
   tmp <- catalogs[[ctl]][, c("language_primary", "publication_country",
                              "publication_place", "publication_decade", "publication_year")]
   tmp$catalog <- rep(ctl, nrow(tmp))
-  df <- dplyr::bind_rows(df, tmp)
+  df <- dplyr::bind_rows(df, tmp) 
 }
 df <- df %>% mutate(catalog=toupper(catalog))
 df$catalog <- factor(df$catalog)
@@ -65,7 +65,7 @@ df$catalog <- factor(df$catalog)
 ntop <- 5
 for (i in seq_len(nrow(selected.towns))) {
 
-  ctl <- selected.towns[i, "catalog"]
+  ctl <- toupper(selected.towns[i, "catalog"])
   town <- selected.towns[i, "town"]
 
   # Pick the selected town and catalog
