@@ -8,11 +8,9 @@
 
 
 
-```{r lang, out.width="50%", fig.width=8, fig.height=5, echo=FALSE}
-# Onks jossain kuva koko STCN:stä / kielten osuudet vuosikymmenittäin
-# (tai vastaava)? Sellainen, josta näkyis kokonaisuudessaan ranskan
-# osuus?
+# STCN languages over time
 
+```{r lang, out.width="50%", fig.width=8, fig.height=5, echo=FALSE, warning=FALSE, message=FALSE}
 df <- catalogs$stcn %>%
         group_by(publication_decade, language_primary) %>%
 	summarize(n=n())
@@ -24,7 +22,7 @@ p <- ggplot(df, aes(x=publication_decade, color=language_primary, y=n)) +
        geom_line() +
        geom_point() +              
        labs(x = "Publication decade", y = "Title count (n)", color="Primary language") +
-       theme_comhis("continuous")
+       theme_comhis("continuous", 30)
 
 print(p)
 ```
