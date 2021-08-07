@@ -1,7 +1,6 @@
 STCN analyses
 =============
 
-STCN languages over time
-========================
+### STCN languages over time
 
-<img src="stcn_files/figure-markdown_strict/lang-1.png" width="50%" />
+<img src="stcn_files/figure-markdown_strict/lang-1.png" width="80%" />
