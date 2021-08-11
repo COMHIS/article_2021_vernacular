@@ -5,11 +5,6 @@ library(tidyverse)
 
 catalogs <- readRDS("../../../output/dataset.Rds")
 
-# Limit years to 1830
-catalogs <- lapply(catalogs, function (x) {subset(x, publication_year < 1830)})
-# Except for ESTC 1800
-catalogs$estc <- subset(catalogs$estc, publication_year < 1800)
-
 # For STCV use countries from other catalogs
 catalogs$stcv$publication_country <- catalogs$estc$publication_country[match(catalogs$stcv$publication_place, catalogs$estc$publication_place)]
 catalogs$stcv$publication_country[catalogs$stcv$publication_place %in% c("Brussel", "Leuven", "Gent")] <- "Belgium"
