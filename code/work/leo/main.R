@@ -21,6 +21,7 @@ selected.towns <- as.data.frame(rbind(
   c("Stockholm", "snb"),
   c("Lund", "snb"),
   c("Uppsala", "snb"),
+  c("Gothenburg", "snb"),  
   c("Turku", "fnb"),
   c("Leiden", "stcn"),
   c("Amsterdam", "stcn"),

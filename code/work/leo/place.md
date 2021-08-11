@@ -9,70 +9,70 @@ Top towns according to title count in each “national” context.
     ## [1] "ESTC"
     ## 
     ## 
-    ## |publication_country |      n|
-    ## |:-------------------|------:|
-    ## |England             | 346600|
-    ## |Scotland            |  38980|
-    ## |USA                 |  33615|
-    ## |Ireland             |  26621|
-    ## |France              |   3861|
-    ## |Other               |  18463|
+    ## |publication_place |      n|
+    ## |:-----------------|------:|
+    ## |London            | 308947|
+    ## |Edinburgh         |  31281|
+    ## |Dublin            |  25324|
+    ## |Boston Ma         |  10016|
+    ## |Philadelphia Pa   |   9505|
+    ## |Other             |  83067|
 
 <img src="place_files/figure-markdown_strict/top_place-1.png" width="33%" />
 
     ## [1] "SNB"
     ## 
     ## 
-    ## |publication_country |     n|
-    ## |:-------------------|-----:|
-    ## |Sweden              | 66238|
-    ## |Finland             |  1730|
-    ## |Germany             |  1356|
-    ## |England             |   481|
-    ## |Denmark             |   423|
-    ## |Other               |  3886|
+    ## |publication_place |     n|
+    ## |:-----------------|-----:|
+    ## |Stockholm         | 45909|
+    ## |Uppsala           |  4949|
+    ## |Gothenburg        |  2415|
+    ## |Lund              |  2247|
+    ## |Turku             |  1540|
+    ## |Other             | 17054|
 
 <img src="place_files/figure-markdown_strict/top_place-2.png" width="33%" />
 
     ## [1] "FNB"
     ## 
     ## 
-    ## |publication_country |     n|
-    ## |:-------------------|-----:|
-    ## |Finland             | 14525|
-    ## |Sweden              |  3818|
-    ## |Estonia             |   256|
-    ## |Germany             |   254|
-    ## |Russia              |   106|
-    ## |Other               |  1450|
+    ## |publication_place |     n|
+    ## |:-----------------|-----:|
+    ## |Turku             | 11505|
+    ## |Stockholm         |  2943|
+    ## |Vaasa             |  2841|
+    ## |Uppsala           |   676|
+    ## |Tartu             |   198|
+    ## |Other             |  2246|
 
 <img src="place_files/figure-markdown_strict/top_place-3.png" width="33%" />
 
     ## [1] "STCN"
     ## 
     ## 
-    ## |publication_country |      n|
-    ## |:-------------------|------:|
-    ## |Netherlands         | 129027|
-    ## |Belgium             |   5247|
-    ## |Suriname            |   4836|
-    ## |Germany             |   4099|
-    ## |France              |   1843|
-    ## |Other               |  48623|
+    ## |publication_place |     n|
+    ## |:-----------------|-----:|
+    ## |Amsterdam         | 49883|
+    ## |Leiden            | 22520|
+    ## |The Hague         | 13853|
+    ## |Utrecht           | 12120|
+    ## |Rotterdam         |  6763|
+    ## |Other             | 88536|
 
 <img src="place_files/figure-markdown_strict/top_place-4.png" width="33%" />
 
     ## [1] "STCV"
     ## 
     ## 
-    ## |publication_country |     n|
-    ## |:-------------------|-----:|
-    ## |Belgium             | 20669|
-    ## |France              |   155|
-    ## |Netherlands         |   120|
-    ## |England             |    43|
-    ## |Germany             |    36|
-    ## |Other               |  4805|
+    ## |publication_place |    n|
+    ## |:-----------------|----:|
+    ## |Antwerp           | 9941|
+    ## |Brussels          | 3449|
+    ## |Gent              | 2149|
+    ## |Leuven            | 1903|
+    ## |Bruges            | 1351|
+    ## |Other             | 7035|
 
 <img src="place_files/figure-markdown_strict/top_place-5.png" width="33%" />
 
