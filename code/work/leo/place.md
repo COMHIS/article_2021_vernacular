@@ -6,7 +6,75 @@ Top places
 
 Top towns according to title count in each “national” context.
 
-<img src="place_files/figure-markdown_strict/top_place-1.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-2.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-3.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-4.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-5.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-6.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-7.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-8.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-9.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-10.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-11.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-12.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-13.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-14.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-15.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-16.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-17.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-18.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-19.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-20.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-21.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-22.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-23.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-24.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-25.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-26.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-27.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-28.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-29.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-30.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-31.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-32.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-33.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-34.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-35.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-36.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-37.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-38.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-39.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-40.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-41.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-42.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-43.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-44.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-45.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-46.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-47.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-48.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-49.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-50.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-51.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-52.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-53.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-54.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-55.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-56.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-57.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-58.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-59.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-60.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-61.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-62.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-63.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-64.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-65.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-66.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-67.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-68.png" width="33%" /><img src="place_files/figure-markdown_strict/top_place-69.png" width="33%" />
+    ## [1] "ESTC"
+    ## 
+    ## 
+    ## |publication_country |      n|
+    ## |:-------------------|------:|
+    ## |England             | 346600|
+    ## |Scotland            |  38980|
+    ## |USA                 |  33615|
+    ## |Ireland             |  26621|
+    ## |France              |   3861|
+    ## |Other               |  18463|
+
+<img src="place_files/figure-markdown_strict/top_place-1.png" width="33%" />
+
+    ## [1] "SNB"
+    ## 
+    ## 
+    ## |publication_country |     n|
+    ## |:-------------------|-----:|
+    ## |Sweden              | 66238|
+    ## |Finland             |  1730|
+    ## |Germany             |  1356|
+    ## |England             |   481|
+    ## |Denmark             |   423|
+    ## |Other               |  3886|
+
+<img src="place_files/figure-markdown_strict/top_place-2.png" width="33%" />
+
+    ## [1] "FNB"
+    ## 
+    ## 
+    ## |publication_country |     n|
+    ## |:-------------------|-----:|
+    ## |Finland             | 14525|
+    ## |Sweden              |  3818|
+    ## |Estonia             |   256|
+    ## |Germany             |   254|
+    ## |Russia              |   106|
+    ## |Other               |  1450|
+
+<img src="place_files/figure-markdown_strict/top_place-3.png" width="33%" />
+
+    ## [1] "STCN"
+    ## 
+    ## 
+    ## |publication_country |      n|
+    ## |:-------------------|------:|
+    ## |Netherlands         | 129027|
+    ## |Belgium             |   5247|
+    ## |Suriname            |   4836|
+    ## |Germany             |   4099|
+    ## |France              |   1843|
+    ## |Other               |  48623|
+
+<img src="place_files/figure-markdown_strict/top_place-4.png" width="33%" />
+
+    ## [1] "STCV"
+    ## 
+    ## 
+    ## |publication_country |     n|
+    ## |:-------------------|-----:|
+    ## |Belgium             | 20669|
+    ## |France              |   155|
+    ## |Netherlands         |   120|
+    ## |England             |    43|
+    ## |Germany             |    36|
+    ## |Other               |  4805|
+
+<img src="place_files/figure-markdown_strict/top_place-5.png" width="33%" />
 
 Countries per catalog
 ---------------------
@@ -88,34 +156,34 @@ Should have the same countries than above.
     ##           Czech Republic                  Denmark                  England 
     ##                        6                       12                     1200 
     ##                  Estonia                  Finland                   France 
-    ##                        5                       31                     1845 
+    ##                        5                       31                     1843 
     ##                  Germany                    Haiti                  Hungary 
-    ##                     4102                        1                        4 
+    ##                     4099                        1                        4 
     ##                    India                Indonesia                     Iraq 
     ##                        2                        3                        2 
     ##                  Ireland                    Italy                Lithuania 
-    ##                        8                      350                        1 
+    ##                        8                      347                        1 
     ##              Netherlands                Nicaragua                   Norway 
-    ##                   129924                        1                       52 
+    ##                   129027                        1                       52 
     ##                   Poland                 Portugal                   Russia 
     ##                       20                        8                        6 
     ##    Saint Kitts and Nevis                 Scotland                 Slovakia 
     ##                        1                       67                        2 
     ##                    Spain                Sri Lanka                 Suriname 
-    ##                       17                       43                     4862 
+    ##                       17                       43                     4836 
     ##                   Sweden              Switzerland                   Turkey 
-    ##                       94                       57                        9 
+    ##                       93                       57                        9 
     ##                  Ukraine           United Kingdom United States of America 
-    ##                        1                        2                      958 
+    ##                        1                        2                      957 
     ##                      USA 
-    ##                      653 
+    ##                      651 
     ## [1] "----------"
     ## [1] "stcv"
     ## 
     ##        Austria        Belgium Czech Republic        England         France 
-    ##             10          20723              1             43            156 
+    ##             10          20669              1             43            155 
     ##        Germany          Italy    Netherlands       Scotland         Sweden 
-    ##             36              6            120              1              2 
+    ##             36              5            120              1              2 
     ##    Switzerland            USA 
     ##              3              1 
     ## [1] "----------"

@@ -38,7 +38,7 @@ Stacked histogram of language shares per decade until 1800
 
     ## R version 4.1.0 (2021-05-18)
     ## Platform: x86_64-pc-linux-gnu (64-bit)
-    ## Running under: Ubuntu 20.10
+    ## Running under: Ubuntu 21.04
     ## 
     ## Matrix products: default
     ## BLAS:   /home/lemila/bin/R-4.1.0/lib/libRblas.so
@@ -58,24 +58,24 @@ Stacked histogram of language shares per decade until 1800
     ## other attached packages:
     ##  [1] ggthemes_4.2.4        comhis_0.1.7          forcats_0.5.1        
     ##  [4] stringr_1.4.0         dplyr_1.0.7           purrr_0.3.4          
-    ##  [7] readr_2.0.0           tidyr_1.1.3           tibble_3.1.3         
+    ##  [7] readr_2.0.1           tidyr_1.1.3           tibble_3.1.3         
     ## [10] ggplot2_3.3.5         tidyverse_1.3.1       bibliographica_0.2.61
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] httr_1.4.2         jsonlite_1.7.2     splines_4.1.0      modelr_0.1.8      
-    ##  [5] assertthat_0.2.1   highr_0.9          cellranger_1.1.0   slam_0.1-48       
-    ##  [9] pillar_1.6.2       backports_1.2.1    lattice_0.20-44    glue_1.4.2        
-    ## [13] digest_0.6.27      rvest_1.0.0        colorspace_2.0-2   Matrix_1.3-4      
-    ## [17] htmltools_0.5.1.1  plyr_1.8.6         tm_0.7-8           pkgconfig_2.0.3   
-    ## [21] broom_0.7.8        haven_2.4.1        scales_1.1.1       stringdist_0.9.6.3
-    ## [25] tzdb_0.1.2         mgcv_1.8-36        generics_0.1.0     farver_2.1.0      
-    ## [29] ellipsis_0.3.2     withr_2.4.2        NLP_0.2-1          cli_3.0.1         
-    ## [33] magrittr_2.0.1     crayon_1.4.1       readxl_1.3.1       evaluate_0.14     
-    ## [37] fs_1.5.0           fansi_0.5.0        nlme_3.1-152       xml2_1.3.2        
-    ## [41] tools_4.1.0        data.table_1.14.0  hms_1.1.0          lifecycle_1.0.0   
-    ## [45] munsell_0.5.0      babynames_1.0.1    reprex_2.0.0       compiler_4.1.0    
-    ## [49] rlang_0.4.11       grid_4.1.0         rstudioapi_0.13    labeling_0.4.2    
-    ## [53] rmarkdown_2.9      gtable_0.3.0       DBI_1.1.1          reshape2_1.4.4    
-    ## [57] R6_2.5.0           lubridate_1.7.10   knitr_1.33         utf8_1.2.2        
-    ## [61] stringi_1.7.3      parallel_4.1.0     Rcpp_1.0.7         vctrs_0.3.8       
-    ## [65] dbplyr_2.1.1       tidyselect_1.1.1   xfun_0.24
+    ##  [1] httr_1.4.2        jsonlite_1.7.2    splines_4.1.0     modelr_0.1.8     
+    ##  [5] assertthat_0.2.1  highr_0.9         cellranger_1.1.0  slam_0.1-48      
+    ##  [9] pillar_1.6.2      backports_1.2.1   lattice_0.20-44   glue_1.4.2       
+    ## [13] digest_0.6.27     rvest_1.0.1       colorspace_2.0-2  Matrix_1.3-4     
+    ## [17] htmltools_0.5.1.1 plyr_1.8.6        tm_0.7-8          pkgconfig_2.0.3  
+    ## [21] broom_0.7.9       haven_2.4.3       scales_1.1.1      stringdist_0.9.7 
+    ## [25] tzdb_0.1.2        mgcv_1.8-36       generics_0.1.0    farver_2.1.0     
+    ## [29] ellipsis_0.3.2    withr_2.4.2       NLP_0.2-1         cli_3.0.1        
+    ## [33] magrittr_2.0.1    crayon_1.4.1      readxl_1.3.1      evaluate_0.14    
+    ## [37] fs_1.5.0          fansi_0.5.0       nlme_3.1-152      xml2_1.3.2       
+    ## [41] tools_4.1.0       data.table_1.14.0 hms_1.1.0         lifecycle_1.0.0  
+    ## [45] munsell_0.5.0     babynames_1.0.1   reprex_2.0.1      compiler_4.1.0   
+    ## [49] rlang_0.4.11      grid_4.1.0        rstudioapi_0.13   labeling_0.4.2   
+    ## [53] rmarkdown_2.10    gtable_0.3.0      DBI_1.1.1         reshape2_1.4.4   
+    ## [57] R6_2.5.0          lubridate_1.7.10  knitr_1.33        utf8_1.2.2       
+    ## [61] stringi_1.7.3     parallel_4.1.0    Rcpp_1.0.7        vctrs_0.3.8      
+    ## [65] dbplyr_2.1.1      tidyselect_1.1.1  xfun_0.25
