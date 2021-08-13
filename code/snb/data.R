@@ -1,3 +1,3 @@
 catalog <- "snb";
-dat <- readRDS("../snb/data/unified/polished/df_augmented.Rds")
+dat <- readRDS("data/unified/polished/df_augmented.Rds")
 

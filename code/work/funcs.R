@@ -145,14 +145,14 @@ read_language <- function (catalog) {
   x
 }
 
-read_language_hpb <- function () {
-  field <- "language"
-  folder <- paste0("data/hpb-", field)
-  file <- paste(folder, "/", "language_008.Rds", sep = "")
-  x <- readRDS(file)
-  
-  x
-}
+#read_language_hpb <- function () {
+#  field <- "language"
+#  folder <- paste0("data/hpb-", field)
+#  file <- paste(folder, "/", "language_008.Rds", sep = "")
+#  x <- readRDS(file)
+#  
+#  x
+#}
 
 read_language_estc <- function (catalog) {
 
