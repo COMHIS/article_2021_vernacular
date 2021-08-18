@@ -63,11 +63,12 @@ dat$publication_century <- comhis::century(dat$publication_year)
 # Recognize "173X"
 inds <- grep("[0-9]{3}X", dat$date_pub)
 dat$publication_decade[inds] <- gsub("X$", "0", dat$date_pub[inds])
+dat$publication_decade <- as.numeric(dat$publication_decade)
 
 # Recognize "17XX"
 inds <- grep("[0-9]{2}XX", dat$date_pub)
 dat$publication_century[inds] <- gsub("XX$", "00", dat$date_pub[inds])
-
+dat$publication_century <- as.numeric(dat$publication_century)
 
 # ------------------------------------------------------------------
 
