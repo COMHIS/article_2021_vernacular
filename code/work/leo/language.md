@@ -32,10 +32,6 @@ Stacked histogram of language shares per decade until 1800
 
 <img src="language_files/figure-markdown_strict/latin_share-1.png" width="50%" />
 
-With absolute counts:
-
-<img src="language_files/figure-markdown_strict/latin_counts-1.png" width="50%" />
-
 ### Version info
 
     sessionInfo()
@@ -60,10 +56,11 @@ With absolute counts:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] ggthemes_4.2.4        comhis_0.1.7          forcats_0.5.1        
-    ##  [4] stringr_1.4.0         dplyr_1.0.7           purrr_0.3.4          
-    ##  [7] readr_2.0.1           tidyr_1.1.3           tibble_3.1.3         
-    ## [10] ggplot2_3.3.5         tidyverse_1.3.1       bibliographica_0.2.61
+    ##  [1] patchwork_1.1.1       ggthemes_4.2.4        comhis_0.1.7         
+    ##  [4] forcats_0.5.1         stringr_1.4.0         dplyr_1.0.7          
+    ##  [7] purrr_0.3.4           readr_2.0.1           tidyr_1.1.3          
+    ## [10] tibble_3.1.3          ggplot2_3.3.5         tidyverse_1.3.1      
+    ## [13] bibliographica_0.2.61
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] httr_1.4.2        jsonlite_1.7.2    splines_4.1.0     modelr_0.1.8     
