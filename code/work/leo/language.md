@@ -30,7 +30,7 @@ Stacked histogram of language shares per decade until 1800
 
 ### Latin share 1500-1800
 
-<img src="language_files/figure-markdown_strict/latin_share-1.png" width="50%" />
+<img src="language_files/figure-markdown_strict/latin_share-1.png" width="100%" />
 
 ### Version info
 
