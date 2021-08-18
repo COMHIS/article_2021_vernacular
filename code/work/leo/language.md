@@ -32,6 +32,10 @@ Stacked histogram of language shares per decade until 1800
 
 <img src="language_files/figure-markdown_strict/latin_share-1.png" width="50%" />
 
+With absolute counts:
+
+<img src="language_files/figure-markdown_strict/latin_counts-1.png" width="50%" />
+
 ### Version info
 
     sessionInfo()
