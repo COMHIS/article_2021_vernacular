@@ -13,6 +13,9 @@ datalist[["publisher"]]         <- read_publisher(catalog) # CSV
 dat <- combine_tables(datalist) 
 
 
+# Add document type per page count
+dat$document_type <- cut(dat$pagecount, c(-Inf, 32, 128, Inf), labels = c("Pamphlet", "Intermediate", "Book"))
+
 # Add work field from /article_2019_early_modern_canon_data_private/
 works <- read.csv("works_places.csv")
 works$system_control_number <- stringr::str_remove(works$system_control_number, "\\(CU-RivES\\)")

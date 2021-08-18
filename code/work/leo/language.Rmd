@@ -275,6 +275,33 @@ print(p)
 ```
 
 
+With absolute counts:
+
+```{r latin_counts, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=8, fig.height=6}
+filter <- dplyr::filter
+dfs <- df %>% filter(publication_year >= 1500) %>%
+              filter(publication_year < 1800) %>%	      
+	      group_by(catalog, publication_year, language_primary) %>%
+	      summarise(n=n()) %>%
+	      filter(language_primary=="Latin") %>%
+	      mutate(catalog = toupper(catalog))
+
+# Catalog default colors
+cols <- default_colors("catalog")[unique(toupper(dfs$catalog))]
+p <- ggplot(dfs, aes(x = publication_year, y = n,
+                     color=catalog, fill=catalog)) +
+       geom_smooth() +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication year", y = "Latin titles (%)") +
+       # scale_y_continuous(label=scales::percent, limits=c(0,1)) +
+       scale_colour_manual(values=unname(cols)) +
+       scale_fill_manual(values=unname(cols)) +
+       labs(fill="Catalog", color="Catalog")
+
+print(p)
+```
+
+
 ### Version info
 
 ```{r}
