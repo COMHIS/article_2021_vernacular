@@ -10,8 +10,9 @@
 
 ## Reprints
 
+For simplicity, just the title count per work shown.
 
-```{r reprints, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%", fig.width=8, fig.height=8}
+```{r reprints, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%", fig.width=6, fig.height=6}
 mylang <- c("Latin", "English")
 catalog <- "estc"
 doctypes <- c("Pamphlet","Between","Book")
@@ -42,7 +43,7 @@ for (lang in mylang) {
            geom_smooth() +
        	   theme_comhis("discrete", base_size=20) +
        	   labs(x = "Publication year", y = "Title count (N)") +
-       	   labs(title="Title count (N)", subtitle=paste(catalog, doct, lang, sep = "/"))
+       	   labs(title="Title count (N)", subtitle=paste(doct, lang, sep = "/"))
       print(p)
 
     }
@@ -56,7 +57,7 @@ for (lang in mylang) {
            geom_smooth() +
        	   theme_comhis("discrete", base_size=20) +
        	   labs(x = "Publication year", y = "Title count (N)") +
-       	   labs(title="Title count (N)", subtitle=paste(catalog, "all", lang, sep = "/"))
+       	   labs(title="Title count (N)", subtitle=paste("all", lang, sep = "/"))
       print(p)
 }
 
