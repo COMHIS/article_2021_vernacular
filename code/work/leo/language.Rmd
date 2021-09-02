@@ -302,6 +302,49 @@ p1 + p2
 ```
 
 
+
+
+### SNB analysis
+
+```{r snblang, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=8, fig.height=8}
+mylang <- c("Latin", "French")
+catalog <- "snb"
+df <- catalogs[[catalog]]
+df$language_primary <- as.character(df$language_primary)
+dfs <- df %>% mutate(language_primary = factor(replace(language_primary, !language_primary %in% mylang, "Other"))) %>%
+              filter(publication_year >= 1500) %>%
+              filter(publication_year < 1800) %>%
+	      group_by(publication_year, language_primary) %>%
+	      summarise(n=n()) %>%
+	      mutate(f=n/sum(n)) %>%
+              filter(language_primary %in% mylang) 
+
+
+for (lang in mylang) {
+  dfss <- dfs %>% filter(language_primary %in% lang)
+  
+  p <- ggplot(dfss, aes(x = publication_year, y = f)) +
+       geom_smooth() +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication year", y = "Share (%)") +
+       scale_y_continuous(label=scales::percent) +
+       labs(title="Title share", subtitle=paste(catalog, lang, sep = "/"), color="Primary language")
+  print(p)
+
+
+  p <- ggplot(dfss, aes(x = publication_year, y = n)) +
+       geom_smooth() +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication year", y = "Title count (N)") +
+       labs(title="Title count (N)", subtitle=paste(catalog, lang, sep = "/"), color="Primary language")
+  print(p)
+}
+
+
+
+
+```
+
 ### Version info
 
 ```{r}

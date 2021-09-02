@@ -32,6 +32,10 @@ Stacked histogram of language shares per decade until 1800
 
 <img src="language_files/figure-markdown_strict/latin_share-1.png" width="100%" />
 
+### SNB analysis
+
+<img src="language_files/figure-markdown_strict/snblang-1.png" width="50%" /><img src="language_files/figure-markdown_strict/snblang-2.png" width="50%" /><img src="language_files/figure-markdown_strict/snblang-3.png" width="50%" /><img src="language_files/figure-markdown_strict/snblang-4.png" width="50%" />
+
 ### Version info
 
     sessionInfo()
@@ -59,15 +63,15 @@ Stacked histogram of language shares per decade until 1800
     ##  [1] patchwork_1.1.1       ggthemes_4.2.4        comhis_0.1.7         
     ##  [4] forcats_0.5.1         stringr_1.4.0         dplyr_1.0.7          
     ##  [7] purrr_0.3.4           readr_2.0.1           tidyr_1.1.3          
-    ## [10] tibble_3.1.3          ggplot2_3.3.5         tidyverse_1.3.1      
+    ## [10] tibble_3.1.4          ggplot2_3.3.5         tidyverse_1.3.1      
     ## [13] bibliographica_0.2.61
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] httr_1.4.2        jsonlite_1.7.2    splines_4.1.0     modelr_0.1.8     
     ##  [5] assertthat_0.2.1  highr_0.9         cellranger_1.1.0  slam_0.1-48      
-    ##  [9] pillar_1.6.2      backports_1.2.1   lattice_0.20-44   glue_1.4.2       
+    ##  [9] lattice_0.20-44   pillar_1.6.2      backports_1.2.1   glue_1.4.2       
     ## [13] digest_0.6.27     rvest_1.0.1       colorspace_2.0-2  Matrix_1.3-4     
-    ## [17] htmltools_0.5.1.1 plyr_1.8.6        tm_0.7-8          pkgconfig_2.0.3  
+    ## [17] htmltools_0.5.2   plyr_1.8.6        tm_0.7-8          pkgconfig_2.0.3  
     ## [21] broom_0.7.9       haven_2.4.3       scales_1.1.1      stringdist_0.9.7 
     ## [25] tzdb_0.1.2        mgcv_1.8-36       generics_0.1.0    farver_2.1.0     
     ## [29] ellipsis_0.3.2    withr_2.4.2       NLP_0.2-1         cli_3.0.1        
@@ -77,6 +81,6 @@ Stacked histogram of language shares per decade until 1800
     ## [45] munsell_0.5.0     babynames_1.0.1   reprex_2.0.1      compiler_4.1.0   
     ## [49] rlang_0.4.11      grid_4.1.0        rstudioapi_0.13   labeling_0.4.2   
     ## [53] rmarkdown_2.10    gtable_0.3.0      DBI_1.1.1         reshape2_1.4.4   
-    ## [57] R6_2.5.0          lubridate_1.7.10  knitr_1.33        utf8_1.2.2       
-    ## [61] stringi_1.7.3     parallel_4.1.0    Rcpp_1.0.7        vctrs_0.3.8      
-    ## [65] dbplyr_2.1.1      tidyselect_1.1.1  xfun_0.25
+    ## [57] R6_2.5.1          lubridate_1.7.10  knitr_1.33        fastmap_1.1.0    
+    ## [61] utf8_1.2.2        stringi_1.7.4     parallel_4.1.0    Rcpp_1.0.7       
+    ## [65] vctrs_0.3.8       dbplyr_2.1.1      tidyselect_1.1.1  xfun_0.25
