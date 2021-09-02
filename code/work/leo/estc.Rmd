@@ -12,7 +12,7 @@
 
 For simplicity, just the title count per work shown.
 
-```{r reprints, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%", fig.width=6, fig.height=6}
+```{r reprints, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%", fig.width=5, fig.height=5}
 mylang <- c("Latin", "English")
 catalog <- "estc"
 doctypes <- c("Pamphlet","Between","Book")
@@ -43,22 +43,23 @@ for (lang in mylang) {
            geom_smooth() +
        	   theme_comhis("discrete", base_size=20) +
        	   labs(x = "Publication year", y = "Title count (N)") +
-       	   labs(title="Title count (N)", subtitle=paste(doct, lang, sep = "/"))
+       	   labs(title="Reprints", subtitle=paste(doct, lang, sep = "/"))
       print(p)
 
     }
 
-      dfss <- dfs %>% 
+    dfss <- dfs %>% 
       	      	      filter(language_primary==lang) %>%
 		      group_by(publication_year, finalWorkField) %>%	   
     	    	      summarize(n=n(), .groups = 'drop')   
 
-      p <- ggplot(dfss, aes(x = publication_year, y = n)) +
+    p <- ggplot(dfss, aes(x = publication_year, y = n)) +
            geom_smooth() +
        	   theme_comhis("discrete", base_size=20) +
        	   labs(x = "Publication year", y = "Title count (N)") +
-       	   labs(title="Title count (N)", subtitle=paste("all", lang, sep = "/"))
-      print(p)
+       	   labs(title="Reprints", subtitle=paste("all", lang, sep = "/"))
+    print(p)
+
 }
 
 
