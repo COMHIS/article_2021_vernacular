@@ -1,0 +1,67 @@
+# ESTC analysis
+
+```{r setup, include=FALSE}
+# Global options
+# library(knitr)
+# opts_chunk$set(fig.path="/")
+```
+
+
+
+## Reprints
+
+
+```{r reprints, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%", fig.width=8, fig.height=8}
+mylang <- c("Latin", "English")
+catalog <- "estc"
+doctypes <- c("Pamphlet","Between","Book")
+df <- catalogs[[catalog]]
+df$language_primary <- as.character(df$language_primary)
+dfs <- df %>% mutate(language_primary = factor(replace(language_primary, !language_primary %in% mylang, "Other"))) %>%
+              filter(!is.na(finalWorkField)) %>%
+              group_by(finalWorkField) %>%
+              filter(n() > 1) %>% # Only consider cases with reprints
+              filter(publication_year >= 1500) %>%
+              filter(publication_year < 1800) %>%
+	      filter(!is.na(pagecount)) %>%
+              filter(language_primary %in% mylang) %>%	      
+	      mutate(doctype = cut(pagecount, breaks=c(0, 32, 127, Inf), labels=doctypes)) %>%
+	      mutate(doctype=factor(doctype, levels=doctypes))
+
+
+for (lang in mylang) {
+
+  for (doct in doctypes){
+
+      dfss <- dfs %>% filter(doctype==doct) %>%
+      	      	      filter(language_primary==lang) %>%
+		      group_by(publication_year, finalWorkField) %>%	   
+    	    	      summarize(n=n(), .groups = 'drop')   
+
+      p <- ggplot(dfss, aes(x = publication_year, y = n)) +
+           geom_smooth() +
+       	   theme_comhis("discrete", base_size=20) +
+       	   labs(x = "Publication year", y = "Title count (N)") +
+       	   labs(title="Title count (N)", subtitle=paste(catalog, doct, lang, sep = "/"))
+      print(p)
+
+    }
+
+      dfss <- dfs %>% 
+      	      	      filter(language_primary==lang) %>%
+		      group_by(publication_year, finalWorkField) %>%	   
+    	    	      summarize(n=n(), .groups = 'drop')   
+
+      p <- ggplot(dfss, aes(x = publication_year, y = n)) +
+           geom_smooth() +
+       	   theme_comhis("discrete", base_size=20) +
+       	   labs(x = "Publication year", y = "Title count (N)") +
+       	   labs(title="Title count (N)", subtitle=paste(catalog, "all", lang, sep = "/"))
+      print(p)
+}
+
+
+    
+
+
+```
