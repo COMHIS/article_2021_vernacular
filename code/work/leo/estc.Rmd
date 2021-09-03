@@ -36,32 +36,41 @@ for (lang in mylang) {
 
       dfss <- dfs %>% filter(doctype==doct) %>%
       	      	      filter(language_primary==lang) %>%
-		      group_by(publication_year, finalWorkField) %>%	   
-    	    	      summarize(n=n(), .groups = 'drop')   
+		      arrange(publication_decade) %>%
+		      filter(duplicated(finalWorkField)) %>% # Only keep reprints, not first print
+		      group_by(publication_decade, finalWorkField) %>%	   
+    	    	      summarize(n=n(), .groups = 'drop') %>%
+		      group_by(publication_decade) %>%	   		      
+    	    	      summarize(mean=mean(n), .groups = 'drop') 
 
-      p <- ggplot(dfss, aes(x = publication_year, y = n)) +
-           geom_smooth() +
+      p <- ggplot(dfss, aes(x = publication_decade, y = mean)) +
+           #geom_point() +
+           #geom_smooth() +
+	   geom_bar(stat="identity") + 
        	   theme_comhis("discrete", base_size=20) +
-       	   labs(x = "Publication year", y = "Title count (N)") +
+       	   labs(x = "Publication decade", y = "Average reprints (N)") +
        	   labs(title="Reprints", subtitle=paste(doct, lang, sep = "/"))
       print(p)
 
     }
 
-    dfss <- dfs %>% 
-      	      	      filter(language_primary==lang) %>%
-		      group_by(publication_year, finalWorkField) %>%	   
-    	    	      summarize(n=n(), .groups = 'drop')   
-
-    p <- ggplot(dfss, aes(x = publication_year, y = n)) +
-           geom_smooth() +
-       	   theme_comhis("discrete", base_size=20) +
-       	   labs(x = "Publication year", y = "Title count (N)") +
-       	   labs(title="Reprints", subtitle=paste("all", lang, sep = "/"))
-    print(p)
-
 }
 
+
+
+      dfss <- dfs %>% arrange(publication_decade) %>%
+		      filter(duplicated(finalWorkField)) %>% # Only keep reprints, not first print
+		      group_by(publication_decade, finalWorkField) %>%	   
+    	    	      summarize(n=n(), .groups = 'drop') %>%
+		      group_by(publication_decade) %>%	   		      
+    	    	      summarize(mean=mean(n), .groups = 'drop') 
+
+      p <- ggplot(dfss, aes(x = publication_decade, y = mean)) +
+	   geom_bar(stat="identity") + 
+       	   theme_comhis("discrete", base_size=20) +
+       	   labs(x = "Publication decade", y = "Average reprints (N)") +
+       	   labs(title="Reprints", subtitle=paste("All", sep = "/"))
+      print(p)
 
     
 
