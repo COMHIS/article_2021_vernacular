@@ -12,7 +12,7 @@
 
 For simplicity, just the title count per work shown.
 
-```{r reprints, echo=FALSE, message=FALSE, warning=FALSE, out.width="25%", fig.width=5, fig.height=5}
+```{r reprints, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%", fig.width=5, fig.height=5}
 mylang <- c("Latin", "English")
 catalog <- "estc"
 doctypes <- c("Pamphlet","Between","Book")
