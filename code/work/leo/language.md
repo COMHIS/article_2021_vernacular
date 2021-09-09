@@ -40,7 +40,7 @@ Stacked histogram of language shares per decade until 1800
 
 French share in all catalogs.
 
-<img src="language_files/figure-markdown_strict/french-1.png" width="50%" /><img src="language_files/figure-markdown_strict/french-2.png" width="50%" />
+<img src="language_files/figure-markdown_strict/french-1.png" width="50%" /><img src="language_files/figure-markdown_strict/french-2.png" width="50%" /><img src="language_files/figure-markdown_strict/french-3.png" width="50%" />
 
 ### Version info
 

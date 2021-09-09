@@ -401,6 +401,18 @@ p <- ggplot(dat, aes(x = publication_decade, y = f,
             color="Catalog",
 	    fill="Catalog")
 print(p)
+
+
+p <- ggplot(dat, aes(x = publication_decade, y = n,
+            color=catalog, fill=catalog)) +
+       geom_bar(stat="identity", position="dodge") +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication decade", y = "Title count (n)") +              
+       labs(title="Title count",
+            subtitle=mylang,
+            color="Catalog",
+	    fill="Catalog")
+print(p)
 ```
 
 ### Version info
