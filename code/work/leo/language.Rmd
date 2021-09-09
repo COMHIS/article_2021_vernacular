@@ -339,10 +339,54 @@ for (lang in mylang) {
        labs(title="Title count (N)", subtitle=paste(catalog, lang, sep = "/"), color="Primary language")
   print(p)
 }
+```
 
 
 
+### French analysis
 
+French share in all catalogs.
+
+
+```{r french, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=8, fig.height=8}
+mylang <- c("French")
+
+dat <- NULL
+for (catalog in names(catalogs)) {
+
+  df <- catalogs[[catalog]]
+  df$language_primary <- as.character(df$language_primary)
+  dfs <- df %>% mutate(language_primary = factor(replace(language_primary,
+                       !language_primary %in% mylang, "Other"))) %>%
+              filter(publication_year >= 1500) %>%
+              filter(publication_year < 1800) %>%
+	      group_by(publication_year, language_primary) %>%
+	      summarise(n=n()) %>%
+	      mutate(f=n/sum(n)) %>%
+              filter(language_primary %in% mylang) 
+
+  dfss <- dfs %>% filter(language_primary %in% mylang)
+  dfss$catalog <- rep(catalog, nrow(dfss))
+  dat <- bind_rows(dat, dfss)
+ 
+
+}
+dat$catalog <- factor(toupper(dat$catalog))
+
+cols <- default_colors("catalog")[levels(dat$catalog)]
+p <- ggplot(dat, aes(x = publication_year, y = f,
+            color=catalog, fill=catalog)) +
+       geom_smooth() +
+       geom_point() +       
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication year", y = "Share (%)") +       
+       scale_y_continuous(label=scales::percent) +
+       
+       labs(title="Title share",
+            subtitle=mylang,
+            color="Catalog",
+	    fill="Catalog")
+print(p)
 ```
 
 ### Version info

@@ -36,6 +36,12 @@ Stacked histogram of language shares per decade until 1800
 
 <img src="language_files/figure-markdown_strict/snblang-1.png" width="50%" /><img src="language_files/figure-markdown_strict/snblang-2.png" width="50%" /><img src="language_files/figure-markdown_strict/snblang-3.png" width="50%" /><img src="language_files/figure-markdown_strict/snblang-4.png" width="50%" />
 
+### French analysis
+
+French share in all catalogs.
+
+<img src="language_files/figure-markdown_strict/french-1.png" width="50%" />
+
 ### Version info
 
     sessionInfo()
@@ -76,7 +82,7 @@ Stacked histogram of language shares per decade until 1800
     ## [25] tzdb_0.1.2        mgcv_1.8-36       generics_0.1.0    farver_2.1.0     
     ## [29] ellipsis_0.3.2    withr_2.4.2       NLP_0.2-1         cli_3.0.1        
     ## [33] magrittr_2.0.1    crayon_1.4.1      readxl_1.3.1      evaluate_0.14    
-    ## [37] fs_1.5.0          fansi_0.5.0       nlme_3.1-152      xml2_1.3.2       
+    ## [37] fs_1.5.0          fansi_0.5.0       nlme_3.1-153      xml2_1.3.2       
     ## [41] tools_4.1.0       data.table_1.14.0 hms_1.1.0         lifecycle_1.0.0  
     ## [45] munsell_0.5.0     babynames_1.0.1   reprex_2.0.1      compiler_4.1.0   
     ## [49] rlang_0.4.11      grid_4.1.0        rstudioapi_0.13   labeling_0.4.2   
