@@ -352,15 +352,15 @@ French share in all catalogs.
 mylang <- c("French")
 
 dat <- NULL
-for (catalog in names(catalogs)) {
+for (catalog in setdiff(names(catalogs), c("fnb", "stcv"))) {
 
   df <- catalogs[[catalog]]
   df$language_primary <- as.character(df$language_primary)
   dfs <- df %>% mutate(language_primary = factor(replace(language_primary,
                        !language_primary %in% mylang, "Other"))) %>%
-              filter(publication_year >= 1500) %>%
-              filter(publication_year < 1800) %>%
-	      group_by(publication_year, language_primary) %>%
+              filter(publication_decade >= 1600) %>%
+              filter(publication_decade < 1800) %>%
+	      group_by(publication_decade, language_primary) %>%
 	      summarise(n=n()) %>%
 	      mutate(f=n/sum(n)) %>%
               filter(language_primary %in% mylang) 
@@ -374,12 +374,26 @@ for (catalog in names(catalogs)) {
 dat$catalog <- factor(toupper(dat$catalog))
 
 cols <- default_colors("catalog")[levels(dat$catalog)]
-p <- ggplot(dat, aes(x = publication_year, y = f,
+p <- ggplot(dat, aes(x = publication_decade, y = f,
             color=catalog, fill=catalog)) +
        geom_smooth() +
        geom_point() +       
        theme_comhis("discrete", base_size=20) +
-       labs(x = "Publication year", y = "Share (%)") +       
+       labs(x = "Publication decade", y = "Share (%)") +       
+       scale_y_continuous(label=scales::percent) +
+       
+       labs(title="Title share",
+            subtitle=mylang,
+            color="Catalog",
+	    fill="Catalog")
+print(p)
+
+
+p <- ggplot(dat, aes(x = publication_decade, y = f,
+            color=catalog, fill=catalog)) +
+       geom_bar(stat="identity", position="dodge") +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication decade", y = "Share (%)") +       
        scale_y_continuous(label=scales::percent) +
        
        labs(title="Title share",
