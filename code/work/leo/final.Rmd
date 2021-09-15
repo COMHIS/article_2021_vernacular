@@ -1,0 +1,385 @@
+
+# Figure 1
+
+### Latin share 1500-1800
+
+```{r latin_share, echo=FALSE, message=FALSE, warning=FALSE, out.width="100%", fig.width=15, fig.height=6}
+# Combine language data from catalogs
+df <- NULL
+for (ctl in names(catalogs)) {
+
+  tmp <- catalogs[[ctl]][, c("language_primary", "publication_country",
+                             "publication_place", "publication_decade", "publication_year")]
+  tmp$catalog <- rep(ctl, nrow(tmp))
+  df <- dplyr::bind_rows(df, tmp) 
+}
+df <- df %>% mutate(catalog=toupper(catalog))
+df$catalog <- factor(df$catalog)
+
+
+filter <- dplyr::filter
+dfs <- df %>% filter(publication_year >= 1500) %>%
+              filter(publication_year < 1800) %>%	      
+	      group_by(catalog, publication_year, language_primary) %>%
+	      summarise(n=n()) %>%
+	      mutate(f=n/sum(n)) %>%
+	      filter(language_primary=="Latin") %>%
+	      mutate(catalog = toupper(catalog))
+
+# Catalog default colors
+cols <- default_colors("catalog")[unique(toupper(dfs$catalog))]
+p <- ggplot(dfs, aes(x = publication_year, y = f,
+                     color=catalog, fill=catalog)) +
+       geom_smooth() +
+       # geom_point() +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication year", y = "Latin share (%)") +
+       scale_y_continuous(label=scales::percent, limits=c(0,1)) +
+       scale_colour_manual(values=unname(cols)) +
+       scale_fill_manual(values=unname(cols)) +
+       labs(title="Title share", fill="Catalog", color="Catalog")
+
+print(p)
+```
+
+
+# Figure 2
+
+
+```{r figure2, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+library(ggpubr)
+stcn <- catalogs$stcn
+top <- rev(rev(sort(table(stcn$language_primary)))[2:2])
+bb2 <- stcn %>% filter(language_primary %in% names(top))
+bb7 <- bb2[grep("cademic", bb2$genre),]
+bb8 <- bb2 %>% filter(!record_id %in% bb7$record_id)
+myvars <- as.vector(c("publication_year", "document_type"))
+a1 = bb7[myvars]
+b1 = bb8[myvars]
+a1$cat <- "academic"
+b1$cat <- "non-academic"
+g1 <- rbind(a1, b1)
+g2 <- g1 %>% group_by(publication_year, cat, document_type) %>%
+ arrange(publication_year) %>%
+ summarize(n = n())
+ggplot(g2, aes(x=publication_year, y=n, group = cat, colour = cat)) +
+ geom_point() +
+ stat_smooth(method = 'loess')  + theme_classic() + grids(linetype = "dashed") +
+ labs(title="STCN, Latin, academic vs non-academic texts")
+```
+
+
+# Figures 3-7
+
+## Language shares per decade until 1800
+
+```{r language_shares_till_end, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+
+# For each place, show top languagues
+library(dplyr)
+ntop <- 4
+#fig3.towns <- subset(selected.towns, town %in% c("London", "Amsterdam", "Stockholm", "Oxford", "Cambridge", "Edinburgh"))
+
+for (i in seq_len(nrow(selected.towns))) {
+
+  ctl <- toupper(selected.towns[i, "catalog"])
+  town <- selected.towns[i, "town"]
+
+  # Pick the selected town and catalog
+  dfs <- df %>% filter(publication_place == town & catalog == ctl) %>%
+                filter(publication_decade <= 1800)
+
+  # Top languages for this catalog and place
+  dfs$language_primary <- compress_field(dfs$language_primary, topn = ntop, rest = "Other")
+
+  # Group by decade
+  dfs <- dfs %>% group_by(publication_decade, publication_place, language_primary) %>%
+                 summarise(n = n()) %>%
+		 mutate(f = n/sum(n)) %>%
+		 group_by(publication_decade, publication_place) %>%
+		 arrange(desc(n)) %>%
+		 mutate(rank = rev(rank(n))) %>%
+		 filter(rank <= ntop)
+
+   # Arrange levels by rank
+   dfs$language_primary <- droplevels(factor(dfs$language_primary))
+
+   # Replace NA with 0
+   dfs$n[is.na(dfs$n)] <- 0
+
+  p <- ggplot(dfs, aes(x = publication_decade, y = f)) +
+         geom_bar(aes(fill = language_primary),
+	              position = "stack",
+		      stat = "identity") +
+         scale_y_continuous(label = scales::percent) + 
+         labs(title = town,
+	      subtitle = ctl,
+	      y = "Title share (%)",
+	      x = "Publication decade",
+	      fill = "Primary language") +
+         theme_comhis("discrete", base_size=30) 
+  print(p)
+
+
+}
+```
+
+```{r language_shares_by_year_till_1800, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=15, fig.height=7}
+# For each place, show top languagues
+library(dplyr)
+ntop <- 3
+for (i in seq_len(nrow(selected.towns))) {
+
+  ctl <- toupper(selected.towns[i, "catalog"])
+  town <- selected.towns[i, "town"]
+
+  # Pick the selected town and catalog
+  dfs <- df %>% filter(publication_place == town & catalog == ctl) %>%
+                filter(publication_year <= 1800)
+
+  # Top languages for this catalog and place
+  dfs$language_primary <- compress_field(dfs$language_primary, topn = ntop, rest = "Other")
+
+  # Group by decade
+  dfs <- dfs %>% group_by(publication_year, publication_place, language_primary) %>%
+                 summarise(n = n()) %>%
+		 mutate(f = n/sum(n)) %>%
+		 group_by(publication_year, publication_place) %>%
+		 arrange(desc(n)) %>%
+		 mutate(rank = rev(rank(n))) %>%
+		 filter(rank <= ntop)
+
+   # Arrange levels by rank
+   dfs$language_primary <- droplevels(factor(dfs$language_primary))
+
+   # Replace NA with 0
+   dfs$n[is.na(dfs$n)] <- 0
+
+   v <- seq(min(na.omit(df$publication_decade)), 1800, 20)
+   p <- ggplot(dfs, aes(x = publication_year, y = n)) +
+         geom_point(aes(color = language_primary,
+	                fill = language_primary)) +
+         geom_smooth(aes(fill = language_primary,
+	        	 color = language_primary)) +
+         scale_x_continuous(breaks = v, labels = v) +			 
+         labs(title = town,
+	      subtitle = ctl,
+	      y = "Title count (n)",
+	      x = "Publication year",
+	      color = "Primary language") +
+	 guides(fill="none", position = "") +
+         theme_comhis("discrete", base_size=30) 
+  print(p)
+}
+```
+
+
+
+
+
+
+# Figure 8
+
+
+Jos käytetään tällaista kuvaa, niin Period documents, Poetry, ja State publications pois. Ja sitten pitää tekstissä selittää, miksi tässä on History (Netherlands) ja Theology (Christian doctrine), vaikka me puhutaan kattokäsitteistä History ja Theology. TAI jotenkin pystyä piirtämään ne yhdistelmäkategoriat.
+
+
+```{r doctypescombined, echo=FALSE, warning=FALSE, message=FALSE, fig.width=15, fig.height=6}
+df0 <- df <- catalogs[["stcn"]]
+
+  dfw <- df0
+  spl <- stringr::str_split(dfw$genre, "\\|")
+
+  dflong <- NULL
+  
+  for (sel.genre in top.genres) {
+
+    dfw$hit <- sapply(spl, function (x){sel.genre %in% x})
+    
+    dfl <- dfw %>% filter(hit) %>%
+               filter(language_primary %in% c("Latin", "Dutch")) %>%
+       	       group_by(publication_year, language_primary) %>%	       
+	       tally() %>%
+	       select(publication_year, language_primary, n) %>%
+               tidyr::pivot_wider(names_from = language_primary, values_from = n, values_fill=0)
+    
+     dfl$genre <- rep(sel.genre, rep = nrow(dfl))
+
+     if (!"Latin" %in% names(dfl)) {
+       dfl$Latin <- rep(0, nrow(dfl))
+     }
+     if (!"Dutch" %in% names(dfl)) {
+       dfl$Dutch <- rep(0, nrow(dfl))
+     }
+
+     dfl <- dfl %>%
+	       mutate(Both = Latin + Dutch) %>%
+	       mutate(Vernacular_Freq = Dutch / Both)
+
+     dflong <- bind_rows(dflong, dfl)
+
+  }
+
+  dflong$genre <- factor(dflong$genre)
+  p <- ggplot(dflong, aes(x = publication_year, color=genre, fill=genre, y = Vernacular_Freq)) +
+       geom_smooth()  +
+       geom_point() +       
+       labs(title="Top genres: vernacular frequency", subtitle="all documents") +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication year", y = "Vernacular frequency (%)", color="Genre", fill="Genre") +
+       scale_y_continuous(label=scales::percent)
+       
+  print(p)
+```
+
+
+
+# Figure 9
+
+
+```{r figure9, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=8, fig.height=8}
+stcn <- catalogs$stcn
+stcn$genre <- lowercase(stcn$genre)
+
+### ensin valitaan medicine ja tehdään siitä oma joukko
+yy2 <- stcn[grep("medicine", stcn$genre),]
+### sitten toinen joukko jossa myös academic text
+yy3 <- yy2[grep("academic text", yy2$genre),]
+yy4 <- yy2[!grepl("academic text",yy2$genre),]
+###
+### academic text vs not academic text Latin all
+myvars <- as.vector(c("publication_year", "language_all"))
+a1 = yy3[myvars]
+b1 = yy4[myvars]
+a1$cat <- "academic medicine"
+b1$cat <- "non-academic medicine"
+g1 <- rbind(a1, b1)
+g2 <- g1 %>% group_by(publication_year, cat, language_all) %>%
+  arrange(publication_year) %>%
+  summarize(n = n())
+top <- rev(rev(sort(table(g2$language_all)))[1:3])
+g2 <- g2 %>% filter(language_all %in% names(top))
+ggplot(g2, aes(x=publication_year, y=n, group=language_all, colour=language_all)) +
+  geom_point() +
+  stat_smooth(method = 'loess')   + theme_classic() + grids(linetype = "dashed") +
+  facet_wrap(~cat, scales = "free")
+```
+
+# Figure 10
+
+```{r figure10, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=8, fig.height=8}
+top <- rev(rev(sort(table(stcn$language_all)))[1:3])
+yy <- stcn %>% filter(language_all %in% names(top))
+yy <- yy[grep("theology", yy$genre),]
+top <- rev(rev(sort(table(yy$publication_place)))[5:5])
+yy <- yy %>% filter(publication_place %in% names(top))
+## practical
+yy1 <- yy[grep("practical", yy$genre),]
+yy2 <- yy[grep("dialogues", yy$genre),]
+yy3 <- yy[grep("children's books", yy$genre),]
+yy4 <- yy[grep("poetry", yy$genre),]
+yy5 <- yy[grep("education", yy$genre),]
+yy6 <- yy[grep("prayer books", yy$genre),]
+yy7 <- yy[grep("pedagogy", yy$genre),]
+yy8 <- yy[grep("songbooks", yy$genre),]
+yy9 <- yy[grep("catechisms", yy$genre),]
+yy10 <- yy[grep("liturgical works", yy$genre),]
+yy11 <- yy[grep("sermons", yy$genre),]
+###
+myvars <- as.vector(c("publication_year", "language_all", "record_id"))
+a1 = yy1[myvars]
+b1 = yy2[myvars]
+c1 = yy3[myvars]
+d1 = yy4[myvars]
+e1 = yy5[myvars]
+f1 = yy6[myvars]
+g1 = yy7[myvars]
+h1 = yy8[myvars]
+i1 = yy9[myvars]
+j1 = yy10[myvars]
+k1 = yy11[myvars]
+g1 <- rbind(a1, b1, c1, d1, e1, f1, g1, h1, i1, j1, k1)
+g1$cat <- "practical"
+g2 <- g1 %>% distinct(record_id, .keep_all = TRUE)
+### academic
+mm1 <- yy[grep("academic", yy$genre),]
+myvars <- as.vector(c("publication_year", "language_all", "record_id"))
+a1 = mm1[myvars]
+a1$cat <- "academic"
+a2 <- a1 %>% distinct(record_id, .keep_all = TRUE)
+### history
+uu1 <- yy[grep("history", yy$genre),]
+myvars <- as.vector(c("publication_year", "language_all", "record_id"))
+q1 = uu1[myvars]
+q1$cat <- "history"
+q2 <- q1 %>% distinct(record_id, .keep_all = TRUE)
+#### ei-mikään näistä
+rr1 <- yy %>% filter(!record_id %in% g2$record_id)
+rr1 <- rr1 %>% filter(!record_id %in% a2$record_id)
+rr1 <- rr1 %>% filter(!record_id %in% q2$record_id)
+myvars <- as.vector(c("publication_year", "language_all", "record_id"))
+r1 = rr1[myvars]
+r1$cat <- "others"
+r2 <- r1 %>% distinct(record_id, .keep_all = TRUE)
+####
+j1 <- rbind(g2, a2, q2, r2)
+myvars <- as.vector(c("publication_year", "language_all", "cat"))
+j1 = j1[myvars]
+j1 <- j1 %>% drop_na(publication_year)
+j1 <- j1 %>% group_by(publication_year, language_all, cat) %>%
+  arrange(publication_year) %>%
+  summarize(n = n())
+j1 <- j1 %>% filter(publication_year < 1801)
+ggplot(j1, aes(x=publication_year, y=n, group=language_all, colour=language_all)) +
+  geom_point() +
+  stat_smooth(method = 'loess')   + theme_classic() + grids(linetype = "dashed") +
+  facet_wrap(~cat, scales = "free") +
+  labs(title="theology grand categories; top-3 language_all")
+```
+
+# Fig 11
+
+See above
+
+
+
+# Figure 12
+
+```{r french, echo=FALSE, message=FALSE, warning=FALSE, out.width="50%", fig.width=8, fig.height=8}
+mylang <- c("French")
+
+dat <- NULL
+for (catalog in setdiff(names(catalogs), c("fnb", "stcv"))) {
+
+  df <- catalogs[[catalog]]
+  df$language_primary <- as.character(df$language_primary)
+  dfs <- df %>% mutate(language_primary = factor(replace(language_primary,
+                       !language_primary %in% mylang, "Other"))) %>%
+              filter(publication_decade >= 1600) %>%
+              filter(publication_decade < 1800) %>%
+	      group_by(publication_decade, language_primary) %>%
+	      summarise(n=n()) %>%
+	      mutate(f=n/sum(n)) %>%
+              filter(language_primary %in% mylang) 
+
+  dfss <- dfs %>% filter(language_primary %in% mylang)
+  dfss$catalog <- rep(catalog, nrow(dfss))
+  dat <- bind_rows(dat, dfss)
+ 
+
+}
+dat$catalog <- factor(toupper(dat$catalog))
+
+cols <- default_colors("catalog")[levels(dat$catalog)]
+
+p <- ggplot(dat, aes(x = publication_decade, y = n,
+            color=catalog, fill=catalog)) +
+       geom_bar(stat="identity", position="dodge") +
+       theme_comhis("discrete", base_size=20) +
+       labs(x = "Publication decade", y = "Title count (n)") +              
+       labs(title="Title count",
+            subtitle=mylang,
+            color="Catalog",
+	    fill="Catalog")
+print(p)
+```

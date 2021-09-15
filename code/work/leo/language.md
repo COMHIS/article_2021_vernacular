@@ -85,8 +85,9 @@ French share in all catalogs.
     ## [37] fs_1.5.0          fansi_0.5.0       nlme_3.1-153      xml2_1.3.2       
     ## [41] tools_4.1.0       data.table_1.14.0 hms_1.1.0         lifecycle_1.0.0  
     ## [45] munsell_0.5.0     babynames_1.0.1   reprex_2.0.1      compiler_4.1.0   
-    ## [49] rlang_0.4.11      grid_4.1.0        rstudioapi_0.13   labeling_0.4.2   
-    ## [53] rmarkdown_2.10    gtable_0.3.0      DBI_1.1.1         reshape2_1.4.4   
-    ## [57] R6_2.5.1          lubridate_1.7.10  knitr_1.34        fastmap_1.1.0    
-    ## [61] utf8_1.2.2        stringi_1.7.4     parallel_4.1.0    Rcpp_1.0.7       
-    ## [65] vctrs_0.3.8       dbplyr_2.1.1      tidyselect_1.1.1  xfun_0.25
+    ## [49] tinytex_0.33      rlang_0.4.11      grid_4.1.0        rstudioapi_0.13  
+    ## [53] labeling_0.4.2    rmarkdown_2.10    gtable_0.3.0      DBI_1.1.1        
+    ## [57] reshape2_1.4.4    R6_2.5.1          lubridate_1.7.10  knitr_1.34       
+    ## [61] fastmap_1.1.0     utf8_1.2.2        stringi_1.7.4     parallel_4.1.0   
+    ## [65] Rcpp_1.0.7        vctrs_0.3.8       dbplyr_2.1.1      tidyselect_1.1.1 
+    ## [69] xfun_0.25

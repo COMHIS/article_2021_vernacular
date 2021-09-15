@@ -44,6 +44,8 @@ rmarkdown::render(input = "genre.Rmd", output_format = "md_document")
 rmarkdown::render(input = "stcn.Rmd", output_format = "md_document")
 rmarkdown::render(input = "estc.Rmd", output_format = "md_document")
 
+rmarkdown::render(input = "final.Rmd", output_format = "pdf_document")
+
 # Check undetermined language in primary lang field
 tab <- catalogs$snb %>% filter(grepl("Undetermined", language_primary)) %>% select("author", "publication_year", "title", "subject_topic")
 write.table(tab, file = "snb_und_lang.csv", quote=F, row.names=F, sep="\t")
