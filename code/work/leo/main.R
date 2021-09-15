@@ -2,6 +2,7 @@
 # - stored in dataset.Rds; use that as the starting point
 library(bibliographica)
 library(tidyverse)
+devtools::load_all("~/comhis/rpkg/bibliographica/")
 
 catalogs <- readRDS("../../../output/dataset.Rds")
 
@@ -44,7 +45,12 @@ rmarkdown::render(input = "genre.Rmd", output_format = "md_document")
 rmarkdown::render(input = "stcn.Rmd", output_format = "md_document")
 rmarkdown::render(input = "estc.Rmd", output_format = "md_document")
 
-rmarkdown::render(input = "final.Rmd", output_format = "pdf_document")
+
+# Final figures
+#rmarkdown::render(input = "final.Rmd", output_format = "pdf_document")
+source("figures_final.R")
+
+
 
 # Check undetermined language in primary lang field
 tab <- catalogs$snb %>% filter(grepl("Undetermined", language_primary)) %>% select("author", "publication_year", "title", "subject_topic")

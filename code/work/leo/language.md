@@ -48,7 +48,7 @@ French share in all catalogs.
 
     ## R version 4.1.0 (2021-05-18)
     ## Platform: x86_64-pc-linux-gnu (64-bit)
-    ## Running under: Ubuntu 21.04
+    ## Running under: Ubuntu 20.10
     ## 
     ## Matrix products: default
     ## BLAS:   /home/lemila/bin/R-4.1.0/lib/libRblas.so
@@ -78,7 +78,7 @@ French share in all catalogs.
     ##  [9] lattice_0.20-44   pillar_1.6.2      backports_1.2.1   glue_1.4.2       
     ## [13] digest_0.6.27     rvest_1.0.1       colorspace_2.0-2  Matrix_1.3-4     
     ## [17] htmltools_0.5.2   plyr_1.8.6        tm_0.7-8          pkgconfig_2.0.3  
-    ## [21] broom_0.7.9       haven_2.4.3       scales_1.1.1      stringdist_0.9.7 
+    ## [21] broom_0.7.9       haven_2.4.3       scales_1.1.1      stringdist_0.9.8 
     ## [25] tzdb_0.1.2        mgcv_1.8-36       generics_0.1.0    farver_2.1.0     
     ## [29] ellipsis_0.3.2    withr_2.4.2       NLP_0.2-1         cli_3.0.1        
     ## [33] magrittr_2.0.1    crayon_1.4.1      readxl_1.3.1      evaluate_0.14    
