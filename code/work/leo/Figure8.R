@@ -61,6 +61,6 @@ p <- ggplot(dflong, aes(x = publication_decade,
        
 
 
-CairoJPEG("Figure8.jpg", width=1*1500, height=1*500, quality=100)
+CairoJPEG("Figure8.jpg", width=1*1200, height=1*500, quality=100)
 print(p)
 dev.off()
