@@ -8,7 +8,7 @@ source("Figure6.R")
 source("Figure7.R")
 source("Figure8.R")
 source("Figure9.R")
-source("Figure10.R")
+#source("Figure10.R")
 source("Figure11.R")
 source("Figure12.R")
 

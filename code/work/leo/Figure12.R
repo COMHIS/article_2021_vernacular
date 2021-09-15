@@ -34,6 +34,6 @@ p <- ggplot(dat, aes(x = publication_decade, y = n,
 	    fill="Catalog") 
 	    
 
-CairoJPEG("Figure12.jpg", width=1*500, height=1*500, quality=100)
+CairoJPEG("Figure12.jpg", width=1*500, height=1*300, quality=100)
 print(p)
 dev.off()

@@ -1,5 +1,5 @@
 # Top genres, excludeing Period documents, Poetry, and State publications.
-
+# Share of vernacular languages across all documents
 
 
 df0 <- df <- catalogs[["stcn"]]
@@ -15,7 +15,7 @@ top.genres <- setdiff(top.genres, c("Period documents", "Poetry", "State publica
 
   dflong <- NULL
   
-  for (sel.genre in top.genres) {
+for (sel.genre in top.genres) {
 
     dfw$hit <- sapply(spl, function (x){sel.genre %in% x})
     
@@ -41,27 +41,26 @@ top.genres <- setdiff(top.genres, c("Period documents", "Poetry", "State publica
 
      dflong <- bind_rows(dflong, dfl)
 
-  }
+}
 
-  dflong$genre <- factor(dflong$genre)
-  p <- ggplot(dflong, aes(x = publication_decade,
+dflong$genre <- factor(dflong$genre)
+
+p <- ggplot(dflong, aes(x = publication_decade,
        		      	  color=genre,
 			  fill=genre,
                           y = Vernacular_Freq)) +
-       geom_smooth()  +
-       geom_point() +       
-       labs(title="Vernacular share",
-            subtitle="All documents") +
+       #geom_line()  +
+       geom_point() +
+       geom_smooth() + 
+       #labs(#title="Vernacular share",
+       #     #subtitle="All documents") +
        theme_comhis("discrete", base_size=20) +
-       labs(x = "Publication decade", y = "Vernacular frequency (%)",
+       labs(x = "Publication decade", y = "Share (%)",
             color="Genre", fill="Genre") +
        scale_y_continuous(label=scales::percent, limits=c(0,1))
        
-  print(p)
 
 
-CairoJPEG("Figure8.jpg", width=1*500, height=1*500, quality=100)
+CairoJPEG("Figure8.jpg", width=1*1500, height=1*500, quality=100)
 print(p)
 dev.off()
-
-

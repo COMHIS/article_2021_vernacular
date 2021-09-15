@@ -39,6 +39,10 @@ for (i in seq_len(nrow(selected.towns))) {
 
    # Arrange levels by rank
    dfs$language_primary <- droplevels(factor(dfs$language_primary))
+   sorted <- sort(unique(dfs$language_primary))
+   others <- c("Other", "Undetermined")
+   sorted <- c(others, setdiff(sorted, others))
+   dfs$language_primary <- factor(dfs$language_primary, levels=sorted)
 
    # Replace NA with 0
    dfs$n[is.na(dfs$n)] <- 0
@@ -60,6 +64,8 @@ for (i in seq_len(nrow(selected.towns))) {
 	      ) +
 	 guides(fill="none", position = "") +
          theme_comhis("discrete", base_size=20) +
+	 #theme(legend.position = c(0.2, 0.75)) +
+	 # theme(legend.position = "bottom") +	 
 	 scale_color_manual(values = mycols) +
 	 scale_fill_manual(values = mycols) 	 
   pics[[selected.towns[i,"town"]]] <- p	 

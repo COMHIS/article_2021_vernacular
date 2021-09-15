@@ -1,3 +1,4 @@
+stcn <- catalogs$stcn
 top <- rev(rev(sort(table(stcn$language_all)))[1:3])
 yy <- stcn %>% filter(language_all %in% names(top))
 yy <- yy[grep("theology", yy$genre),]
@@ -77,7 +78,7 @@ p <- ggplot(j1, aes(x=publication_year, y=n,
   labs(x = "Publication year", y = "", color="") +
   theme_comhis("discrete", base_size=20) 
 
-CairoJPEG("Figure10.jpg", width=1*500, height=1*500, quality=100)
+CairoJPEG("Figure10.jpg", width=1*1000, height=1*500, quality=100)
 print(p)
 dev.off()
 

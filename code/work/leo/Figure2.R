@@ -20,8 +20,10 @@ df <- g2 %>% pivot_wider(names_from=Category, id_cols=c(publication_decade), val
              mutate(Academic=replace_na(Academic, 0)) %>%
 	     pivot_longer(cols=c("Academic","Non-academic"))
 p <- ggplot(df, aes(x=publication_decade, y=value, fill = name, colour = name)) +
- geom_bar(stat="identity", position="dodge") + 
+ #geom_bar(stat="identity", position="dodge") + 
  # labs(title="STCN, Latin") +
+ geom_point() +
+ geom_line() +  
  theme_comhis("discrete", base_size=20) +
  theme(legend.position=c(0.21, 0.86)) + 
  labs(x = "Publication decade",
