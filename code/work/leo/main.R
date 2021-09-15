@@ -5,11 +5,6 @@ library(tidyverse)
 
 catalogs <- readRDS("../../../output/dataset.Rds")
 
-# Limit years to 1830
-catalogs <- lapply(catalogs, function (x) {subset(x, publication_year < 1830)})
-# Except for ESTC 1800
-catalogs$estc <- subset(catalogs$estc, publication_year < 1800)
-
 # For STCV use countries from other catalogs
 catalogs$stcv$publication_country <- catalogs$estc$publication_country[match(catalogs$stcv$publication_place, catalogs$estc$publication_place)]
 catalogs$stcv$publication_country[catalogs$stcv$publication_place %in% c("Brussel", "Leuven", "Gent")] <- "Belgium"
@@ -26,6 +21,7 @@ selected.towns <- as.data.frame(rbind(
   c("Stockholm", "snb"),
   c("Lund", "snb"),
   c("Uppsala", "snb"),
+  c("Gothenburg", "snb"),  
   c("Turku", "fnb"),
   c("Leiden", "stcn"),
   c("Amsterdam", "stcn"),
@@ -46,8 +42,11 @@ rmarkdown::render(input = "place.Rmd",    output_format = "md_document")
 rmarkdown::render(input = "language.Rmd", output_format = "md_document")
 rmarkdown::render(input = "genre.Rmd", output_format = "md_document")
 rmarkdown::render(input = "stcn.Rmd", output_format = "md_document")
+rmarkdown::render(input = "estc.Rmd", output_format = "md_document")
 
-
+# Check undetermined language in primary lang field
+tab <- catalogs$snb %>% filter(grepl("Undetermined", language_primary)) %>% select("author", "publication_year", "title", "subject_topic")
+write.table(tab, file = "snb_und_lang.csv", quote=F, row.names=F, sep="\t")
 
 
 

@@ -8,23 +8,30 @@ Top towns according to title count in each “national” context.
 ```{r top_place, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%"}
 # Combine place data from catalogs
 # Exclude STCN as it does not have towns
+library(comhis)
+library(ggplot2)  
+
 df <- NULL
 for (ctl in names(catalogs)) {
-  tmp <- catalogs[[ctl]][, c("publication_place", "publication_country")]
+  tmp <- data.frame(publication_place=catalogs[[ctl]][, c("publication_place")])
   tmp$catalog <- rep(ctl, nrow(tmp))
   df <- dplyr::bind_rows(df, tmp)
 }
 
-# For each country, show top towns
-ntop <- 10
-for (country in unique(df$publication_country)) {
+# For each place, show top towns
+ntop <- 5
 
-  dfs <- subset(df, publication_country == country)
-  catalog <- paste(unique(dfs$catalog), collapse = "+")
-  library(comhis)
-  library(ggplot2)  
-  p <- top_plot(dfs$publication_place, ntop = ntop) +
-       labs(title = country, subtitle = catalog) +
+for (cata in unique(df$catalog)) {
+
+  dfs <- subset(df, catalog == cata)
+  dfs$publication_place <- compress_field(dfs$publication_place, topn=ntop)
+
+  print(toupper(cata))
+  dftab <- dfs %>% group_by(publication_place) %>% tally()
+  print(knitr::kable(dftab))
+
+  p <- top_plot(dfs$publication_place, ntop = ntop+1, show.percentage=TRUE) +
+       labs(title = toupper(cata)) +
        scale_y_log10() +
        theme_comhis("discrete", base_size=25)
        

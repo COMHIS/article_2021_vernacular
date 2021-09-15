@@ -145,14 +145,14 @@ read_language <- function (catalog) {
   x
 }
 
-read_language_hpb <- function () {
-  field <- "language"
-  folder <- paste0("data/hpb-", field)
-  file <- paste(folder, "/", "language_008.Rds", sep = "")
-  x <- readRDS(file)
-  
-  x
-}
+#read_language_hpb <- function () {
+#  field <- "language"
+#  folder <- paste0("data/hpb-", field)
+#  file <- paste(folder, "/", "language_008.Rds", sep = "")
+#  x <- readRDS(file)
+#  
+#  x
+#}
 
 read_language_estc <- function (catalog) {
 
@@ -185,8 +185,11 @@ read_title <- function (catalog, n=30) {
   if (any(n < nchar(x))) {
     warning(paste(sum(n < nchar(x)), "titles cut to string length", n))
   }
-  x$title <- stringr::str_sub(x$title, 1, n)
 
+  if (n<Inf) {
+    x$title <- stringr::str_sub(x$title, 1, n)
+  }
+  
   x
 
 }
@@ -198,10 +201,6 @@ read_title_estc <- function (catalog) {
   x$system_control_number <- gsub("\\(CU-RivES\\)", "", x$system_control_number)  
   x
 }
-
-##########################################################
-
-
 
 ##########################################################
 

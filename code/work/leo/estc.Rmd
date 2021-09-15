@@ -1,0 +1,78 @@
+# ESTC analysis
+
+```{r setup, include=FALSE}
+# Global options
+# library(knitr)
+# opts_chunk$set(fig.path="/")
+```
+
+
+
+## Reprints
+
+For simplicity, just the title count per work shown.
+
+```{r reprints, echo=FALSE, message=FALSE, warning=FALSE, out.width="33%", fig.width=5, fig.height=5}
+mylang <- c("Latin", "English")
+catalog <- "estc"
+doctypes <- c("Pamphlet","Between","Book")
+df <- catalogs[[catalog]]
+df$language_primary <- as.character(df$language_primary)
+dfs <- df %>% mutate(language_primary = factor(replace(language_primary, !language_primary %in% mylang, "Other"))) %>%
+              filter(!is.na(finalWorkField)) %>%
+              group_by(finalWorkField) %>%
+              filter(n() > 1) %>% # Only consider cases with reprints
+              filter(publication_year >= 1500) %>%
+              filter(publication_year < 1800) %>%
+	      filter(!is.na(pagecount)) %>%
+              filter(language_primary %in% mylang) %>%	      
+	      mutate(doctype = cut(pagecount, breaks=c(0, 32, 127, Inf), labels=doctypes)) %>%
+	      mutate(doctype=factor(doctype, levels=doctypes))
+
+
+for (lang in mylang) {
+
+  for (doct in doctypes){
+
+      dfss <- dfs %>% filter(doctype==doct) %>%
+      	      	      filter(language_primary==lang) %>%
+		      arrange(publication_decade) %>%
+		      filter(duplicated(finalWorkField)) %>% # Only keep reprints, not first print
+		      group_by(publication_decade, finalWorkField) %>%	   
+    	    	      summarize(n=n(), .groups = 'drop') %>%
+		      group_by(publication_decade) %>%	   		      
+    	    	      summarize(mean=mean(n), .groups = 'drop') 
+
+      p <- ggplot(dfss, aes(x = publication_decade, y = mean)) +
+           #geom_point() +
+           #geom_smooth() +
+	   geom_bar(stat="identity") + 
+       	   theme_comhis("discrete", base_size=20) +
+       	   labs(x = "Publication decade", y = "Average reprints (N)") +
+       	   labs(title="Reprints", subtitle=paste(doct, lang, sep = "/"))
+      print(p)
+
+    }
+
+}
+
+
+
+      dfss <- dfs %>% arrange(publication_decade) %>%
+		      filter(duplicated(finalWorkField)) %>% # Only keep reprints, not first print
+		      group_by(publication_decade, finalWorkField) %>%	   
+    	    	      summarize(n=n(), .groups = 'drop') %>%
+		      group_by(publication_decade) %>%	   		      
+    	    	      summarize(mean=mean(n), .groups = 'drop') 
+
+      p <- ggplot(dfss, aes(x = publication_decade, y = mean)) +
+	   geom_bar(stat="identity") + 
+       	   theme_comhis("discrete", base_size=20) +
+       	   labs(x = "Publication decade", y = "Average reprints (N)") +
+       	   labs(title="Reprints", subtitle=paste("All", sep = "/"))
+      print(p)
+
+    
+
+
+```

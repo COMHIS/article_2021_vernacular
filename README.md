@@ -8,6 +8,7 @@ Summary files:
    * [Top towns](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/place.md)
    * [Top languages](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/language.md)
    * [Top genres](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/genre.md)
+   * [ESTC cases](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/estc.md)   
 
 
 
@@ -17,7 +18,8 @@ Replicate the analyses with:
 
 - Reproduce the data subsets with main.R in each catalog-specific
   subfolder in [code/](code/)
-- Run the final analyses with [code/final/main.R](code/final/main.R)
+- Then generate the combined data with code/data/data.R
+- Then run the final analyses with [code/final/main.R](code/final/main.R)
 
 
 ## Docs

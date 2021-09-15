@@ -1,5 +1,5 @@
 catalog <- "stcn";
-dat <- read.csv("data/final/stcn-basic-fields.csv")
+dat <- dat0 <- read.csv("data/final/stcn-basic-fields.csv")
 
 dat <- dat %>% rename(language_primary = lang_pub) %>%
 	       rename(publication_country = country) 
@@ -56,9 +56,19 @@ dat$language_latin_secondary <- grepl("Latin", dat$language_other)
 
 # ------------------------------------------------------------------------
 
-# Add decade
+# Add decade 
 dat$publication_decade <- comhis::decade(dat$publication_year)
+# Recognize "173X"
+inds <- grep("[0-9]{3}X", dat0$date_pub)
+dat$publication_decade[inds] <- gsub("X$", "0", dat0$date_pub[inds])
+dat$publication_decade <- as.numeric(dat$publication_decade)
 
+# Add Century
+# Recognize "17XX"
+dat$publication_century <- comhis::century(dat$publication_decade)
+inds <- grep("[0-9]{2}XX", dat0$date_pub)
+dat$publication_century[inds] <- gsub("XX$", "00", dat0$date_pub[inds])
+dat$publication_century <- as.numeric(dat$publication_century)
 
 # ------------------------------------------------------------------
 
