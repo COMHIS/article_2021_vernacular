@@ -71,3 +71,5 @@ for (i in seq_len(nrow(selected.towns))) {
   pics[[selected.towns[i,"town"]]] <- p	 
 
 }
+
+townpics <- pics
