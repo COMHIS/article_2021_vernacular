@@ -6,7 +6,8 @@ df0 <- df <- catalogs[["stcn"]]
 
 # Most common genres out of all separate ones
 spl <- stringr::str_split(df$genre, "\\|")
-top.genres <- names(which(rev(sort(table(unlist(spl)))) > 500))[1:10]
+#top.genres <- names(which(rev(sort(table(unlist(spl)))) > 500))[1:10]
+top.genres <- names(rev(sort(table(unlist(spl)))))[1:13]
 
 top.genres <- setdiff(top.genres, c("Period documents", "Poetry", "State publications"))
 

@@ -74,7 +74,7 @@ for (cate in unique(df$name)) {
   pics[[cate]] <- ggplot(dfs, aes(x=publication_decade, y=value, fill=language_all, color=language_all)) +
          geom_point() +
 	 geom_line() + 	 
- 	 labs(color="", x="Publication decade", y = "Title count (N)", fill="") + 
+ 	 labs(color="", x="Publication decade", y = "Title count (N)", fill="", title=cate) + 
  	 theme_comhis("discrete", base_size=20) +
 	 scale_color_manual(values = mycols) +
 	 scale_fill_manual(values = mycols) 
