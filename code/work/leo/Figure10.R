@@ -4,6 +4,7 @@ yy <- stcn %>% filter(language_all %in% names(top))
 yy <- yy[grep("theology", yy$genre),]
 top <- rev(rev(sort(table(yy$publication_place)))[5:5])
 yy <- yy %>% filter(publication_place %in% names(top))
+
 ## practical
 yy1 <- yy[grep("practical", yy$genre),]
 yy2 <- yy[grep("dialogues", yy$genre),]
@@ -16,6 +17,7 @@ yy8 <- yy[grep("songbooks", yy$genre),]
 yy9 <- yy[grep("catechisms", yy$genre),]
 yy10 <- yy[grep("liturgical works", yy$genre),]
 yy11 <- yy[grep("sermons", yy$genre),]
+
 ###
 myvars <- as.vector(c("publication_year", "language_all", "record_id"))
 a1 = yy1[myvars]
@@ -67,13 +69,14 @@ j1$cat <- gsub("others", "Others", j1$cat)
 j1$cat <- gsub("practical", "Practical", j1$cat)
 cols <- default_colors("language")
 mycols <- cols[as.character(levels(j1$language_all))]
+
 p <- ggplot(j1, aes(x=publication_year, y=n,
                group=language_all,
 	       colour=language_all)) +
   geom_point() +
   stat_smooth(method = 'loess') +
   facet_wrap(~cat, scales = "free") +
-  #labs(title="theology grand categories; top-3 language_all") +
+
   scale_color_manual(values=mycols) +   
   labs(x = "Publication year", y = "", color="") +
   theme_comhis("discrete", base_size=20) 
