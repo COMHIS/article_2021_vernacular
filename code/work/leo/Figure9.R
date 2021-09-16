@@ -28,6 +28,7 @@ p <- ggplot(g2, aes(x=publication_year, y=n,
   geom_point() +
   stat_smooth(method = 'loess') + 
   facet_wrap(~cat, scales = "free") +
+  scale_y_continuous(limits = range(g2$n)) + 
   theme_comhis("discrete", base_size=20) +
   scale_color_manual(values=mycols) +
   scale_fill_manual(values=mycols) +     
