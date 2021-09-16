@@ -28,7 +28,7 @@ mypics <- list()
 
 for (cate in unique(g2$cat)) {
 
-  mypics[[cate]] <- ggplot(g2, aes(x=publication_year, y=n,
+  mypics[[cate]] <- ggplot(subset(g2, cat==cate), aes(x=publication_year, y=n,
       group=language_all, colour=language_all)) +
   geom_point() +
   stat_smooth(method = 'loess', se=FALSE) + 
