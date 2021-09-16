@@ -1,20 +1,19 @@
-# Top genres, excludeing Period documents, Poetry, and State publications.
+# Top 8 genres after excluding Period documents, Poetry, and State publications.
+# and combining all Theology (*), and all History (*)
 # Share of vernacular languages across all documents
 
 
-df0 <- df <- catalogs[["stcn"]]
+dfw <- catalogs[["stcn"]]
+dfw$genre <- str_replace_all(dfw$genre, "Theology \\(.*\\)", "Theology")
+dfw$genre <- str_replace_all(dfw$genre, "History \\(.*\\)", "History")
 
 # Most common genres out of all separate ones
-spl <- stringr::str_split(df$genre, "\\|")
-#top.genres <- names(which(rev(sort(table(unlist(spl)))) > 500))[1:10]
-top.genres <- names(rev(sort(table(unlist(spl)))))[1:13]
+spl <- stringr::str_split(dfw$genre, "\\|")
 
+top.genres <- names(rev(sort(table(unlist(spl)))))[1:(8+3)]
 top.genres <- setdiff(top.genres, c("Period documents", "Poetry", "State publications"))
 
-  dfw <- df0
-  spl <- stringr::str_split(dfw$genre, "\\|")
-
-  dflong <- NULL
+dflong <- NULL
   
 for (sel.genre in top.genres) {
 
@@ -22,9 +21,9 @@ for (sel.genre in top.genres) {
     
     dfl <- dfw %>% filter(hit) %>%
                filter(language_primary %in% c("Latin", "Dutch")) %>%
-       	       group_by(publication_decade, language_primary) %>%	       
+       	       group_by(publication_year, language_primary) %>%	       
 	       tally() %>%
-	       select(publication_decade, language_primary, n) %>%
+	       select(publication_year, language_primary, n) %>%
                tidyr::pivot_wider(names_from = language_primary, values_from = n, values_fill=0)
     
      dfl$genre <- rep(sel.genre, rep = nrow(dfl))
@@ -46,17 +45,15 @@ for (sel.genre in top.genres) {
 
 dflong$genre <- factor(dflong$genre)
 
-p <- ggplot(dflong, aes(x = publication_decade,
+p <- ggplot(dflong, aes(x = publication_year,
        		      	  color=genre,
 			  fill=genre,
                           y = Vernacular_Freq)) +
-       #geom_line()  +
        geom_point() +
-       geom_smooth() + 
-       #labs(#title="Vernacular share",
-       #     #subtitle="All documents") +
+       #geom_smooth(span=0.8, se=FALSE) +
+       geom_smooth(se=FALSE) +        
        theme_comhis("discrete", base_size=20) +
-       labs(x = "Publication decade", y = "Share (%)",
+       labs(x = "Publication year", y = "Share (%)",
             color="Genre", fill="Genre") +
        scale_y_continuous(label=scales::percent, limits=c(0,1))
        
