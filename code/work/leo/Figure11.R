@@ -62,10 +62,9 @@ ss2 <- ss2 %>%
 cols <- default_colors("language")
 pics <- list()
 
-
 df <- ss2 %>% pivot_wider(names_from=cat, id_cols=c(publication_decade, language_all), values_from = n)
 df[is.na(df)] <- 0
-df <- df %>% pivot_longer(names(df)[3:7])
+df <- df %>% pivot_longer(names(df)[3:8])
 
 
 for (cate in unique(df$name)) {
@@ -76,6 +75,7 @@ for (cate in unique(df$name)) {
 	 geom_line() + 	 
  	 labs(color="", x="Publication decade", y = "Title count (N)", fill="", title=cate) + 
  	 theme_comhis("discrete", base_size=20) +
+	 # theme(legend.position = "bottom") + 
 	 scale_color_manual(values = mycols) +
 	 scale_fill_manual(values = mycols) 
 }
@@ -90,8 +90,8 @@ for (i in 1:length(pics)) {
 }
 
 library(patchwork)
-p <- pics[[1]] + pics[[2]] + pics[[3]] + pics[[4]] + pics[[5]] + l
+p <- pics[[1]] + pics[[2]] + pics[[3]] + pics[[4]] + pics[[5]] + pics[[6]] + l
 
-CairoJPEG("Figure11.jpg", width=1.9*500, height=1*500, quality=100)
+CairoJPEG("Figure11.jpg", width=1.9*500, height=1.5*500, quality=100)
 print(p)
 dev.off()
