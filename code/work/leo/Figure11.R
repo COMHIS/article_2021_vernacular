@@ -26,19 +26,19 @@ j1 = yy10[myvars]
 
 a1$cat <- "Law"
 
-#b1$cat <- "theology"
+b1$cat <- "Theology"
 #c1$cat <- "public and social administration"
 
 d1$cat <- "History"
 e1$cat <- "Medicine"
 
-f1$cat <- "Dutch language and literature"
+#f1$cat <- "Dutch language and literature"
 #g1$cat <- "french language and literature"
 #h1$cat <- "latin language and literature"
 i1$cat <- "Philosophy"
-#j1$cat <- "poetry"
+j1$cat <- "Poetry"
 #g1 <- rbind(a1, b1, c1, d1, e1, f1, g1, h1, i1, j1)
-g1 <- rbind(a1, d1, e1, f1, i1)
+g1 <- rbind(a1, b1, d1, e1, j1, i1)
 
 #"Kuvaan kategoriat 
 # Law, Medicine, History (combined), Theology (combined); 
