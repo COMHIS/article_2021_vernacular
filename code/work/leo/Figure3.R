@@ -1,5 +1,6 @@
+pics <- townpics
 
-library(cowplot)
+library(patchwork)
 p <- pics[["London"]] + pics[["Amsterdam"]] + pics[["Stockholm"]]
 
 

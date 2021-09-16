@@ -1,0 +1,17 @@
+source("init.R")
+source("Figure1.R")
+source("Figure2.R")
+source("townfigures.R")
+source("Figure3.R")
+source("Figure4.R")
+source("Figure5.R")
+source("Figure6.R")
+source("Figure7.R")
+source("Figure8.R")
+source("Figure9.R")
+#source("Figure10.R")
+source("Figure11.R")
+source("Figure12.R")
+source("Figure13.R")
+
+
