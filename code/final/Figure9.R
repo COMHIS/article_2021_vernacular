@@ -51,7 +51,7 @@ for (i in 1:length(mypics)) {
 
 mypics[[1]] <- mypics[[1]] + theme(legend.position=c(0.13, 0.85))
 
-p <- mypics[[1]] + mypics[[2]]
+p <- mypics[[2]] + mypics[[1]]
 
 CairoJPEG("Figure9.jpg", width=1*1000, height=1*500, quality=100)
 print(p)
