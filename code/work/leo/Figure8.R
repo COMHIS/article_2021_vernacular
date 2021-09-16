@@ -11,7 +11,7 @@ dfw$genre <- str_replace_all(dfw$genre, "History \\(.*\\)", "History")
 spl <- stringr::str_split(dfw$genre, "\\|")
 
 top.genres <- names(rev(sort(table(unlist(spl)))))[1:(8+3)]
-top.genres <- setdiff(top.genres, c("Period documents", "Poetry", "State publications"))
+top.genres <- setdiff(top.genres, c("Period documents", "Poetry", "State publications", "Holland"))
 
 dflong <- NULL
   
