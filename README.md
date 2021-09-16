@@ -1,9 +1,15 @@
 # Analyses 
 
 
+
+## Final versions for the manuscript
+
+   * [Final](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/final/main.R)
+
+
 ## Working code / Leo
 
-Summary files:
+Misc Summary files:
 
    * [Top towns](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/place.md)
    * [Top languages](https://github.com/COMHIS/article_2021_vernacular/blob/master/code/work/leo/language.md)
