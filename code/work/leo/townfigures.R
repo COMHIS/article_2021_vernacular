@@ -9,7 +9,8 @@ for (ctl in names(catalogs)) {
 }
 df <- df %>% mutate(catalog=toupper(catalog))
 df$catalog <- factor(df$catalog)
-
+others <- c("Other", "Undetermined")
+df <- df %>% filter(!language_primary %in% others)
 
 # For each place, show top languagues
 library(dplyr)
@@ -40,7 +41,6 @@ for (i in seq_len(nrow(selected.towns))) {
    # Arrange levels by rank
    dfs$language_primary <- droplevels(factor(dfs$language_primary))
    sorted <- sort(unique(dfs$language_primary))
-   others <- c("Other", "Undetermined")
    sorted <- c(others, setdiff(sorted, others))
    dfs$language_primary <- factor(dfs$language_primary, levels=sorted)
 
