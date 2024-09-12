@@ -124,7 +124,7 @@ for (cate in rev(unique(j1$cat))) {
 		      colour=language_all)) +
   geom_point() +
   stat_smooth(method = 'loess', se=FALSE) + 
-  labs(x = "Publication year", y = "Title count (N)",
+  labs(x = "Publication year", y = "Title count (n)",
        color="", fill="", title=cate) + 
   theme_comhis("discrete", base_size=20) +
   scale_color_manual(values=mycols) +
@@ -136,14 +136,14 @@ for (cate in rev(unique(j1$cat))) {
 
 
 # get legend from p1
-l <- get_legend(mypics[[1]])
+l <- get_legend(mypics[[2]])
 
 # remove legends
 for (i in 1:length(mypics)) {
   mypics[[i]] <- mypics[[i]] + theme(legend.position = "none")
 }
 
-mypics[[1]] <- mypics[[1]] + theme(legend.position=c(0.13, 0.78))
+mypics[[1]] <- mypics[[1]] + theme(legend.position=c(0.18, 0.8))
 p <- (mypics[[1]] + mypics[[2]] + mypics[[3]] + mypics[[4]])
 
 
@@ -152,3 +152,4 @@ print(p)
 dev.off()
 
 
+s <- 4 * 480; CairoTIFF("Figure10.tif", width=2*s, height=1.7*s, dpi=300); print(p); dev.off()

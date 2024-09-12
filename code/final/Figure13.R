@@ -37,3 +37,5 @@ p <- ggplot(dat, aes(x = publication_decade, y = n,
 CairoJPEG("Figure13.jpg", width=1*500, height=1*300, quality=100)
 print(p)
 dev.off()
+
+s <- 5 * 480; CairoTIFF("Figure13.tif", width=1.5*s, height=0.9*s, dpi=300); print(p); dev.off()

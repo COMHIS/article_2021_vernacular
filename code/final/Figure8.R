@@ -62,3 +62,5 @@ p <- ggplot(dflong, aes(x = publication_year,
 CairoJPEG("Figure8.jpg", width=1*1200, height=1*500, quality=100)
 print(p)
 dev.off()
+
+s <- 5 * 480; CairoTIFF("Figure8.tif", width=1.8*s, height=0.8*s, dpi=300); print(p); dev.off()

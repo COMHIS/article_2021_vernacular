@@ -36,7 +36,7 @@ for (cate in unique(g2$cat)) {
   theme_comhis("discrete", base_size=20) +
   scale_color_manual(values=mycols) +
   scale_fill_manual(values=mycols) +     
-  labs(x="Publication year", y="Title count (N)", color="", fill="", title=cate)
+  labs(x="Publication year", y="Title count (n)", color="", fill="", title=cate)
 
 }
 
@@ -57,5 +57,6 @@ CairoJPEG("Figure9.jpg", width=1*1000, height=1*500, quality=100)
 print(p)
 dev.off()
 
+s <- 4 * 480; CairoTIFF("Figure9.tif", width=2*s, height=1*s, dpi=300); print(p); dev.off()
 
 

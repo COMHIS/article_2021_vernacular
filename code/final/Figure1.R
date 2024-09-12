@@ -43,4 +43,6 @@ CairoJPEG("Figure1.jpg", width=1.2*480, height=0.8*480, quality=100)
 print(p)
 dev.off()
 
+s <- 5 * 480; CairoTIFF("Figure1.tif", width=1.2*s, height=0.8*s, dpi=300); print(p); dev.off()
+
 

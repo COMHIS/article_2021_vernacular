@@ -1,11 +1,9 @@
 # Load data subsets and combine
 # - stored in dataset.Rds; use that as the starting point
-library(bibliographica)
 library(tidyverse)
-library(comhis)
 library(Cairo)
-
 devtools::load_all("bibliographica")
+devtools::load_all("comhis")
 
 catalogs <- readRDS("../../output/dataset.Rds")
 

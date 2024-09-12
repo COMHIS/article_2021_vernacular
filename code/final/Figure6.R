@@ -20,4 +20,4 @@ print(p)
 dev.off()
 
 
-
+s <- 5 * 480; CairoTIFF("Figure6.tif", width=2*s, height=1*s, dpi=300); print(p); dev.off()

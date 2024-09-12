@@ -73,7 +73,7 @@ for (cate in unique(df$name)) {
   pics[[cate]] <- ggplot(dfs, aes(x=publication_decade, y=value, fill=language_all, color=language_all)) +
          geom_point() +
 	 geom_line() + 	 
- 	 labs(color="", x="Publication decade", y = "Title count (N)", fill="", title=cate) + 
+ 	 labs(color="", x="Publication decade", y = "Title count (n)", fill="", title=cate) + 
  	 theme_comhis("discrete", base_size=20) +
 	 # theme(legend.position = "bottom") + 
 	 scale_color_manual(values = mycols) +
@@ -89,7 +89,7 @@ for (i in 1:length(pics)) {
   pics[[i]] <- pics[[i]] + theme(legend.position = "none")
 }
 
-pics[[1]] <- pics[[1]] + theme(legend.position=c(0.13, 0.79))
+pics[[1]] <- pics[[1]] + theme(legend.position=c(0.16, 0.77))
 
 library(patchwork)
 p <- pics[[1]] +
@@ -98,3 +98,5 @@ p <- pics[[1]] +
 CairoJPEG("Figure11.jpg", width=3*500, height=1.5*500, quality=100)
 print(p)
 dev.off()
+
+s <- 4 * 480; CairoTIFF("Figure11.tif", width=3.4*s, height=1.8*s, dpi=300); print(p); dev.off()
