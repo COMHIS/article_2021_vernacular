@@ -36,8 +36,8 @@ p <- ggplot(dfs, aes(x = publication_decade, y = f,
        scale_colour_manual(values=unname(cols)) +
        scale_fill_manual(values=unname(cols)) +
        labs(# title="Title share",
-            fill="Catalog",
-	    color="Catalog") 
+            fill="Catalogue",
+	    color="Catalogue") 
 
 CairoJPEG("Figure1.jpg", width=1.2*480, height=0.8*480, quality=100)
 print(p)
